@@ -14,4 +14,7 @@ angular.module('app.controllers', []).
   }).
   controller('HomeController', function($scope, $http) {
 
+  }).
+  controller('ItemSetViewController', function($scope, $http) {
+
   });

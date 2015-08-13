@@ -11,6 +11,10 @@ app.use(express.static(path.join(__dirname, 'frontend', 'public')));
 app.use('/api', api);
 
 // Routes
+app.get('/item-set/:id', routes.getItemSet);
+app.post('/item-set', routes.createItemSet);
+app.delete('/item-set/:id', routes.deleteItemSet);
+
 app.get('*', routes.index);
 
 // Starts server

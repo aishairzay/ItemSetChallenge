@@ -18,6 +18,10 @@ config(function ($routeProvider, $locationProvider) {
     templateUrl: 'templates/item-set-create.html',
     controller: 'CreateController'
   })
+  .when('/item-set/:id/view', {
+    templateUrl: '/templates/item-set-view.html',
+    controller: 'ItemSetViewController'
+  })
   .otherwise({
     redirectTo: '/'
   });
