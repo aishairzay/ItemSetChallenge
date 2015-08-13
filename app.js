@@ -10,7 +10,6 @@ app.set('views', path.join(__dirname, 'frontend', 'views'));
 app.use(express.static(path.join(__dirname, 'frontend', 'public')));
 
 // Routes
-app.get('/', routes.index);
 app.get('*', routes.index);
 
 // Starts server

@@ -11,7 +11,3 @@ exports.init = function(rootViewDirectory) {
 exports.index = function(req, res) {
   res.sendFile(path.join(viewRoot, 'index.html'));
 }
-
-exports.itemSetCreate = function(req, res) {
-  res.sendFile(path.join(viewRoot, ''))
-}
