@@ -10,6 +10,17 @@ app.set('views', path.join(__dirname, 'frontend', 'views'));
 app.use(express.static(path.join(__dirname, 'frontend', 'public')));
 app.use('/api', api);
 
+// Database connection
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/item-set-challenge');
+/**
+collections to use:
+items
+  Stores all items given from the Riot API call
+item-sets
+  Stores list of item-sets
+*/
+
 // Routes
 app.get('/item-set/:id', routes.getItemSet);
 app.post('/item-set', routes.createItemSet);
