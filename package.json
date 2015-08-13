@@ -3,6 +3,8 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "^4.10.2"
+    "express": "^4.10.2",
+    "mongodb": "^2.0.40",
+    "mongoose": "^4.1.2"
   }
 }
