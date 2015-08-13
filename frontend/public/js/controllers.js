@@ -7,9 +7,12 @@ angular.module('app.controllers', []).
 
   }).
   controller('CreateController', function($scope, $http) {
-  	$http.get('/api/getItems')
+  	$scope.items = {};
+    $http.get('/api/getItems')
   		.success(function(data) {
-  			console.log(data);
+  			for(var stuff in data){
+  				$scope.items[stuff] = data[stuff];
+  			}
   		})
   }).
   controller('HomeController', function($scope, $http) {
