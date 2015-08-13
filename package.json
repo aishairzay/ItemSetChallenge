@@ -4,7 +4,7 @@
   },
   "dependencies": {
     "express": "^4.10.2",
-    "mongodb": "^2.0.40",
-    "mongoose": "^4.1.2"
+    "mongoose": "^4.1.2",
+    "request": "^2.60.0"
   }
 }
