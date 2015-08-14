@@ -7,13 +7,29 @@ angular.module('app.controllers', []).
 
   }).
   controller('CreateController', function($scope, $http) {
-  	$scope.items = {};
-    $http.get('/api/getItems')
-  		.success(function(data) {
-  			for(var stuff in data){
-  				$scope.items[stuff] = data[stuff];
-  			}
-  		})
+    $scope.items = [];
+    $scope.categories = [];
+    $scope.category = "All";
+    $http.get('/items')
+      .success(function(data) {
+        var items = data.data;
+        console.log("All items", items);
+        for (var key in items) {
+          if(items.hasOwnProperty(key)) {
+            var obj = items[key];
+            $scope.items.push(obj);
+            $scope.categories = _.union($scope.categories, obj.tags);
+          }
+        }
+      })
+
+    $scope.changeSelectedCategory = function(category) {
+      console.log("Changed category:", category);
+      $scope.category = category;
+    }
+    $scope.inRightCategory = function(categories) {
+      return ($scope.category == "All" || _.contains(categories, $scope.category));
+    }
   }).
   controller('HomeController', function($scope, $http) {
 

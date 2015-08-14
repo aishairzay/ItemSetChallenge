@@ -3,7 +3,7 @@
 // Declare app level module which depends on filters, and services
 // Defines app module
 angular.module('app', [
-  'app.controllers', 'app.directive.items'
+  'app.controllers', 'app.directives'
 ]).
 config(function ($routeProvider, $locationProvider) {
   $routeProvider

@@ -1,4 +1,6 @@
-var path = require('path');
+var path = require('path'),
+  request = require('request'),
+  keys = require('../keys.js');
 var viewRoot = '';
 
 exports.init = function(rootViewDirectory) {
@@ -24,4 +26,12 @@ exports.createItemSet = function(req, res) {
 // delete /item-set/:id
 exports.deleteItemSet = function(req, res) {
 
+}
+
+// Item routes
+exports.getItems = function(req, res) {
+  request('https://global.api.pvp.net/api/lol/static-data/na/v1.2/item?itemListData=gold,groups,maps,requiredChampion,tags&api_key='+ keys.RIOT_API_KEY, function(err, resp, body) {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(body);
+  });
 }

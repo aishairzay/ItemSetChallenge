@@ -1,6 +1,31 @@
-<h1>Item set creation here</h1>
-<div class="itemsWrap">
-	<div data-ng-repeat="item in items">
-		<lol-items data='item'></lol-items>
-	</div>
+<div class="row col-xs-12">
+  <h1>Create an item set</h1>
+</div>
+<div class="row">
+  <div class="col-xs-5">
+    <div class="row">
+      <div class="col-xs-4">
+        <h5>Categories</h5>
+        <a ng-click="changeSelectedCategory('All')">All</a>
+        <div data-ng-repeat="category in categories">
+          <a ng-click="changeSelectedCategory(category)">{{category}}</a>
+        </div>
+      </div>
+      <div class="col-xs-8">
+        <div class="center">
+          <input type="text" ng-model="itemSearch" class="form-control" placeholder="Item Search">
+        </div>
+        <div class="row">
+          <div data-ng-repeat="item in items | filter:itemSearch">
+            <div class="col-xs-3" ng-show="inRightCategory(item.tags)">
+              <item class="item" data='item'></item>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-7">
+
+  </div>
 </div>
