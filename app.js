@@ -12,8 +12,10 @@ app.use(express.static(path.join(__dirname, 'frontend', 'public')));
 
 // Database connection
 // run mongo with mongod --dbpath=C:\data on my machine
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/item-set-challenge');
+
+//var mongoose = require('mongoose');
+//mongoose.connect('mongodb://localhost:27017/item-set-challenge');
+
 /**
 collections to use:
 items
