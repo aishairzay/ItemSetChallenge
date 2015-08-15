@@ -7,7 +7,6 @@ directive('item', function(){
 		},
 		templateUrl: 'templates/item-directive.html',
 		controller: function($scope) {
-			$scope.showPopover = false;
       $scope.imageUrl = 'http://ddragon.leagueoflegends.com/cdn/5.15.1/img/item/' + $scope.data.id + '.png';
 		}
 	};

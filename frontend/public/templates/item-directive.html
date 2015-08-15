@@ -1,7 +1,8 @@
-<!-- GUNNA ADD DIRECTIVE TEMPLATERINO!!! -->
-<div ng-show="showPopover">
-  popover 
-</div>
 <div class="item">
-  <img ng-mouseover="showPopover=true" ng-mouseleave="showPopover=false" height="36" width="36" src={{imageUrl}}>
+  <img ng-mouseover="showPopover=true" ng-mouseleave="showPopover=false" height="42" width="42" src={{imageUrl}}>
+</div>
+<div class="item-popover" ng-show="showPopover"> 
+  <h5><b>{{data.name}}</b></h5>
+  <p>{{data.plaintext}}</p>
+  <h5>{{data.sanitizedDescription}}</h5>
 </div>

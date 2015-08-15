@@ -1,3 +1,15 @@
-.popover {
-  
+.item-popover {
+  border-radius: 30px;
+  padding:10px;
+  position:absolute;
+  z-index:100;
+  min-width: 200px;
+  min-height: 100px;
+  background-color:rgba(120,120,190,0.7);
+  margin-left:30px;
+  top:-70px;
+}
+
+.item {
+  margin-top:10px;
 }

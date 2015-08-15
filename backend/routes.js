@@ -30,7 +30,7 @@ exports.deleteItemSet = function(req, res) {
 
 // Item routes
 exports.getItems = function(req, res) {
-  request('https://global.api.pvp.net/api/lol/static-data/na/v1.2/item?itemListData=gold,groups,maps,requiredChampion,tags&api_key='+ keys.RIOT_API_KEY, function(err, resp, body) {
+  request('https://global.api.pvp.net/api/lol/static-data/na/v1.2/item?itemListData=from,gold,groups,into,maps,sanitizedDescription,stats,tags,tree&api_key='+ keys.RIOT_API_KEY, function(err, resp, body) {
     res.setHeader('Content-Type', 'application/json');
     res.send(body);
   });

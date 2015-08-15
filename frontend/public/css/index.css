@@ -1,0 +1,10 @@
+body{
+  background-image:url(http://briansturges.com/wp-content/uploads/2014/09/1920x1440-light-green-website-plain-background.jpg);
+}
+h1,h2,h3,h4,h5,p {
+  color: white;
+}
+.main input[type='text']{
+  background-color: rgba(0,0,0,0.5);
+  color:white;
+}

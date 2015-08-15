@@ -18,6 +18,7 @@ angular.module('app.controllers', []).
 
   }).
   controller('CreateController', function($scope, $http) {
+    console.log("Controller created");
     $scope.items = [];
     $scope.categories = [];
     $scope.category = "All";
