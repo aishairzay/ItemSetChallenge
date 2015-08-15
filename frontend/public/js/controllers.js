@@ -6,7 +6,7 @@ angular.module('app.controllers', []).
   run(function($rootScope, $http) {
     $http.get('/champions')
       .success(function(data) {
-        //do something 
+        //do something
       })
   }).
   controller('AppController', function($scope, $http) {
