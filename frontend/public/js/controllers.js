@@ -11,7 +11,7 @@ angular.module('app.controllers', []).
            for(var key in champs){
             $rootScope.champions.push(champs[key]);
            }
-           console.log($rootScope.champions[0]);
+           console.log($rootScope.champions);
       })
   }).
   controller('AppController', function($scope, $http) {
