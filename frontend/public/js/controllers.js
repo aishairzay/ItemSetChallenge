@@ -18,14 +18,13 @@ angular.module('app.controllers', []).
 
   }).
   controller('CreateController', function($scope, $http) {
-    console.log("Controller created");
+    $scope.itemSearch = '';
     $scope.items = [];
     $scope.categories = [];
     $scope.category = "All";
     $http.get('/items')
       .success(function(data) {
         var items = data.data;
-        console.log("All items", items);
         for (var key in items) {
           if(items.hasOwnProperty(key)) {
             var obj = items[key];
@@ -34,6 +33,9 @@ angular.module('app.controllers', []).
           }
         }
       })
+    $scope.searchItems = function(item){
+      return $scope.itemSearch.length == 0 || item.name.toLowerCase().indexOf($scope.itemSearch.toLowerCase()) != -1
+    }
     $scope.changeSelectedCategory = function(category) {
       console.log("Changed category:", category);
       $scope.category = category;

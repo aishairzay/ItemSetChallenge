@@ -17,7 +17,7 @@
           <input type="text" ng-model="itemSearch" class="form-control" placeholder="Item Search">
         </div>
         <div class="row">
-          <div data-ng-repeat="item in items | filter:itemSearch">
+          <div ng-repeat="item in items | orderBy:'name' | orderBy:'gold.total' | filter:searchItems">
             <div class="col-xs-3" ng-show="inRightCategory(item.tags)">
               <item class="item" data='item'></item>
             </div>
