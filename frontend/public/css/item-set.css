@@ -17,3 +17,16 @@
 img{
   border-radius:5px;
 }
+
+.block-new {
+  min-height: 150px;
+  width:100%;
+  border-style: dashed;
+  border-width: medium;
+  border-color: white;
+  text-align: center;
+}
+
+.block-vertical-center {
+  margin-top:60px;
+}

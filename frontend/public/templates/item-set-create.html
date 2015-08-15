@@ -18,7 +18,7 @@
         </div>
         <div class="row">
           <div ng-repeat="item in items | orderBy:'name' | orderBy:'gold.total' | filter:searchItems">
-            <div class="col-xs-3" ng-show="inRightCategory(item.tags)">
+            <div class="col-xs-6 col-md-3" ng-show="inRightCategory(item.tags)">
               <item class="item" data='item'></item>
             </div>
           </div>
