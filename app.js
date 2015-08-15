@@ -29,6 +29,8 @@ app.get('/item-set/:id', routes.getItemSet);
 app.post('/item-set', routes.createItemSet);
 app.delete('/item-set/:id', routes.deleteItemSet);
 
+app.get('/champions', routes.getChampions);
+
 app.get('/items', routes.getItems);
 
 app.get('*', routes.index);
