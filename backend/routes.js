@@ -35,3 +35,10 @@ exports.getItems = function(req, res) {
     res.send(body);
   });
 }
+
+exports.getChampions = function(req, res) {
+  request('https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key=' + keys.RIOT_API_KEY, function(err, resp, body) {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(body);
+  })
+}
