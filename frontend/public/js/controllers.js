@@ -4,9 +4,14 @@
 
 angular.module('app.controllers', []).
   run(function($rootScope, $http) {
+    $rootScope.champions = [];
     $http.get('/champions')
       .success(function(data) {
-        //do something
+          var champs = data.data;
+           for(var key in champs){
+            $rootScope.champions.push(champs[key]);
+           }
+           console.log($rootScope.champions[0]);
       })
   }).
   controller('AppController', function($scope, $http) {
@@ -28,7 +33,6 @@ angular.module('app.controllers', []).
           }
         }
       })
-
     $scope.changeSelectedCategory = function(category) {
       console.log("Changed category:", category);
       $scope.category = category;
