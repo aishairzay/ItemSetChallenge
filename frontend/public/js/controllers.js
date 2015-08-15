@@ -11,7 +11,7 @@ angular.module('app.controllers', []).
            for(var key in champs){
             $rootScope.champions.push(champs[key]);
            }
-           console.log($rootScope.champions[0]);
+           console.log($rootScope.champions);
       })
   }).
   controller('AppController', function($scope, $http) {
@@ -46,6 +46,10 @@ angular.module('app.controllers', []).
     }
     $scope.inRightCategory = function(categories) {
       return ($scope.category == "All" || _.contains(categories, $scope.category));
+    }
+
+    $scope.submit = function(name, type, maps, mode){
+      console.log(type, maps, mode);
     }
   }).
   controller('HomeController', function($scope, $http) {
