@@ -44,28 +44,37 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Modal Header</h4>
+                <h4 class="modal-title">Configuration Settings</h4>
               </div>
               <div class="modal-body">
-                <form>
-                  <label>Select Champions!</label>
-                  <div ng-repeat="champ in champions">
-                    <input type="checkbox" name="champions" ng-model="champ"> 
+                <!--FIX TO SEND VALUE OF SELECTED BOX -->
+                <form ng-submit="submit(type, maps, mode)">
+                  <label>Select Champions!</label></br>
+                  <div ng-repeat="champ in champions" class="col-md-3">
+                    <input type="checkbox" name="champions" value="{{champ.name}}"> 
                     <label>{{champ.name}}</label>
-                  </div>
+                  </div></br>
                   <label>Custom or Global</label>
-                  <select class="form-control">
-                    <option>Custom</option>
+                  <select class="form-control" ng-model="type">
+                    <option selected="selected">Custom</option>
                     <option>Global</option>
                   </select>
                   <label>Maps</label>
-                  <select class="form-control">
-                    <option>Any</option>
+                  <select class="form-control" ng-model="maps">
+                    <option selected="selected">Any</option>
                     <option>Summoners Rift</option>
                     <option>Howling Abyss</option>
                     <option>Twisted Tree Line</option>
                     <option>Crystal Scar</option>
                   </select>
+                  <label>Mode</label>
+                  <select class="form-control" ng-model="mode">
+                    <option selected="selected">Any</option>
+                    <option>Classic</option>
+                    <option>ARAM</option>
+                    <option>Dominion</option>
+                  </select>
+                  <input class="btn btn-primary" type="submit" value="Submit!">
                 </form>
               </div>
               <div class="modal-footer">

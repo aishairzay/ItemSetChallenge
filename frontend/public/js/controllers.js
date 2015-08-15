@@ -43,6 +43,10 @@ angular.module('app.controllers', []).
     $scope.inRightCategory = function(categories) {
       return ($scope.category == "All" || _.contains(categories, $scope.category));
     }
+
+    $scope.submit = function(name, type, maps, mode){
+      console.log(type, maps, mode);
+    }
   }).
   controller('HomeController', function($scope, $http) {
     
