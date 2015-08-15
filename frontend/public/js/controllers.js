@@ -18,6 +18,7 @@ angular.module('app.controllers', []).
 
   }).
   controller('CreateController', function($scope, $http) {
+    $scope.blocks = [{}];
     $scope.itemSearch = '';
     $scope.items = [];
     $scope.categories = [];
@@ -33,6 +34,9 @@ angular.module('app.controllers', []).
           }
         }
       })
+    $scope.addNewBlock = function() {
+      $scope.blocks.push({});
+    }
     $scope.searchItems = function(item){
       return $scope.itemSearch.length == 0 || item.name.toLowerCase().indexOf($scope.itemSearch.toLowerCase()) != -1
     }

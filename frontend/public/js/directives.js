@@ -15,11 +15,15 @@ directive('block', function() {
 	return {
 		restrict: 'E',
 		scope: {
-			data: '='
 		},
 		templateUrl: 'templates/item-set-block.html',
 		controller: function($scope) {
 			$scope.items = [];
+			$scope.unactivated = true;
+			$scope.makeNewBlock = function() {
+				$scope.unactivated = false;
+				$scope.$parent.addNewBlock();
+			}
 		}
 	}
 });
