@@ -10,10 +10,23 @@ var itemSetSchema = new Schema({
     type: String,
     map: String,
     mode: String,
-    priority: boolean,
-    sortrank: String,
+    priority: Boolean,
+    sortrank: Number,
     blocks: [
-      //Array of blocks
+      {
+        type: String,
+        recMath: Boolean,
+        minSummonerLevel: Number,
+        maxSummonerLevel: Number,
+        showIfSummonerSpell: String,
+        hideIfSummonerSpell: String,
+        items: [
+          {
+            id: String,
+            count: Number
+          }
+        ] 
+      }
     ]
   }
 });
