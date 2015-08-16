@@ -14,7 +14,7 @@
       </div>
       <div class="col-xs-8">
         <div class="center">
-          <input type="text" ng-model="itemSearch" class="form-control" placeholder="Item Search">
+          <input class="dark form-control" type="text" ng-model="itemSearch" placeholder="Item Search">
         </div>
         <div class="row">
           <div ng-repeat="item in items | orderBy:'name' | orderBy:'gold.total' | filter:searchItems">
@@ -30,56 +30,106 @@
     <div class="row">
       <div class="col-xs-12 col-md-6">
         <p><strong>Give your item set a title:</strong>
-          <input type="text" ng-model="itemSetTitle" class="form-control" placeholder="Title">
+          <input class="dark form-control" type="text" ng-model="itemSetTitle" placeholder="Title">
         </p>
       </div>
       <div class="col-xs-12 col-md-6">
-        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
-
+        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">
+          Open Modal
+        </button>
         <!-- Modal -->
         <div id="myModal" class="modal fade" role="dialog">
           <div class="modal-dialog">
-
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Configuration Settings</h4>
+                <h4 class="modal-title black">Configure your Item Set</h4>
               </div>
-              <div class="modal-body">
-                <!--FIX TO SEND VALUE OF SELECTED BOX -->
-                <form ng-submit="submit(type, maps, mode)">
-                  <label>Select Champions!</label></br>
-                  <div ng-repeat="champ in champions" class="col-md-3">
-                    <input type="checkbox" name="champions" value="{{champ.name}}"> 
-                    <label>{{champ.name}}</label>
-                  </div></br>
-                  <label>Custom or Global</label>
-                  <select class="form-control" ng-model="type">
-                    <option selected="selected">Custom</option>
-                    <option>Global</option>
-                  </select>
-                  <label>Maps</label>
-                  <select class="form-control" ng-model="maps">
-                    <option selected="selected">Any</option>
-                    <option>Summoners Rift</option>
-                    <option>Howling Abyss</option>
-                    <option>Twisted Tree Line</option>
-                    <option>Crystal Scar</option>
-                  </select>
-                  <label>Mode</label>
-                  <select class="form-control" ng-model="mode">
-                    <option selected="selected">Any</option>
-                    <option>Classic</option>
-                    <option>ARAM</option>
-                    <option>Dominion</option>
-                  </select>
+              <form ng-submit="submit(itemSetMaps, champs)">
+                <div class="modal-body">
+                  <!--FIX TO SEND VALUE OF SELECTED BOX -->
+                    <label>Select map(s) where your item set will appear</label>
+                    <select class="form-control" ng-model="itemSetMaps">
+                      <option>Any</option>
+                      <option>Summoners Rift</option>
+                      <option>Howling Abyss</option>
+                      <option>Twisted Tree Line</option>
+                      <option>Crystal Scar</option>
+                    </select>
+
+                    <label style="margin-top:20px;">Select which champion(s) you would like to use this item set with</label></br>
+                    <div class="row">
+                      <div class="col-xs-6">
+                        <div ng-init="champView='All'"></div>
+                        <div ng-click="champView='All'">
+                          <input ng-model="champView" type="radio" name="showChampions" value="All">
+                          <label>All</label>                    
+                        </div>
+                      </div>
+                      <div class="col-xs-6">
+                        <div ng-click="champView='Custom'">
+                          <input ng-model="champView" type="radio" name="showChampions" value="Custom">
+                          <label>Custom</label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="champ-selector-wrapper" ng-show="champView == 'Custom'">
+                      <hr/>
+                      <div class="row">
+                        <div class="col-xs-6">
+                          <select name="champFilterSelect" class="form-control" ng-model="champFilter">
+                            <option>All</option>
+                            <option>Support</option>
+                            <option>Fighter</option>
+                            <option>Tank</option>
+                            <option>Assassin</option>
+                            <option>Mage</option>
+                            <option>Marksman</option>
+                          </select>
+                        </div>
+                        <div class="col-xs-6">
+                          <input class="form-control" type="text" ng-model="championSearch"/>
+                        </div>
+                        <div class="row">
+                        <div class="center col-xs-3 btn-margin">
+                          <a ng-click="checkAllCurrentChampions()" class="btn btn-primary">Check Current</a>
+                        </div>
+                        <div class="center col-xs-3 btn-margin">
+                          <a ng-click="uncheckAllCurrentChampions()" class="btn btn-primary">Uncheck Current</a>
+                        </div>
+                        <div class="center col-xs-3 btn-margin">
+                          <a ng-click="checkAllChampions()" class="btn btn-primary">Check All</a>
+                        </div>
+                        <div class="center col-xs-3 btn-margin">
+                          <a ng-click="uncheckAllChampions()" class="btn btn-primary">Uncheck All</a>
+                        </div>
+                      </div>
+                      
+                      <div class="row">
+                        <div ng-repeat="champ in champions | orderBy:name | filter:{name:championSearch}">
+                          <div class="col-xs-3" ng-show="inRightChampCategory(champ.tags)">
+                            <input type="checkbox" checklist-model='champs' checklist-value='champ.name'> 
+                            <label>{{champ.name}}</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div ng-repeat="champ in champions" ng-model="champs">
+                      <div class="col-xs-3">
+                        
+                      </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
                   <input class="btn btn-primary" type="submit" value="Submit!">
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              </div>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
