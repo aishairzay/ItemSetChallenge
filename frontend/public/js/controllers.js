@@ -70,7 +70,9 @@ angular.module('app.controllers', ['checklist-model', 'dndLists']).
     $scope.checkAllChampions = function() {
       for(var key in $rootScope.champions) {
         var champion = $rootScope.champions[key];
-        $scope.champs.push(champion.name);
+        if($scope.champs.indexOf(champion.name) == -1) {
+          $scope.champs.push(champion.name);
+        }
       }
     }
     $scope.uncheckAllChampions = function() {

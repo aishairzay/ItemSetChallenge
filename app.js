@@ -1,5 +1,7 @@
 var express = require('express');
 var app = express();
+var session = require('express-session');
+var passport = require('./passport-config');
 var http = require('http').Server(app);
 var path = require('path');
 var viewRoot = path.join(__dirname, 'frontend/views');
@@ -8,6 +10,11 @@ var routes = require(path.join(__dirname, 'backend', 'routes')).init(viewRoot);
 // Setup
 app.set('views', path.join(__dirname, 'frontend', 'views'));
 app.use(express.static(path.join(__dirname, 'frontend', 'public')));
+
+//passport configuration
+app.use(session({ secret: 'keyboard cat'}));
+app.use(passport.initialize());
+app.use(passport.session());
 //app.use('/api', api);
 
 // Database connection
