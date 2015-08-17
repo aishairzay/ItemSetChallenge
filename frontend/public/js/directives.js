@@ -18,6 +18,7 @@ directive('block', function() {
 		},
 		templateUrl: 'templates/item-set-block.html',
 		controller: function($scope) {
+			$scope.isBlock = true;
 			$scope.items = [];
 			$scope.unactivated = true;
 			$scope.makeNewBlock = function() {

@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-angular.module('app.controllers', ['checklist-model']).
+angular.module('app.controllers', ['checklist-model', 'dndLists']).
   run(function($rootScope, $http) {
     $rootScope.champions = [];
     $http.get('/champions')
@@ -18,16 +18,20 @@ angular.module('app.controllers', ['checklist-model']).
 
   }).
   controller('CreateController', function($rootScope, $scope, $http) {
+    $scope.lists = {
+      "blocks":[],
+      "items":[]
+    };
     $scope.itemSetMode = 'Any';
     $scope.itemSetMaps = 'Any';
     $scope.champFilter = 'All';
     $scope.championView = 'All';
     $scope.checked = false;
     $scope.champs = [];
-    $scope.blocks = [{}];
+    $scope.lists.blocks = [{}];
     $scope.itemSearch = '';
     $scope.championSearch = '';
-    $scope.items = [];
+    $scope.lists.items = [];
     $scope.categories = [];
     $scope.category = 'All';
     $http.get('/items')
@@ -36,13 +40,13 @@ angular.module('app.controllers', ['checklist-model']).
         for (var key in items) {
           if(items.hasOwnProperty(key)) {
             var obj = items[key];
-            $scope.items.push(obj);
+            $scope.lists.items.push(obj);
             $scope.categories = _.union($scope.categories, obj.tags);
           }
         }
       })
     $scope.addNewBlock = function() {
-      $scope.blocks.push({});
+      $scope.lists.blocks.push({});
     }
     $scope.searchItems = function(item){
       return $scope.itemSearch.length == 0 || item.name.toLowerCase().indexOf($scope.itemSearch.toLowerCase()) != -1;

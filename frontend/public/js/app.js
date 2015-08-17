@@ -3,11 +3,10 @@
 // Declare app level module which depends on filters, and services
 // Defines app module
 angular.module('app', [
-  'app.controllers', 'app.directives', 'checklist-model'
+  'app.controllers', 'app.directives', 'ngRoute'
 ]).
 config(function ($routeProvider, $locationProvider) {
   $routeProvider
-
   // Sets routes and
   // Decides which html file to load up in the main part of the view
   .when('/', {

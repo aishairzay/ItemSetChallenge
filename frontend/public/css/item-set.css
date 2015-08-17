@@ -12,14 +12,12 @@
 
 .item {
   margin-top:10px;
-}
-
-img{
-  border-radius:5px;
+  margin-left:15px;
 }
 
 .block-new {
-  min-height: 150px;
+  height:150px;
+  max-height:150px;
   width:100%;
   border-style: dashed;
   border-width: medium;
@@ -75,4 +73,16 @@ img{
 }
 input:focus {
   outline:0;
+}
+li {
+  display:inline-block;
+}
+
+.block-list {
+  width:100%;
+}
+.block-item-wrap {
+  height:125px;
+  position:relative;
+  width:100%;
 }

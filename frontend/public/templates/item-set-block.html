@@ -5,10 +5,12 @@
   <div style="text-align:center" ng-hide="unactivated" class="block">
     <div class="row">
       <div class="col-xs-11">
-        <input class="form-control dark borderless" type="text" placeholder="Block Name"/>
+        <input class="form-control dark borderless" type="text" placeholder="Block Name (e.g. Attack Damage)"/>
+        <ul class="block-item-wrap" dnd-list="items">
+          <li ng-repeat="item in items" dnd-draggable="move" dnd-effect-allowed="move" dnd-allowed-types="item"><item class="item" data='item' dnd-horizontal-list="true"></item></li>
+        </ul>
       </div>
       <div class="col-xs-1">
-        <span style="margin-left:-13px;margin-top:3px;font-size:2.2em;color:white;" class="glyphicon glyphicon-remove-circle" ng-click="$parent.blocks.splice($index, 1)"></span>
       </div>
     </div>
   </div>
