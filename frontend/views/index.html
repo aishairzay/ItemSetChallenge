@@ -1,41 +1,45 @@
 <html>
-  <head>
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/index.css">
-  </head>
-  <body ng-app="app">
-    <!-- Header here !-->
-    <nav class="navbar navbar-default">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="/">
-            Item Set Helper
-          </a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" role="search">
-              <input type="text" class="form-control" placeholder="Champion Search">
-              <button type="submit" class="btn btn-default">Search</button>
-          </form>
-        </div>
+<head>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/index.css">
+</head>
+<body ng-app="app">
+  <!-- Header here !-->
+  <nav class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/">
+          Item Set Helper
+        </a>
       </div>
-    </nav>
-    <!--              !-->
-
-    <div class="main container">
-      <div ng-view></div>
+      <div class="navbar-collapse collapse">
+        <form class="navbar-form navbar-right" role="search">
+          <input type="text" class="form-control" placeholder="Champion Search">
+          <button type="submit" class="btn btn-default">Search</button>
+        </form>
+      </div>
     </div>
-    
-    <!-- Footer here !-->
+  </nav>
+  <!--              !-->
 
-    <!--             !-->
-    </div>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>  
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/controllers.js"></script>
-    <script src="js/directives.js"></script>
-  </body>
+  <div class="main container">
+    <div ng-view></div>
+  </div>
+
+  <!-- Footer here !-->
+
+  <!--             !-->
+</div>
+<!--JQuery scripts -->
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<!--Angular scripts -->
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script src="js/app.js"></script>
+<script src="js/controllers.js"></script>
+<script src="js/directives.js"></script>
+</body>
 </html>
