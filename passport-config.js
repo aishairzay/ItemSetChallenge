@@ -1,12 +1,12 @@
 var passport = require('passport'),
 LocalStrategy = require('passport-local').Strategy,
-bCrypt = require('bCrypt-nodejs');
+bCrypt = require('bcrypt-nodejs');
 
 passport.serializeUser(function(user, done) {
 
 });
 
-passport.desreializeUser(function(username, done) {
+passport.deserializeUser(function(username, done) {
 
 });
 
