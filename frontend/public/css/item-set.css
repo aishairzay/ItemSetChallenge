@@ -3,10 +3,10 @@
   padding:10px;
   position:absolute;
   z-index:100;
-  min-width:250px;
+  min-width:225px;
   min-height: 100px;
   background-color:rgba(120,120,190,0.7);
-  margin-left:30px;
+  margin-left:50px;
   top:-70px;
 }
 
@@ -42,12 +42,37 @@ img{
   min-height:150px;
   width:100%;
   border-style:solid;
-  border-width:large;
   border-color:white;
   text-align:center;
   border-radius:25px;
 }
 
-.block-wrapper {
+.block-list {
   margin-top:15px;
+}
+
+.center {
+  text-align: center;
+}
+
+.btn-margin {
+  margin-top:10px;
+  margin-bottom:10px;
+}
+
+.modal-content{
+  width:700px;
+}
+
+.champ-selector-wrapper {
+  padding-left:30px;
+  padding-right:20px;
+}
+
+.borderless {
+  border:0px;
+  background-color: transparent;
+}
+input:focus {
+  outline:0;
 }
