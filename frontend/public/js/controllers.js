@@ -188,4 +188,7 @@ angular.module('app.controllers', ['checklist-model', 'dndLists']).
   }).
   controller('ItemSetViewController', function($scope, $http) {
 
+  }).
+  controller('AuthCtrl', function($scope, $http) {
+    
   });
