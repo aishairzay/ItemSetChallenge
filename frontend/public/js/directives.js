@@ -15,11 +15,12 @@ directive('block', function() {
 	return {
 		restrict: 'E',
 		scope: {
+			items: '=',
+			type: '='
 		},
 		templateUrl: 'templates/item-set-block.html',
 		controller: function($scope) {
 			$scope.isBlock = true;
-			$scope.items = [];
 			$scope.unactivated = true;
 			$scope.makeNewBlock = function() {
 				$scope.unactivated = false;

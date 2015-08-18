@@ -134,15 +134,37 @@
     <hr/>
     <br/>
     </div>
-    <div class="row">
+    <div class="row block-row">
       <div class="col-xs-12">
         <ul>
           <li class="block-list" ng-repeat="block in lists.blocks">
-            <span style="font-size:2.2em;color:white;position:relative;margin-left:94%;margin-bottom:-22%;margin-top:1%;" class="glyphicon glyphicon-remove-circle" ng-click="lists.blocks.splice($index, 1)" ng-show="$index != lists.blocks.length - 1"></span>
-            <block></block>
+            <span style="font-size:2.2em;color:white;position:relative;margin-left:94%;margin-bottom:-22%;margin-top:1%;" class="glyphicon glyphicon-remove-circle" ng-click="removeBlock($index)"></span>
+
+            <div class="block-wrapper">
+              <div class="block">
+                <div class="row">
+                  <div class="col-xs-11">
+                    <input ng-model="block.type" class="form-control dark borderless" type="text" placeholder="Block Name (e.g. Attack Damage)"/>
+                    <ul class="block-item-wrap" dnd-list="block.items">
+                      <li ng-repeat="item in block.items" 
+                        dnd-draggable="move" 
+                        dnd-effect-allowed="move" 
+                        dnd-allowed-types="item">
+                        <item class="item" data='item' dnd-horizontal-list="true"></item>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="block-list block-new" ng-click="addNewBlock()">
+            <h4 class="block-vertical-center">+ Add Block</h4>
           </li>
         </ul>
       </div>
     </div>
+    <a ng-click="createDoc()" class="btn btn-primary">Create File</a>
+    <a ng-click="save()" class="btn btn-primary">Save</a>
   </div>
 </div>

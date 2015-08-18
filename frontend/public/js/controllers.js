@@ -11,7 +11,6 @@ angular.module('app.controllers', ['checklist-model', 'dndLists']).
            for(var key in champs){
             $rootScope.champions.push(champs[key]);
            }
-           console.log($rootScope.champions);
       })
   }).
   controller('AppController', function($scope, $http) {
@@ -22,18 +21,21 @@ angular.module('app.controllers', ['checklist-model', 'dndLists']).
       "blocks":[],
       "items":[]
     };
-    $scope.itemSetMode = 'Any';
-    $scope.itemSetMaps = 'Any';
-    $scope.champFilter = 'All';
-    $scope.championView = 'All';
-    $scope.checked = false;
-    $scope.champs = [];
-    $scope.lists.blocks = [{}];
-    $scope.itemSearch = '';
-    $scope.championSearch = '';
+
+    // Item controls
     $scope.lists.items = [];
+    $scope.itemSearch = ''; 
     $scope.categories = [];
     $scope.category = 'All';
+    $scope.searchItems = function(item){
+      return $scope.itemSearch.length == 0 || item.name.toLowerCase().indexOf($scope.itemSearch.toLowerCase()) != -1;
+    }
+    $scope.changeSelectedCategory = function(category) {
+      $scope.category = category;
+    }
+    $scope.inRightCategory = function(categories) {
+      return ($scope.category == 'All' || _.contains(categories, $scope.category));
+    }
     $http.get('/items')
       .success(function(data) {
         var items = data.data;
@@ -45,24 +47,26 @@ angular.module('app.controllers', ['checklist-model', 'dndLists']).
           }
         }
       })
+
+    // Block controls
+    $scope.lists.blocks = [];
     $scope.addNewBlock = function() {
-      $scope.lists.blocks.push({});
+      $scope.lists.blocks.push({
+        'type':'', 
+        'items':[]
+      });
+      }
+    $scope.removeBlock = function(index) {
+      $scope.lists.blocks.splice(index, 1);
     }
-    $scope.searchItems = function(item){
-      return $scope.itemSearch.length == 0 || item.name.toLowerCase().indexOf($scope.itemSearch.toLowerCase()) != -1;
-    }
-    $scope.changeSelectedCategory = function(category) {
-      console.log("Changed category:", category);
-      $scope.category = category;
-    }
-    $scope.inRightCategory = function(categories) {
-      return ($scope.category == 'All' || _.contains(categories, $scope.category));
-    }
+
+    // Champ controls
+    $scope.champFilter = 'All';
+    $scope.championView = 'All';
+    $scope.champs = [];
+    $scope.championSearch = '';
     $scope.inRightChampCategory = function(categories) {
       return ($scope.champFilter == 'All' || _.contains(categories, $scope.champFilter));
-    }
-    $scope.submit = function(maps, champs){
-      console.log(maps, champs);
     }
     $scope.searchChampions = function(champion) {
       return $scope.championSearch.length == 0 || champion.name.toLowerCase().indexOf($scope.championSearch.toLowerCase()) != -1;
@@ -98,6 +102,85 @@ angular.module('app.controllers', ['checklist-model', 'dndLists']).
           }
         }
       }
+    }
+
+    // Other
+    $scope.itemSetMode = 'Any';
+    $scope.itemSetMaps = 'Any';
+
+    
+    $scope.submit = function(maps, champs){
+      console.log(maps, champs);
+    }
+    
+    $scope.createDoc = function() {
+      var data = $scope.buildObj();
+    }
+    $scope.save = function() {
+      var data = $scope.buildObj();
+    }
+
+    $scope.buildObj = function() {
+      var map = $scope.itemSetMaps;
+      if (map == 'Summoners Rift') {
+        map ="SR";
+      }
+      else if (map == 'Howling Abyss') {
+        map = "HA";
+      }
+      else if (map == 'Twisted Tree Line') {
+        map = "TT";
+      }
+      else if (map == 'Crystal Scar') {
+        map = "CS";
+      }
+      else{
+        map = 'any';
+      }
+      var blocks = [];
+      var count = 1;
+      for (var i = 0; i<$scope.lists.blocks.length; i++) {
+        var cur = $scope.lists.blocks[i];
+        var type="Block " + count;
+        if(cur.items.length == 0){
+          continue;
+        }
+        if (cur.type != '') {
+          type = cur.type;
+        }
+        var blockItems = [];
+        var items = cur.items;
+        for (var n = 0; n<items.length; n++) {
+          var item = items[n];
+          var index = -1;
+          for (var j = 0; j<blockItems.length; j++) {
+            if(item.id == blockItems[j].id) {
+              index = j;
+            }
+          }
+          if(index == -1) {
+            blockItems.push({id:item.id, count:1});
+          }
+          else{
+            blockItems[index].count = blockItems[index].count + 1;
+          }
+        }
+        var block = {
+          'type': type,
+          'items': blockItems
+        };
+        blocks.push(block);
+        count = count + 1;
+      }
+      
+      var data = {
+        title:$scope.itemSetTitle,
+        type:'custom',
+        map:map,
+        mode:'any',
+        blocks: blocks
+      };
+      console.log("data", data);
     }
   }).
   controller('HomeController', function($scope, $http) {
