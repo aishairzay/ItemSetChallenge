@@ -217,7 +217,7 @@ controller('CreateController', function($rootScope, $scope, $http) {
             }
           }
           if(index == -1) {
-            blockItems.push({id:item.id, count:1});
+            blockItems.push({id:item.id.toString(), count:1});
           }
           else{
             blockItems[index].count = blockItems[index].count + 1;
