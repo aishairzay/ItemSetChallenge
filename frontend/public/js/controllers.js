@@ -133,9 +133,6 @@ controller('CreateController', function($rootScope, $scope, $http) {
     
     $scope.createDoc = function() {
       var data = $scope.buildObj();
-      var str = JSON.stringify(data);
-      console.log("str", str);
-      console.log("type", typeof str);
       $scope.download($scope.itemSetTitle + '.json', JSON.stringify(data));
     }
     $scope.save = function() {
@@ -228,6 +225,11 @@ controller('CreateController', function($rootScope, $scope, $http) {
         }
         var block = {
           'type': type,
+          'recMath': false,
+          'minSummonerLevel': -1,
+          'maxSummonerLevel':-1,
+          'showIfSummonerSpell':"",
+          'hideIfSummonerSpell':"",
           'items': blockItems
         };
         blocks.push(block);
@@ -239,6 +241,8 @@ controller('CreateController', function($rootScope, $scope, $http) {
         type:'custom',
         map:map,
         mode:'any',
+        priority: false,
+        sortrank: 0,
         blocks: blocks
       };
       console.log("data", data);
