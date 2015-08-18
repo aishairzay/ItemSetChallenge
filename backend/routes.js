@@ -45,13 +45,41 @@ exports.getChampions = function(req, res) {
 
 exports.login = function(req, res, next) {
   passport.authenticate('login', function(err, user, info){
+    if(err) {
+      return next(err);
+    }
 
+    if(!user) {
+      return res.redirect('#/login');
+    }
+
+    req.logIn(user, function(err) {
+      if(err) { return
+        next(err);
+      }
+
+      return res.redirect('#/item-set/create');
+    });
   })(req, res, next);
 }
 
 exports.register = function(req, res, next){
   passport.authenticate('register', function(err, user, info){
+    if(err) {
+      return next(err);
+    }
 
+    if(!user) {
+      return res.redirect('#/register');
+    }
+
+    req.logIn(user, function(err) {
+      if(err) { return
+        next(err);
+      }
+
+      return res.redirect('#/item-set/create');
+    });
   })(req, res, next);
 }
 
