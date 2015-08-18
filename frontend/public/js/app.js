@@ -26,7 +26,7 @@ config(function ($routeProvider, $locationProvider) {
     controller: 'AuthCtrl'
   })
   .when('/register', {
-    templateUrl:'/templates/login.html',
+    templateUrl:'/templates/register.html',
     controller: 'AuthCtrl'
   })
   .otherwise({
