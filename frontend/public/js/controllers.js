@@ -120,14 +120,28 @@ angular.module('app.controllers', ['checklist-model', 'dndLists']).
     $scope.submit = function(maps, champs){
       console.log(maps, champs);
     }
+
+    $scope.download = function (filename, text) {
+      var element = document.createElement('a');
+      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));  
+      element.setAttribute('download', filename);
+      element.style.display = 'none';
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+    }
     
     $scope.createDoc = function() {
       var data = $scope.buildObj();
-
+      var str = JSON.stringify(data);
+      console.log("str", str);
+      console.log("type", typeof str);
+      $scope.download($scope.itemSetTitle + '.json', JSON.stringify(data));
     }
     $scope.save = function() {
       var data = $scope.buildObj();
     }
+
     $scope.initialize = function(data) {
       $scope.itemSetTitle = data.title;
       var map = data.map;
@@ -228,6 +242,7 @@ angular.module('app.controllers', ['checklist-model', 'dndLists']).
         blocks: blocks
       };
       console.log("data", data);
+      return data;
     }
   }).
   controller('HomeController', function($scope, $http) {
