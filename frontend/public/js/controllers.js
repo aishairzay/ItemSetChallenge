@@ -3,24 +3,24 @@
 /* Controllers */
 
 angular.module('app.controllers', ['checklist-model', 'dndLists']).
-  run(function($rootScope, $http) {
-    $rootScope.champions = [];
-    $http.get('/champions')
-      .success(function(data) {
-          var champs = data.data;
-           for(var key in champs){
-            $rootScope.champions.push(champs[key]);
-           }
-      })
-  }).
-  controller('AppController', function($scope, $http) {
+run(function($rootScope, $http) {
+  $rootScope.champions = [];
+  $http.get('/champions')
+  .success(function(data) {
+    var champs = data.data;
+    for(var key in champs){
+      $rootScope.champions.push(champs[key]);
+    }
+  })
+}).
+controller('AppController', function($scope, $http) {
 
-  }).
-  controller('CreateController', function($rootScope, $scope, $http) {
-    $scope.lists = {
-      "blocks":[],
-      "items":[]
-    };
+}).
+controller('CreateController', function($rootScope, $scope, $http) {
+  $scope.lists = {
+    "blocks":[],
+    "items":[]
+  };
 
     // Item controls
     $scope.lists.items = [];
@@ -37,16 +37,16 @@ angular.module('app.controllers', ['checklist-model', 'dndLists']).
       return ($scope.category == 'All' || _.contains(categories, $scope.category));
     }
     $http.get('/items')
-      .success(function(data) {
-        var items = data.data;
-        for (var key in items) {
-          if(items.hasOwnProperty(key)) {
-            var obj = items[key];
-            $scope.lists.items.push(obj);
-            $scope.categories = _.union($scope.categories, obj.tags);
-          }
+    .success(function(data) {
+      var items = data.data;
+      for (var key in items) {
+        if(items.hasOwnProperty(key)) {
+          var obj = items[key];
+          $scope.lists.items.push(obj);
+          $scope.categories = _.union($scope.categories, obj.tags);
         }
-      })
+      }
+    })
 
     // Block controls
     $scope.lists.blocks = [];
@@ -55,7 +55,7 @@ angular.module('app.controllers', ['checklist-model', 'dndLists']).
         'type':'', 
         'items':[]
       });
-      }
+    }
     $scope.removeBlock = function(index) {
       $scope.lists.blocks.splice(index, 1);
     }
@@ -98,7 +98,7 @@ angular.module('app.controllers', ['checklist-model', 'dndLists']).
         if($scope.champFilter == 'All' || _.contains(champion.tags, $scope.champFilter)) {
           var index = $scope.champs.indexOf(champion.name);
           if (index !== -1) {
-              $scope.champs.splice(index, 1);
+            $scope.champs.splice(index, 1);
           }
         }
       }
@@ -230,17 +230,36 @@ angular.module('app.controllers', ['checklist-model', 'dndLists']).
       console.log("data", data);
     }
   }).
-  controller('HomeController', function($scope, $http) {
-    
-  }).
-  controller('ItemSetViewController', function($scope, $http) {
+controller('HomeController', function($scope, $http) {
 
-  }).
-  controller('AuthCtrl', function($scope, $http) {
-      $scope.login = function(user){
-        $http.post('/login', user)
-        .success(function(data){
-          console.log(data);
-        })
-    };
-  });
+}).
+controller('ItemSetViewController', function($scope, $http) {
+
+}).
+controller('AuthCtrl', function($scope, $http) {
+  $scope.user = {
+    username: '',
+    password: ''
+  };
+  $scope.login = function(){
+    console.log($scope.user);
+    $http.post('/login', $scope.user)
+    .success(function(data){
+      console.log(data);
+    })
+  };
+  $scope.register = function(){
+    console.log($scope.user);
+    if($scope.user.username.length < 4){
+      console.log("Username must be longer than 4 characters");
+    }
+    if($scope.user.password == $scope.user.username){
+      console.log("Password cannot be the same as username");
+    }
+    if($scope.user.password.length < 5){
+      console.log("Password must be longer than 5 characters");
+    } else {
+      console.log("SENDING " + $scope.user);
+    } 
+  }
+});

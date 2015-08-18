@@ -64,7 +64,7 @@ app.post('/login', function(req, res, next) {
   })(req, res, next);
 });
 
-app.post('register', passport.authenticate('register', { successRedirect: '/',
+app.post('/register', passport.authenticate('register', { successRedirect: '/',
                                                     failureRedirect: '/register' }));
 
 app.get('*', routes.index);
