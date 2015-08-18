@@ -107,7 +107,15 @@ angular.module('app.controllers', ['checklist-model', 'dndLists']).
     // Other
     $scope.itemSetMode = 'Any';
     $scope.itemSetMaps = 'Any';
-
+    $scope.textFile = null
+    $scope.makeTextFile = function (text) {
+      var data = new Blob([text], {type: 'text/plain'});
+      if ($scope.textFile !== null) {
+        window.URL.revokeObjectURL($scope.textFile);
+      }
+      $scope.textFile = window.URL.createObjectURL(data);
+      return $scope.textFile;
+    };
     
     $scope.submit = function(maps, champs){
       console.log(maps, champs);
@@ -115,9 +123,48 @@ angular.module('app.controllers', ['checklist-model', 'dndLists']).
     
     $scope.createDoc = function() {
       var data = $scope.buildObj();
+
     }
     $scope.save = function() {
       var data = $scope.buildObj();
+    }
+    $scope.initialize = function(data) {
+      $scope.itemSetTitle = data.title;
+      var map = data.map;
+      var itemSetMap = 'Any';
+      if (map == 'SR') {
+        itemSetMap = 'Summoners Rift';
+      }
+      else if (map == 'HA') {
+        itemSetMap = 'Howling Abyss';
+      }
+      else if (map == 'TT') {
+        itemSetMap = 'Twisted Tree Line';
+      }
+      else if (map == 'CS') {
+        itemSetMap = 'Crystal Scar';
+      }
+      $scope.itemSetMaps = itemSetMap;
+      for (var i = 0; i < data.blocks.length; i++) {
+        var block = data.blocks[i];
+        var items = [];
+        for (var j = 0; j < block.items.length; j++) {
+          var item = block.items[j];
+          for (var k = 0; k < $scope.lists.items.length; k++){
+            var curRealItem = $scope.lists.items[k];
+            if(item.id == curRealItem.id) {
+              for(var n = 0; n < item.count; n++ ) {
+                item.push(curRealItem);
+              }
+              break;
+            }
+          }
+        }
+        $scope.blocks.push({
+          'items' : items,
+          'type' : block.type
+        });
+      }
     }
 
     $scope.buildObj = function() {
