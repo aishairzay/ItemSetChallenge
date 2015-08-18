@@ -21,6 +21,14 @@ config(function ($routeProvider, $locationProvider) {
     templateUrl: '/templates/item-set-view.html',
     controller: 'ItemSetViewController'
   })
+  .when('/login', {
+    templateUrl:'/templates/login.html',
+    controller: 'AuthCtrl'
+  })
+  .when('/register', {
+    templateUrl:'/templates/login.html',
+    controller: 'AuthCtrl'
+  })
   .otherwise({
     redirectTo: '/'
   });
