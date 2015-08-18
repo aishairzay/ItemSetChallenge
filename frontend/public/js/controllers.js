@@ -190,5 +190,10 @@ angular.module('app.controllers', ['checklist-model', 'dndLists']).
 
   }).
   controller('AuthCtrl', function($scope, $http) {
-    
+      $scope.login = function(user){
+        $http.post('/login', user)
+        .success(function(data){
+          console.log(data);
+        })
+    };
   });
