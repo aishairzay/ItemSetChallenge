@@ -40,5 +40,22 @@ exports.getChampions = function(req, res) {
   request('https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?champData=tags&api_key=' + keys.RIOT_API_KEY, function(err, resp, body) {
     res.setHeader('Content-Type', 'application/json');
     res.send(body);
-  })
+  });
+}
+
+exports.login = function(req, res, next) {
+  passport.authenticate('login', function(err, user, info){
+
+  })(req, res, next);
+}
+
+exports.register = function(req, res, next){
+  passport.authenticate('register', function(err, user, info){
+
+  })(req, res, next);
+}
+
+exports.logout = function(req, res, next){
+  req.logout();
+  res.redirect('/');
 }
