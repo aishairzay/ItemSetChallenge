@@ -1,5 +1,7 @@
 <div class="item">
-  <img ng-mouseover="showPopover=true" ng-mouseleave="showPopover=false" height="42" width="42" src={{imageUrl}}>
+  <div class="item-img">
+    <img ng-mouseover="showPopover=true" ng-mouseleave="showPopover=false" height="36" width="36" src={{imageUrl}}>
+  </div>
 </div>
 <div class="item-popover" ng-show="showPopover"> 
   <h5><b>{{data.name}}</b></h5>

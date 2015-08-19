@@ -2,7 +2,13 @@
 <div class="row col-xs-12">
   <h1>Item Set Creator</h1>
 </div>
-<div class="row">
+<div ng-show="loading" style="text-align:center">
+  <div class="row col-xs-12">
+    <div style="margin-top:10%" class="hexdots-loader">
+    </div>
+  </div>
+</div>
+<div ng-hide="loading" class="row">
   <div class="col-xs-5">
     <div class="row">
       <div class="col-xs-4">
