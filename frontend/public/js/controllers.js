@@ -6,6 +6,7 @@ angular.module('app.controllers', ['checklist-model', 'dndLists']).
 run(function($rootScope, $http, $location) {
   //setting default auth status
   $rootScope.isAuthenticated = false;
+  $rootScope.currentUser = '';
 
   //navbar button functions
   $rootScope.rootLogin = function(){
@@ -18,6 +19,7 @@ run(function($rootScope, $http, $location) {
     $http.get('/logout').success(function(data){
       $location.path('/');
       $rootScope.isAuthenticated = false;
+      $rootScope.currentUser = '';
     })
   }
 
@@ -341,6 +343,7 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope) {
     .success(function(data){
       if(data.info === 'success'){
         $rootScope.isAuthenticated = true;
+        $rootScope.currentUser = data.user.username;
         $location.url('/item-set/create');
       } else {
         $scope.warning = data.info;

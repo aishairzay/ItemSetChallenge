@@ -37,7 +37,7 @@ passport.use('login', new LocalStrategy({
           }
           // User and password both match, return user from done method
           // which will be treated like success
-          return done(null, user, {info: 'success'});
+          return done(null, user, {info: 'success', user: user});
         }
       );
 }));
