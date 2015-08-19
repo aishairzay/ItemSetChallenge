@@ -52,14 +52,25 @@
                 <div ng-click="uploadMethod='probuild'">
                   <input ng-model="uploadMethod" type="radio" name="uploadMethod" value="probuild"/>Probuild
                 </div>
+                <hr/>
 
                 <div id="item-upload-wrapper" ng-show="uploadMethod=='file'">
-                  <input id="item-set-data-file" type="file" accept=".json" multiple=""/>
+                  <h5 style="color:black;">
+                    <div style="margin-bottom:5px">
+                      <strong>Choose an item set in JSON format to be uploaded.</strong>
+                    </div>
+                    <br/>
+                    <div style="margin-bottom:10px">
+                     Your existing item sets can be uploaded from <b>League of Legends\Config\Global\Recommended\</b> or <b>League of Legends\Config\Champions\{championKey}\Recommended\</b>
+                    </div>
+                  </h5>
+                  <input align="center" id="item-set-data-file" type="file" accept=".json" multiple=""/>
                 </div>
 
                 <div ng-show="uploadMethod=='probuild'">
-                  <h5>Enter the URL to a probuild guide to have it imported as an Item Set!</h5>
-                  <input ng-model="uploadValue" type="text"/>
+                  <h5 style="color:black"><b>Enter the URL to a probuild guide to have it imported as an Item Set!</b></h5>
+                  <br/>
+                  <input placeholder="Probuild Guide URL" ng-model="uploadValue" type="text"/>
                 </div>
 
               </div>
@@ -80,7 +91,7 @@
         </p>
       </div>
       <div class="col-xs-12 col-md-6">
-        <button type="button" class="btn btn-primary" style="margin-top:20px;margin-left:40px"data-toggle="modal" data-target="#myModal">
+        <button type="button" class="btn btn-primary" style="margin-top:20px;margin-left:40px" data-toggle="modal" data-target="#myModal">
           Additional Settings
         </button>
         <!-- Modal -->

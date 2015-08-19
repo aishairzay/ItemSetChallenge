@@ -92,3 +92,7 @@ li {
 .block-selected {
   border-color:yellow;
 }
+
+#item-upload-wrapper {
+  text-align:left;
+}

@@ -178,6 +178,7 @@ controller('CreateController', function($rootScope, $scope, $http) {
         }
         if (clean) {
           $scope.initialize(data);
+          $('#uploadModal').modal('toggle');
         }
         console.log("data", data);
         //$scope.data = goodData;
@@ -226,6 +227,7 @@ controller('CreateController', function($rootScope, $scope, $http) {
         itemSetMap = 'Crystal Scar';
       }
       $scope.itemSetMaps = itemSetMap;
+      $scope.lists.blocks = [];
       for (var i = 0; i < data.blocks.length; i++) {
         var block = data.blocks[i];
         var items = [];
@@ -233,9 +235,11 @@ controller('CreateController', function($rootScope, $scope, $http) {
           var item = block.items[j];
           for (var k = 0; k < $scope.lists.items.length; k++){
             var curRealItem = $scope.lists.items[k];
-            if(item.id.toString == curRealItem.id.toString()) {
+
+            if(item.id.toString() == curRealItem.id.toString()) {
+              console.log('here');
               for(var n = 0; n < item.count; n++ ) {
-                item.push(curRealItem);
+                items.push(curRealItem);
               }
               break;
             }

@@ -16,9 +16,11 @@
               <input type="text" class="form-control" placeholder="Champion Search">
               <button type="submit" class="btn btn-default">Search</button>
           </form -->
-          <button ng-click="rootLogin()" ng-hide="isAuthenticated" class="btn btn-primary" href="/#/login">LOGIN</button>
-          <button ng-click="rootRegister()" ng-hide="isAuthenticated" class="btn btn-primary">REGISTER</button>
-          <button ng-click="rootLogout()" ng-show="isAuthenticated" class="btn btn-primary">LOGOUT</button>
+          <div class="navbar-right">
+            <button ng-click="rootLogin()" ng-hide="isAuthenticated" class="btn btn-primary" href="/#/login">LOGIN</button>
+            <button ng-click="rootRegister()" ng-hide="isAuthenticated" class="btn btn-primary">REGISTER</button>
+            <button ng-click="rootLogout()" ng-show="isAuthenticated" class="btn btn-primary">LOGOUT</button>
+          </div>
         </div>
       </div>
     </nav>
