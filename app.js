@@ -53,20 +53,31 @@ app.post('/login', function(req, res, next) {
       return next(err); 
     }
     if (!user) { 
-      console.log('failed');
+      console.log('Login failed');
       return res.send(info); 
     }
     req.logIn(user, function(err) {
       if (err) { 
         return next(err); 
       }
-      console.log("signed in");
+      console.log("Signed in");
       return res.send(info);
     });
   })(req, res, next);
 });
-app.post('/register', passport.authenticate('register', { successRedirect: '/',
-                                                    failureRedirect: '/register' }));
+app.post('/register', function(req, res, next) {
+  passport.authenticate('register', function(err, user, info) {
+    if (err) {
+      return next(err);
+    }
+    if(!user) {
+      console.log('Registration failed');
+      return res.send(info);
+    }
+    return res.send(info);
+  })(req, res, next);
+});
+
 app.get('/logout', routes.logout);
 
 app.get('*', routes.index);

@@ -5,13 +5,13 @@ bCrypt = require('bcrypt-nodejs');
 
 passport.serializeUser(function(user, done) {
   console.log('serializing: ' + user.username);
-  done(null, user._id);
+  return done(null, user._id);
 });
 
 passport.deserializeUser(function(id, done) {
-  User.findbyId(id, function(err, user) {
+  User.findById(id, function(err, user) {
     console.log('deserializing: ' + user.username);
-    done(err, user);
+    return done(err, user);
   });
 });
 
@@ -57,7 +57,7 @@ passport.use('login', new LocalStrategy({
         // already exists
         if (user) {
           console.log('User already exists with username: '+username);
-          return done(null, false);
+          return done(null, false, {info: 'User already exists'});
         } else {
           // if there is no user, create the user
           var newUser = new User();
@@ -73,7 +73,7 @@ passport.use('login', new LocalStrategy({
               throw err;  
             }
             console.log(newUser.username + ' Registration succesful');    
-            return done(null, newUser);
+            return done(null, newUser, {info: 'Registration successful'});
           });
         }
       });

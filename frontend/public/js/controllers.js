@@ -273,7 +273,7 @@ controller('HomeController', function($scope, $http) {
 controller('ItemSetViewController', function($scope, $http) {
 
 }).
-controller('AuthCtrl', function($scope, $http, $location) {
+controller('AuthCtrl', function($scope, $http, $location, $rootScope) {
   $scope.user = {
     username: '',
     password: ''
@@ -303,6 +303,13 @@ controller('AuthCtrl', function($scope, $http, $location) {
       console.log("Password must be longer than 5 characters");
     } else {
       console.log("SENDING " + $scope.user);
+      $http.post('/register', $scope.user)
+      .success(function(data){
+        console.log(data);
+        if(data.info === "Registration successful"){
+          $location.url('/login');
+        }
+      });
     } 
   }
 });
