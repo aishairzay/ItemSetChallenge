@@ -36,7 +36,7 @@
         Upload Item Set
       </button>
       <div id="uploadModal" class="modal fade" role="dialog">
-        <form ng-submit="upload(value, method)">
+        <form ng-submit="upload(uploadValue, uploadMethod)">
           <div class="modal-dialog">
             <div class="modal-content modal-smaller">
               <div class="modal-header">
@@ -53,18 +53,18 @@
                   <input ng-model="uploadMethod" type="radio" name="uploadMethod" value="probuild"/>Probuild
                 </div>
 
-                <div ng-show="uploadMethod=='file'">
+                <div id="item-upload-wrapper" ng-show="uploadMethod=='file'">
                   <input id="item-set-data-file" type="file" accept=".json" multiple=""/>
                 </div>
 
                 <div ng-show="uploadMethod=='probuild'">
                   <h5>Enter the URL to a probuild guide to have it imported as an Item Set!</h5>
-                  <input type="text"/>
+                  <input ng-model="uploadValue" type="text"/>
                 </div>
 
               </div>
               <div class="modal-footer">
-                <input class="btn btn-primary" type="submit" value="Upload">
+                <input class="btn btn-primary" type="submit" value="Upload"/>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               </div>
             </div>

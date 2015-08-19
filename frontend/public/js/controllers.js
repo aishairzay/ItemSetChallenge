@@ -123,6 +123,8 @@ controller('CreateController', function($rootScope, $scope, $http) {
     }
 
     // Other
+    $scope.itemSetData = {};
+    $scope.uploadedFileText = '';
     $scope.itemSetMode = 'Any';
     $scope.itemSetMaps = 'Any';
     $scope.textFile = null
@@ -132,11 +134,31 @@ controller('CreateController', function($rootScope, $scope, $http) {
         window.URL.revokeObjectURL($scope.textFile);
       }
       $scope.textFile = window.URL.createObjectURL(data);
-      return $scope.textFile;
     };
 
+    $('#item-upload-wrapper').on('change', '#item-set-data-file', function(evt) {
+      console.log(evt);
+      var input = evt.target;
+      var reader = new FileReader();
+      reader.onload = function(){
+        var result = reader.result;
+        console.log(result);
+        $scope.uploadedFileText = result;
+      };
+      reader.readAsText(input.files[0]);
+    });
+
+
+
     $scope.upload = function(value, method) {
-      
+      if (method == 'file') {
+        var data = JSON.parse($scope.uploadedFileText);
+        // check if data is good -> aka has all the appropriate things we want
+        console.log("data", data);
+      }
+      else if (method == 'probuild') {
+
+      }
     }
     
     $scope.submit = function(maps, champs) {
@@ -310,3 +332,19 @@ controller('AuthCtrl', function($scope, $http, $location) {
     } 
   }
 });
+
+
+
+
+
+
+function readFile (evt) {
+  console.log(evt);
+   var files = evt.target.files;
+   var file = files[0];           
+   var reader = new FileReader();
+   reader.onload = function() {
+     console.log(this.result);            
+   }
+   reader.readAsText(file)
+}
