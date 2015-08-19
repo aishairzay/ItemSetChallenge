@@ -45,6 +45,8 @@ app.get('/champions', routes.getChampions);
 
 app.get('/items', routes.getItems);
 
+
+//authentication routes -- put into routes.js later
 app.post('/login', function(req, res, next) {
   passport.authenticate('login', function(err, user, info) {
     if (err) { 
@@ -52,20 +54,20 @@ app.post('/login', function(req, res, next) {
     }
     if (!user) { 
       console.log('failed');
-      return res.redirect('#/login'); 
+      return res.send(info); 
     }
     req.logIn(user, function(err) {
       if (err) { 
         return next(err); 
       }
       console.log("signed in");
-      return res.redirect('/');
+      return res.send(info);
     });
   })(req, res, next);
 });
-
 app.post('/register', passport.authenticate('register', { successRedirect: '/',
                                                     failureRedirect: '/register' }));
+app.get('/logout', routes.logout);
 
 app.get('*', routes.index);
 

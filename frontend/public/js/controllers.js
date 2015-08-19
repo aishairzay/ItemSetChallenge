@@ -3,7 +3,25 @@
 /* Controllers */
 
 angular.module('app.controllers', ['checklist-model', 'dndLists']).
-run(function($rootScope, $http) {
+run(function($rootScope, $http, $location) {
+  //setting default auth status
+  $rootScope.isAuthenticated = false;
+
+  //navbar button functions
+  $rootScope.rootLogin = function(){
+    $location.path('/login');
+  }
+  $rootScope.rootRegister = function(){
+    $location.path('/register');
+  }
+  $rootScope.rootLogout = function(){
+    $http.get('/logout').success(function(data){
+      $location.path('/');
+      $rootScope.isAuthenticated = false;
+    })
+  }
+
+  //load champions on any page
   $rootScope.champions = [];
   $http.get('/champions')
   .success(function(data) {
@@ -255,16 +273,22 @@ controller('HomeController', function($scope, $http) {
 controller('ItemSetViewController', function($scope, $http) {
 
 }).
-controller('AuthCtrl', function($scope, $http) {
+controller('AuthCtrl', function($scope, $http, $location) {
   $scope.user = {
     username: '',
     password: ''
   };
+  $scope.warning = '';
   $scope.login = function(){
     console.log($scope.user);
     $http.post('/login', $scope.user)
     .success(function(data){
-      console.log(data);
+      if(data.info === 'success'){
+        $rootScope.isAuthenticated = true;
+        $location.url('/item-set/create');
+      } else {
+        $scope.warning = data.info;
+      }
     })
   };
   $scope.register = function(){
