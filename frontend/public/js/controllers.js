@@ -134,8 +134,12 @@ controller('CreateController', function($rootScope, $scope, $http) {
       $scope.textFile = window.URL.createObjectURL(data);
       return $scope.textFile;
     };
+
+    $scope.upload = function(value, method) {
+      
+    }
     
-    $scope.submit = function(maps, champs){
+    $scope.submit = function(maps, champs) {
       console.log(maps, champs);
     }
 

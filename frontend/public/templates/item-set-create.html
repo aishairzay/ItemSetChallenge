@@ -36,21 +36,40 @@
         Upload Item Set
       </button>
       <div id="uploadModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-          <div class="modal-content modal-smaller">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title black">Upload an Item Set</h4>
-            </div>
-            <div class="modal-body">
-              <input id="item-set-data-file" type="file" accept=".json" multiple=""/> 
-            </div>
-            <div class="modal-footer">
-              <input class="btn btn-primary" type="submit" value="Upload">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <form ng-submit="upload(value, method)">
+          <div class="modal-dialog">
+            <div class="modal-content modal-smaller">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title black">Upload an Item Set</h4>
+              </div>
+              <div class="modal-body">
+                
+                <div ng-init="uploadMethod='file'"></div>
+                <div ng-click="uploadMethod='file'">
+                  <input ng-model="uploadMethod" type="radio" name="uploadMethod" value="file"/>File Upload
+                </div>
+                <div ng-click="uploadMethod='probuild'">
+                  <input ng-model="uploadMethod" type="radio" name="uploadMethod" value="probuild"/>Probuild
+                </div>
+
+                <div ng-show="uploadMethod=='file'">
+                  <input id="item-set-data-file" type="file" accept=".json" multiple=""/>
+                </div>
+
+                <div ng-show="uploadMethod=='probuild'">
+                  <h5>Enter the URL to a probuild guide to have it imported as an Item Set!</h5>
+                  <input type="text"/>
+                </div>
+
+              </div>
+              <div class="modal-footer">
+                <input class="btn btn-primary" type="submit" value="Upload">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
 
