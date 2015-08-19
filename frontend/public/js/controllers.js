@@ -123,6 +123,8 @@ controller('CreateController', function($rootScope, $scope, $http) {
     }
 
     // Other
+    $scope.itemSetData = {};
+    $scope.uploadedFileText = '';
     $scope.itemSetMode = 'Any';
     $scope.itemSetMaps = 'Any';
     $scope.textFile = null
@@ -132,10 +134,60 @@ controller('CreateController', function($rootScope, $scope, $http) {
         window.URL.revokeObjectURL($scope.textFile);
       }
       $scope.textFile = window.URL.createObjectURL(data);
-      return $scope.textFile;
     };
+
+    $('#item-upload-wrapper').on('change', '#item-set-data-file', function(evt) {
+      console.log(evt);
+      var input = evt.target;
+      var reader = new FileReader();
+      reader.onload = function(){
+        var result = reader.result;
+        console.log(result);
+        $scope.uploadedFileText = result;
+      };
+      reader.readAsText(input.files[0]);
+    });
+
+
+
+    $scope.upload = function(value, method) {
+      if (method == 'file') {
+        var data = JSON.parse($scope.uploadedFileText);
+        var clean = true;
+        // check if data is good -> aka has all the appropriate things we want
+        if (data.map && data.title && data.blocks) {
+          for (var i = 0;i<data.blocks.length;i++) {
+            var block = data.blocks[i];
+            if(block.type && block.items) {
+              for (var j = 0;j<block.items.length;j++) {
+                var item = block.items[j];
+                if(!item.id || !item.count) {
+                  clean = false;
+                  break;
+                }
+              }
+            }
+            else{
+              clean = false;
+              break;
+            }
+          }
+        }
+        else{
+          clean = false;
+        }
+        if (clean) {
+          $scope.initialize(data);
+        }
+        console.log("data", data);
+        //$scope.data = goodData;
+      }
+      else if (method == 'probuild') {
+
+      }
+    }
     
-    $scope.submit = function(maps, champs){
+    $scope.submit = function(maps, champs) {
       console.log(maps, champs);
     }
 
@@ -181,7 +233,7 @@ controller('CreateController', function($rootScope, $scope, $http) {
           var item = block.items[j];
           for (var k = 0; k < $scope.lists.items.length; k++){
             var curRealItem = $scope.lists.items[k];
-            if(item.id == curRealItem.id) {
+            if(item.id.toString == curRealItem.id.toString()) {
               for(var n = 0; n < item.count; n++ ) {
                 item.push(curRealItem);
               }
@@ -189,7 +241,7 @@ controller('CreateController', function($rootScope, $scope, $http) {
             }
           }
         }
-        $scope.blocks.push({
+        $scope.lists.blocks.push({
           'items' : items,
           'type' : block.type
         });
@@ -253,7 +305,7 @@ controller('CreateController', function($rootScope, $scope, $http) {
         blocks.push(block);
         count = count + 1;
       }
-      
+
       var data = {
         title:$scope.itemSetTitle,
         type:'custom',
@@ -313,3 +365,19 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope) {
     } 
   }
 });
+
+
+
+
+
+
+function readFile (evt) {
+  console.log(evt);
+   var files = evt.target.files;
+   var file = files[0];           
+   var reader = new FileReader();
+   reader.onload = function() {
+     console.log(this.result);            
+   }
+   reader.readAsText(file)
+}
