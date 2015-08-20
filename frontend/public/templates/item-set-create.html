@@ -1,24 +1,27 @@
 <link rel="stylesheet" type="text/css" href="css/item-set.css">
-<div class="row col-xs-12">
-  <h1>Item Set Creator</h1>
-</div>
-<div ng-show="loading" style="text-align:center">
-  <div class="row col-xs-12">
-    <div style="margin-top:10%" class="hexdots-loader">
-    </div>
-  </div>
-</div>
-<div ng-hide="loading" class="row">
+
+<div class="row">
   <div class="col-xs-5">
-    <div class="row">
-      <div class="col-xs-4">
-        <h5>Categories</h5>
-        <a ng-click="changeSelectedCategory('All')">All</a>
-        <div data-ng-repeat="category in categories">
-          <a text-align=center ng-click="changeSelectedCategory(category)">{{category}}</a>
+    <div ng-show="loading" style="text-align:center">
+      <div class="row col-xs-12">
+        <div style="margin-top:50%" class="three-quarters-loader">
         </div>
       </div>
-      <div class="col-xs-8">
+    </div>
+
+    <div ng-hide="loading" class="row">
+      <div class="col-xs-4">
+        <h5>Categories</h5>
+        <ul class="nav nav-pills nav-stacked">
+          <li ng-class="{active:category == 'All'}">
+            <a ng-click="changeSelectedCategory('All')">All</a>
+          </li>
+          <li ng-class="{active:category == categoryObj}" ng-repeat="categoryObj in categories">
+            <a class="category" ng-click="changeSelectedCategory(categoryObj)">{{fixName(categoryObj)}}</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-xs-8" style="margin-top:12px;">
         <div class="center">
           <input class="dark form-control" type="text" ng-model="itemSearch" placeholder="Item Search">
         </div>
@@ -38,7 +41,7 @@
   </div>
   <div class="col-xs-7">
     <div class="row col-xs-12 center">
-      <button type="button" class="btn btn-primary" style="margin-top:20px;margin-left:40px" data-toggle="modal" data-target="#uploadModal">
+      <button type="button" class="btn btn-primary" style="margin-left:40px" data-toggle="modal" data-target="#uploadModal">
         Upload Item Set
       </button>
       <div id="uploadModal" class="modal fade" role="dialog">
@@ -196,7 +199,7 @@
       <div class="col-xs-12">
         <ul>
           <li class="block-list" ng-repeat="block in lists.blocks">
-            <span style="font-size:2.2em;color:white;position:relative;margin-left:94%;margin-bottom:-22%;margin-top:1%;" class="glyphicon glyphicon-remove-circle" ng-click="removeBlock($index)"></span>
+            <span style="font-size:2.2em;color:#767676;position:relative;margin-left:94%;margin-bottom:-22%;margin-top:1%;" class="glyphicon glyphicon-remove-circle" ng-click="removeBlock($index)"></span>
 
             <div class="block-wrapper">
               <div class="block">
