@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-angular.module('app.controllers', ['checklist-model', 'dndLists']).
+angular.module('app.controllers', ['checklist-model', 'ngDragDrop']).
 run(function($rootScope, $http, $location) {
   //setting default auth status
   $rootScope.isAuthenticated = false;
@@ -48,7 +48,7 @@ controller('CreateController', function($rootScope, $scope, $http) {
     $scope.categories = [];
     $scope.category = 'All';
     $scope.searchItems = function(item){
-      return $scope.itemSearch.length == 0 || item.name.toLowerCase().indexOf($scope.itemSearch.toLowerCase()) != -1;
+      return $scope.itemSearch.length == 0 || item.toLowerCase().indexOf($scope.itemSearch.toLowerCase()) != -1;
     }
     $scope.changeSelectedCategory = function(category) {
       $scope.category = category;

@@ -25,8 +25,8 @@
         <div class="row">
           <div class="col-xs-12">
           <ul style="margin-left:-15%">
-            <li ng-repeat="item in lists.items | orderBy:'name' | orderBy:'gold.total' | filter:searchItems" dnd-draggable="item" dnd-type="item">
-              <div ng-show="inRightCategory(item.tags)">
+            <li ng-repeat="item in lists.items track by $index" data-drag="true" data-jqyoui-options="{revert:'invalid', helper:'clone'}" ng-model="lists.items" jqyoui-draggable="{index: {{$index}},placeholder:'keep', deepCopy:true}">
+              <div ng-show="searchItems(item.name)&&inRightCategory(item.tags)">
                 <item class="item" data='item'></item>
               </div>
             </li>
@@ -203,12 +203,16 @@
                 <div class="row">
                   <div class="col-xs-11">
                     <input ng-model="block.type" class="form-control dark borderless" type="text" placeholder="Block Name (e.g. Attack Damage)"/>
-                    <ul class="block-item-wrap" dnd-list="block.items">
-                      <li ng-repeat="item in block.items" 
-                        dnd-draggable="move" 
-                        dnd-effect-allowed="move" 
-                        dnd-allowed-types="item">
-                        <item class="item" data='item' dnd-horizontal-list="true"></item>
+                    <ul class="block-item-wrap" 
+                      data-drop="true"
+                      ng-model="block.items"
+                      jqyoui-droppable="{deepCopy:true,multiple:true}">
+                      <li ng-repeat="item in block.items track by $index"
+                        data-drag="true"
+                        ng-model="block.items"
+                        data-jqyoui-options="{revert: 'invalid', helper: 'clone'}"
+                        jqyoui-draggable="{index:{{$index}}, placeholder:false, deepCopy:true}">
+                        <item class="item" data='item'></item>
                       </li>
                     </ul>
                   </div>
