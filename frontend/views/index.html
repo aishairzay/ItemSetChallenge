@@ -15,10 +15,7 @@
         <div class="navbar-collapse collapse">
             <div class="navbar-right">
               <button ng-click="rootLogout()" ng-show="isAuthenticated" class="btn btn-primary">LOGOUT</button>
-
-
               <button style="margin-top:7%;" ng-hide="isAuthenticated" type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Register/Login</button>
-
               <!-- Modal -->
               <div id="loginModal" class="modal fade" role="dialog" ng-controller="AuthCtrl">
                 <div class="modal-dialog">
@@ -29,6 +26,11 @@
                         <div class="col-xs-6" style="border-right:thin solid #eee9e9">
                           <div id="registration">
                             <h4>Create A New Account</h4>
+                            <div ng-show="registerError.length > 0" class="alert alert-danger" role="alert">
+                              <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                              <span class="sr-only">Error:</span>
+                              {{registerError}}
+                            </div>
                             <hr/>
                             <form ng-submit="register()">
                               <input class="form-control" ng-model="newUser.username" type="text" placeholder="Username" name="username">
@@ -41,6 +43,11 @@
                         <div class="col-xs-6">
                           <div id="login">
                             <h4>Log In</h4>
+                            <div ng-show="loginError.length > 0" class="alert alert-danger" role="alert">
+                              <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                              <span class="sr-only">Error:</span>
+                              {{loginError}}
+                            </div>
                             <hr/>
                             <form ng-submit="login()">
                               <input class="form-control" ng-model="user.username" type="text" placeholder="Username" name="username">

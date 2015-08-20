@@ -367,41 +367,45 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope) {
   $scope.login = function(){
     console.log($scope.user);
     $http.post('/login', $scope.user)
-    .success(function(data){
+    .then(function(data){
       if(data.info === 'success'){
         $rootScope.isAuthenticated = true;
         $rootScope.currentUser = data.user.username;
         $('#loginModal').modal('toggle')
         $location.url('/item-set/create');
       } else {
-        $scope.warning = data.info;
+        $scope.loginError = 'Invalid Login Information';
       }
-    })
+    }, function(response) {
+      $scope.loginError = 'Something went wrong, refresh the page and try again';
+    });
   };
   $scope.register = function(){
     console.log($scope.newUser);
     if($scope.newUser.username.length < 4){
-      console.log("Username must be longer than 4 characters");
-    }
-    else if($scope.newUser.password == $scope.user.username){
-      console.log("Password cannot be the same as username");
+      $scope.registerError = 'Username must be longer than 4 characters';
     }
     else if($scope.newUser.password.length < 5){
-      console.log("Password must be longer than 5 characters");
+      $scope.registerError = 'Password must be longer than 5 characters';
     } 
+    else if($scope.newUser.password == $scope.user.username){
+      $scope.registerError = 'Password cannot be the same as username';
+    }
     else if ($scope.newUser.password != $scope.newUser.confirmPassword){
-      console.log("Passwords do not match");
+      $scope.registerError = 'Passwords do not match';
     }
     else {
       console.log("SENDING " + $scope.newUser);
       $http.post('/register', $scope.newUser)
-      .success(function(data){
+      .then(function(data){
         $('#loginModal').modal('toggle')
         console.log(data);
         if(data.info === "Registration successful"){
           //$location.url('/login');
           // Call Login here. Change login to not toggle the modal, but to simply hide it if it is there
         }
+      }, function(response) {
+        $scope.registerError = 'Something went wrong, refresh the page and try again';
       });
     } 
   }
