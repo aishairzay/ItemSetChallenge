@@ -39,7 +39,7 @@
 }
 
 .block-new:hover {
-  background-color:#337ab7;
+  background-color:#70A2CD;
   border-style:solid;
   border-radius:25px;
   opacity:0.6;
@@ -49,7 +49,7 @@
   min-height:150px;
   width:100%;
   border-style:solid;
-  border-color:#666666;
+  border-color:#767676;
   border-radius:25px;
 }
 
