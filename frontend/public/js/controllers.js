@@ -338,7 +338,14 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope) {
     username: '',
     password: ''
   };
+
+  $scope.newUser = {
+    username: '',
+    password: ''
+  };
+
   $scope.warning = '';
+
   $scope.login = function(){
     console.log($scope.user);
     $http.post('/login', $scope.user)
@@ -346,6 +353,7 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope) {
       if(data.info === 'success'){
         $rootScope.isAuthenticated = true;
         $rootScope.currentUser = data.user.username;
+        $('#myModal').modal('toggle')
         $location.url('/item-set/create');
       } else {
         $scope.warning = data.info;
@@ -353,19 +361,20 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope) {
     })
   };
   $scope.register = function(){
-    console.log($scope.user);
-    if($scope.user.username.length < 4){
+    console.log($scope.newUser);
+    if($scope.newUser.username.length < 4){
       console.log("Username must be longer than 4 characters");
     }
-    if($scope.user.password == $scope.user.username){
+    if($scope.newUser.password == $scope.user.username){
       console.log("Password cannot be the same as username");
     }
-    if($scope.user.password.length < 5){
+    if($scope.newUser.password.length < 5){
       console.log("Password must be longer than 5 characters");
     } else {
-      console.log("SENDING " + $scope.user);
-      $http.post('/register', $scope.user)
+      console.log("SENDING " + $scope.newUser);
+      $http.post('/register', $scope.newUser)
       .success(function(data){
+        $('#myModal').modal('toggle')
         console.log(data);
         if(data.info === "Registration successful"){
           $location.url('/login');
