@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-angular.module('app.controllers', ['checklist-model', 'ngDragDrop']).
+angular.module('app.controllers', ['checklist-model', 'ngDragDrop', 'ngCookies']).
 run(function($rootScope, $http, $location) {
   //setting default auth status
   $rootScope.isAuthenticated = false;
