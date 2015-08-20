@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var session = require('express-session');
 var passport = require('./passport-config.js');
+var itemSet = require('./itemSetSchema.js');
 var http = require('http').Server(app);
 var bodyParser = require('body-parser');
 var multer = require('multer');
@@ -40,9 +41,7 @@ item-sets
 app.get('/item-set/:id', routes.getItemSet);
 app.post('/item-set', routes.createItemSet);
 app.delete('/item-set/:id', routes.deleteItemSet);
-
 app.get('/champions', routes.getChampions);
-
 app.get('/items', routes.getItems);
 
 

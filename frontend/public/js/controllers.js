@@ -224,6 +224,7 @@ controller('CreateController', function($rootScope, $scope, $http) {
     }
     $scope.save = function() {
       var data = $scope.buildObj();
+      $http.post('/item-set', data);
     }
 
     $scope.initialize = function(data) {
