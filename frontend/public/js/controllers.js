@@ -341,7 +341,8 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope) {
 
   $scope.newUser = {
     username: '',
-    password: ''
+    password: '',
+    confirmPassword: ''
   };
 
   $scope.warning = '';
@@ -353,7 +354,7 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope) {
       if(data.info === 'success'){
         $rootScope.isAuthenticated = true;
         $rootScope.currentUser = data.user.username;
-        $('#myModal').modal('toggle')
+        $('#loginModal').modal('toggle')
         $location.url('/item-set/create');
       } else {
         $scope.warning = data.info;
@@ -365,37 +366,26 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope) {
     if($scope.newUser.username.length < 4){
       console.log("Username must be longer than 4 characters");
     }
-    if($scope.newUser.password == $scope.user.username){
+    else if($scope.newUser.password == $scope.user.username){
       console.log("Password cannot be the same as username");
     }
-    if($scope.newUser.password.length < 5){
+    else if($scope.newUser.password.length < 5){
       console.log("Password must be longer than 5 characters");
-    } else {
+    } 
+    else if ($scope.newUser.password != $scope.newUser.confirmPassword){
+      console.log("Passwords do not match");
+    }
+    else {
       console.log("SENDING " + $scope.newUser);
       $http.post('/register', $scope.newUser)
       .success(function(data){
-        $('#myModal').modal('toggle')
+        $('#loginModal').modal('toggle')
         console.log(data);
         if(data.info === "Registration successful"){
-          $location.url('/login');
+          //$location.url('/login');
+          // Call Login here. Change login to not toggle the modal, but to simply hide it if it is there
         }
       });
     } 
   }
 });
-
-
-
-
-
-
-function readFile (evt) {
-  console.log(evt);
-   var files = evt.target.files;
-   var file = files[0];           
-   var reader = new FileReader();
-   reader.onload = function() {
-     console.log(this.result);            
-   }
-   reader.readAsText(file)
-}
