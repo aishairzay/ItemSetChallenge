@@ -15,6 +15,13 @@
   margin-left:15px;
 }
 
+.item-img {
+  border-style:solid;
+  border-width:small;
+  border-radius:3px;
+  border-color:gray;
+}
+
 .block-new {
   height:150px;
   max-height:150px;

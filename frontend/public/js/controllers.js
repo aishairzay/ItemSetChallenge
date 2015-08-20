@@ -66,6 +66,7 @@ controller('CreateController', function($rootScope, $scope, $http) {
           $scope.categories = _.union($scope.categories, obj.tags);
         }
       }
+      $scope.loading = false;
     })
 
     // Block controls
@@ -125,6 +126,7 @@ controller('CreateController', function($rootScope, $scope, $http) {
     }
 
     // Other
+    $scope.loading = true;
     $scope.itemSetData = {};
     $scope.uploadedFileText = '';
     $scope.itemSetMode = 'Any';
