@@ -1,11 +1,12 @@
 .item-popover {
+  color:white;
   border-radius: 30px;
   padding:10px;
   position:absolute;
   z-index:100;
   min-width:225px;
   min-height: 100px;
-  background-color:rgba(120,120,190,0.7);
+  background-color:rgba(140,140,210,0.9);
   margin-left:50px;
   margin-top:-20%;
 }
@@ -19,7 +20,7 @@
   border-style:solid;
   border-width:small;
   border-radius:3px;
-  border-color:gray;
+  border-color:black;
 }
 
 .block-new {
@@ -38,16 +39,17 @@
 }
 
 .block-new:hover {
-  background-color:rgb(0,20,40);
+  background-color:#337ab7;
   border-style:solid;
   border-radius:25px;
+  opacity:0.6;
 }
 
 .block {
   min-height:150px;
   width:100%;
   border-style:solid;
-  border-color:white;
+  border-color:#666666;
   border-radius:25px;
 }
 

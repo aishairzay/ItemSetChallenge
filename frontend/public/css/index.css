@@ -1,12 +1,11 @@
 body{
-  background-image:url(http://supernovathemes.com/wp-content/themes/supernonvathemes/images/bg/b36.png);
+  background-image:url(http://supernovathemes.com/wp-content/themes/supernonvathemes/images/bg/b21.png);
 }
 h1,h2,h3,h4,h5,p {
-  color: white;
+  color: black;
 }
 .dark{
-  background-color: rgba(0,0,0,0.5);
-  color:white;
+
 }
 .black {
   color: black;
@@ -31,8 +30,4 @@ h1,h2,h3,h4,h5,p {
 }
 .modal-smaller {
   width:600px;
-}
-
-a {
-  color: #7EACD4;
 }
