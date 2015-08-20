@@ -96,3 +96,7 @@ li {
 #item-upload-wrapper {
   text-align:left;
 }
+
+.nav li a {
+  padding: 2px 10px;
+}

@@ -42,6 +42,18 @@ controller('CreateController', function($rootScope, $scope, $http) {
     "items":[]
   };
 
+    $scope.fixName = function(name) {
+      var newStr = '';
+      for (var i in name) {
+        var c = name[i]
+        if (c == c.toUpperCase()) {
+          newStr += ' ';
+        }
+        newStr += c;
+      }
+      return newStr;
+    }
+
     // Item controls
     $scope.lists.items = [];
     $scope.itemSearch = ''; 
@@ -230,7 +242,7 @@ controller('CreateController', function($rootScope, $scope, $http) {
       else if (map == 'CS') {
         itemSetMap = 'Crystal Scar';
       }
-      $scope.itemSetMaps = itemSetMap;
+      $scope.itemSetMaps = itemSetMap; 
       $scope.lists.blocks = [];
       for (var i = 0; i < data.blocks.length; i++) {
         var block = data.blocks[i];
@@ -313,9 +325,13 @@ controller('CreateController', function($rootScope, $scope, $http) {
         blocks.push(block);
         count = count + 1;
       }
+      var title = $scope.itemSetTitle;
+      if(!title){
+        title = 'UnnamedItemSet'
+      }
 
       var data = {
-        title:$scope.itemSetTitle,
+        title: title,
         type:'custom',
         map:map,
         mode:'any',
