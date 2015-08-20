@@ -12,22 +12,7 @@ var itemSetSchema = new Schema({
   mode: String,
   priority: Boolean,
   sortrank: Number,
-  blocks: [
-  {
-    type: String,
-    recMath: Boolean,
-    minSummonerLevel: Number,
-    maxSummonerLevel: Number,
-    showIfSummonerSpell: String,
-    hideIfSummonerSpell: String,
-    items: [
-    {
-      id: String,
-      count: Number
-    }
-    ] 
-  }
-  ]
+  blocks: [Schema.Types.Mixed]
   
 });
 

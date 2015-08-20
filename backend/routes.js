@@ -22,7 +22,7 @@ exports.getItemSet = function(req, res) {
 }
 // post /item-set
 exports.createItemSet = function(req, res) {
-  if(!req.user.username){
+  if(req.user.username == 'undefined'){
     console.log('Not logged in');
   }else{
     var newItemSet = new itemSet({
