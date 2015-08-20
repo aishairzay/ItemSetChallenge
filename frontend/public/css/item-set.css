@@ -29,7 +29,7 @@
   width:100%;
   border-style: dashed;
   border-width: medium;
-  border-color: gray;
+  border-color: #666666;
   text-align: center;
   border-radius:25px;
 }
@@ -39,10 +39,13 @@
 }
 
 .block-new:hover {
-  background-color:#70A2CD;
+  cursor:pointer;
+  background-color:#4E7190;
   border-style:solid;
+  border-color:#666666;
   border-radius:25px;
-  opacity:0.6;
+  opacity:0.9;
+  font-color:white;
 }
 
 .block {
