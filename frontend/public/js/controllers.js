@@ -3,18 +3,17 @@
 /* Controllers */
 
 angular.module('app.controllers', ['checklist-model', 'ngDragDrop', 'ngCookies']).
-run(function($rootScope, $http, $location) {
+run(function($rootScope, $http, $location, $cookieStore) {
   //setting default auth status
-  $rootScope.isAuthenticated = false;
-  $rootScope.currentUser = '';
+  if($cookieStore.get('userObj')){
+    $rootScope.isAuthenticated = true;
+    $rootScope.currentUser = $cookieStore.get('userObj').username
+  }else{
+    $rootScope.isAuthenticated = false;
+    $rootScope.currentUser = '';
+  }
 
   //navbar button functions
-  $rootScope.rootLogin = function(){
-    $location.path('/login');
-  }
-  $rootScope.rootRegister = function(){
-    $location.path('/register');
-  }
   $rootScope.rootLogout = function(){
     $http.get('/logout').success(function(data){
       $location.path('/');
@@ -350,7 +349,7 @@ controller('HomeController', function($scope, $http) {
 controller('ItemSetViewController', function($scope, $http) {
 
 }).
-controller('AuthCtrl', function($scope, $http, $location, $rootScope) {
+controller('AuthCtrl', function($scope, $http, $location, $rootScope, $cookieStore) {
   $scope.user = {
     username: '',
     password: ''
@@ -365,14 +364,16 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope) {
   $scope.warning = '';
 
   $scope.login = function(){
-    console.log($scope.user);
     $http.post('/login', $scope.user)
     .then(function(data){
-      if(data.info === 'success'){
+      console.log(data.data.info);
+      if(data.data.info === 'success'){
+        var userObj = data.data.user;
+        $cookieStore.put('userObj', userObj);
         $rootScope.isAuthenticated = true;
-        $rootScope.currentUser = data.user.username;
+        $rootScope.currentUser = data.data.user.username;
         $('#loginModal').modal('toggle')
-        $location.url('/item-set/create');
+        $location.url('/');
       } else {
         $scope.loginError = 'Invalid Login Information';
       }
