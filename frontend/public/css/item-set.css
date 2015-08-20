@@ -38,7 +38,7 @@
 }
 
 .block-new:hover {
-  background-color:rgb(0,30,20);
+  background-color:rgb(0,20,40);
   border-style:solid;
   border-radius:25px;
 }
@@ -99,4 +99,8 @@ li {
 
 .nav li a {
   padding: 2px 10px;
+}
+
+a:hover {
+  cursor:pointer;
 }
