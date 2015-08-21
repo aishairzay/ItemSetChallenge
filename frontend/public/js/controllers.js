@@ -45,7 +45,7 @@ run(function($rootScope, $http, $location, $cookieStore, $routeParams) {
 controller('AppController', function($scope, $http) {
 
 }).
-controller('CreateController', function($rootScope, $scope, $http, $routeParams) {
+controller('CreateController', function($rootScope, $scope, $http, $routeParams, $location) {
   var id = $routeParams.id;
   $http.get('/item-set/' + id)
     .then(function(data) {
@@ -256,7 +256,19 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams)
     }
     $scope.save = function() {
       var data = $scope.buildObj();
-      $http.post('/item-set', data);
+      data.itemSetId = id;
+      $http.post('/item-set', data)
+        .then(function(data) {
+          console.log("data", data);
+          if (data.data.success) {
+            $location.path( "/" );
+          }
+          else {
+            $rootScope.pageError = "Something went wrong, please refresh and try again";
+          }
+        }, function(result) {
+          $rootScope.pageError = "Something went wrong, please refresh and try again";
+        });
     }
 
     $scope.initialize = function(data) {
@@ -394,9 +406,14 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope, $cookieSto
 
   $scope.warning = '';
 
-  $scope.removeLoginErrors = function() {
+  $scope.clearLoginPage = function() {
     $scope.loginError = '';
     $scope.registerError = '';
+    $scope.newUser.password = '';
+    $scope.newUser.confirmPassword = '';
+    $scope.newUser.username = '';
+    $scope.user.username = '';
+    $scope.user.password = '';
   }
 
   $scope.login = function(){
@@ -408,6 +425,7 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope, $cookieSto
         $rootScope.isAuthenticated = true;
         $rootScope.currentUser = data.data.user.username;
         $('#loginModal').modal('toggle');
+        $scope.clearLoginPage();
       } else {
         $scope.loginError = 'Invalid Login Information';
       }
@@ -432,12 +450,12 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope, $cookieSto
       $http.post('/register', $scope.newUser)
       .then(function(data){
         $('#loginModal').modal('toggle')
-        if(data.info === "Registration successful"){
-          $cookieStore.put('userObj', userObj);
+        if(data.data.success){
+          var user = $scope.newUser;
+          $cookieStore.put('userObj', user);
           $rootScope.isAuthenticated = true;
-          $rootScope.currentUser = data.data.user.username;
-          //$location.url('/login');
-          // Call Login here. Change login to not toggle the modal, but to simply hide it if it is there
+          $rootScope.currentUser = user.username;
+          $scope.clearLoginPage();
         }
       }, function(response) {
         $scope.registerError = 'Something went wrong, refresh the page and try again';

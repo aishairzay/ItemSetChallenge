@@ -37,6 +37,6 @@ exports.register = function(req, res, next) {
       console.log('Registration failed');
       return res.send(info);
     }
-    return res.send(info);
+    return res.send({success:true});
   })(req, res, next);
 }
