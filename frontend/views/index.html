@@ -78,6 +78,12 @@
           {{pageError}}
           <span style="font-size:1.5em;position:relative;margin-left:99%;margin-top:-2%" ng-click="pageError=''" class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
         </div>
+        <div ng-show="pageSuccess.length > 0" class="alert alert-success" role="alert">
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" style="margin-right:3%;"></span>
+          <span class="sr-only">Error:</span>
+          {{pageSuccess}}
+          <span style="font-size:1.5em;position:relative;margin-left:99%;margin-top:-2%" ng-click="pageSuccess=''" class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+        </div>
         <div ng-view></div>
       </div>
 

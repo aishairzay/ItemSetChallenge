@@ -5,6 +5,13 @@
 angular.module('app.controllers', ['checklist-model', 'ngDragDrop', 'ngCookies']).
 run(function($rootScope, $http, $location, $cookieStore, $routeParams) {
   $rootScope.pageError = '';
+  $rootScope.pageSuccess = '';
+
+  $rootScope.$on('$stateChangeStart',
+    function(toState){
+        $rootScope.pageError = '';
+        $rootScope.pageSuccess = '';
+    });
 
   //setting default auth status
   if($cookieStore.get('userObj')){
@@ -20,6 +27,7 @@ run(function($rootScope, $http, $location, $cookieStore, $routeParams) {
     $cookieStore.remove('userObj');
     $rootScope.isAuthenticated = false;
     $rootScope.currentUser = '';
+    $rootScope.pageSuccess = 'You have been logged out';
 
     // no need for log out route, the cookie is the only thing that really matters
 
@@ -224,11 +232,16 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
         }
         else{
           clean = false;
+
         }
         if (clean) {
           $scope.initialize(data);
-          $('#uploadModal').modal('toggle');
+          $rootScope.pageSuccess = 'Your file has been uploaded'
         }
+        else{
+          $rootScope.pageError = 'There was a problem parsing the uploaded file. Make sure you have uploaded a JSON file with all item set fields.';
+        }
+        $('#uploadModal').modal('toggle');
         //$scope.data = goodData;
       }
       else if (method == 'probuild') {
@@ -262,6 +275,7 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
           console.log("data", data);
           if (data.data.success) {
             $location.path( "/" );
+            $rootScope.pageSuccess = 'Your item set has been successfully saved';
           }
           else {
             $rootScope.pageError = "Something went wrong, please refresh and try again";
@@ -426,6 +440,7 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope, $cookieSto
         $rootScope.currentUser = data.data.user.username;
         $('#loginModal').modal('toggle');
         $scope.clearLoginPage();
+        $rootScope.pageSuccess = 'You are now logged in';
       } else {
         $scope.loginError = 'Invalid Login Information';
       }
@@ -456,6 +471,7 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope, $cookieSto
           $rootScope.isAuthenticated = true;
           $rootScope.currentUser = user.username;
           $scope.clearLoginPage();
+          $rootScope.pageSuccess = 'You are now logged in';
         }
       }, function(response) {
         $scope.registerError = 'Something went wrong, refresh the page and try again';
