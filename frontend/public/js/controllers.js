@@ -50,9 +50,14 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams)
   $http.get('/item-set/' + id)
     .then(function(data) {
       if(data.data.success && data.data.itemSet) {
-        $scope.$on('itemsLoaded', function() {
-          $scope.initialize(data.data.itemSet);
-        })
+        if($scope.lists.items.length == 0) {
+          $scope.$on('itemsLoaded', function() {
+            $scope.initialize(data.data.itemSet);
+          })
+        }
+        else {
+           $scope.initialize(data.data.itemSet);
+        }
       }
       else if(data.data.success){
         // Do nothing
