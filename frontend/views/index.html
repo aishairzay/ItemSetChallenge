@@ -72,6 +72,12 @@
       </nav>
 
       <div class="main container">
+        <div style="width:50%" ng-show="pageError.length > 0" class="alert alert-danger" role="alert">
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          <span class="sr-only">Error:</span>
+          {{pageError}}
+          <span ng-click="pageError=''" class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+        </div>
         <div ng-view></div>
       </div>
 

@@ -13,13 +13,9 @@ config(function ($routeProvider, $locationProvider) {
     templateUrl: 'templates/home.html',
     controller: 'HomeController'
   })
-  .when('/item-set/create', {
-    templateUrl: 'templates/item-set-create.html',
+  .when('/item-set/create/:id?', {
+    templateUrl: '/templates/item-set-create.html',
     controller: 'CreateController'
-  })
-  .when('/item-set/:id/view', {
-    templateUrl: '/templates/item-set-view.html',
-    controller: 'ItemSetViewController'
   })
   .when('/login', {
     templateUrl:'/templates/login.html',

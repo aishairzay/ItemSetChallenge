@@ -12,8 +12,8 @@ var itemSetSchema = new Schema({
   mode: String,
   priority: Boolean,
   sortrank: Number,
-  blocks: [Schema.Types.Mixed]
-  
+  blocks: [Schema.Types.Mixed],
+  id: Schema.Types.ObjectId
 });
 
 module.exports = mongoose.model('itemSet', itemSetSchema);

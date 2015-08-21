@@ -3,11 +3,13 @@
 /* Controllers */
 
 angular.module('app.controllers', ['checklist-model', 'ngDragDrop', 'ngCookies']).
-run(function($rootScope, $http, $location, $cookieStore) {
+run(function($rootScope, $http, $location, $cookieStore, $routeParams) {
+  $rootScope.pageError = '';
+
   //setting default auth status
   if($cookieStore.get('userObj')){
     $rootScope.isAuthenticated = true;
-    $rootScope.currentUser = $cookieStore.get('userObj').username
+    $rootScope.currentUser = $cookieStore.get('userObj').username;
   }else{
     $rootScope.isAuthenticated = false;
     $rootScope.currentUser = '';
@@ -15,28 +17,51 @@ run(function($rootScope, $http, $location, $cookieStore) {
 
   //navbar button functions
   $rootScope.rootLogout = function(){
-    $http.get('/logout').success(function(data){
+    $cookieStore.remove('userObj');
+    $rootScope.isAuthenticated = false;
+    $rootScope.currentUser = '';
+
+    // no need for log out route, the cookie is the only thing that really matters
+
+    /*$http.get('/logout').then(function(data){
       $location.path('/');
-      $rootScope.isAuthenticated = false;
-      $rootScope.currentUser = '';
-      $cookieStore.remove('userObj');
-    })
+    }, function(result) {
+      $location.path('/');
+    });*/
   }
 
   //load champions on any page
   $rootScope.champions = [];
   $http.get('/champions')
-  .success(function(data) {
-    var champs = data.data;
+  .then(function(data) {
+    var champs = data.data.data;
     for(var key in champs){
       $rootScope.champions.push(champs[key]);
     }
+  }, function(result) {
+    $rootScope.pageError = 'Something went wrong loading champions, refresh to try again';
   })
 }).
 controller('AppController', function($scope, $http) {
 
 }).
-controller('CreateController', function($rootScope, $scope, $http) {
+controller('CreateController', function($rootScope, $scope, $http, $routeParams) {
+  var id = $routeParams.id;
+  $http.get('/item-set/' + id)
+    .then(function(data) {
+      if(data.data.success && data.data.itemSet) {
+        $scope.initialize(data.data.itemSet);
+      }
+      else if(data.data.success){
+        // Do nothing
+      }
+      else {
+        $rootScope.pageError = 'Could not find specified item-set';
+      }
+    }, function(response) {
+      $rootScope.pageError = 'Could not find specified item-set';
+    });
+
   $scope.lists = {
     "blocks":[],
     "items":[]
@@ -69,8 +94,8 @@ controller('CreateController', function($rootScope, $scope, $http) {
       return ($scope.category == 'All' || _.contains(categories, $scope.category));
     }
     $http.get('/items')
-    .success(function(data) {
-      var items = data.data;
+    .then(function(data) {
+      var items = data.data.data;
       for (var key in items) {
         if(items.hasOwnProperty(key)) {
           var obj = items[key];
@@ -79,6 +104,8 @@ controller('CreateController', function($rootScope, $scope, $http) {
         }
       }
       $scope.loading = false;
+    }, function(res) {
+      $scope.pageError = 'Something went wrong, please refresh';
     })
 
     // Block controls
@@ -153,12 +180,10 @@ controller('CreateController', function($rootScope, $scope, $http) {
     };
 
     $('#item-upload-wrapper').on('change', '#item-set-data-file', function(evt) {
-      console.log(evt);
       var input = evt.target;
       var reader = new FileReader();
       reader.onload = function(){
         var result = reader.result;
-        console.log(result);
         $scope.uploadedFileText = result;
       };
       reader.readAsText(input.files[0]);
@@ -196,7 +221,6 @@ controller('CreateController', function($rootScope, $scope, $http) {
           $scope.initialize(data);
           $('#uploadModal').modal('toggle');
         }
-        console.log("data", data);
         //$scope.data = goodData;
       }
       else if (method == 'probuild') {
@@ -254,7 +278,6 @@ controller('CreateController', function($rootScope, $scope, $http) {
             var curRealItem = $scope.lists.items[k];
 
             if(item.id.toString() == curRealItem.id.toString()) {
-              console.log('here');
               for(var n = 0; n < item.count; n++ ) {
                 items.push(curRealItem);
               }
@@ -340,7 +363,6 @@ controller('CreateController', function($rootScope, $scope, $http) {
         sortrank: 0,
         blocks: blocks
       };
-      console.log("data", data);
       return data;
     }
   }).
@@ -372,14 +394,12 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope, $cookieSto
   $scope.login = function(){
     $http.post('/login', $scope.user)
     .then(function(data){
-      console.log(data.data.info);
       if(data.data.info === 'success'){
         var userObj = data.data.user;
         $cookieStore.put('userObj', userObj);
         $rootScope.isAuthenticated = true;
         $rootScope.currentUser = data.data.user.username;
-        $('#loginModal').modal('toggle')
-        $location.refresh();
+        $('#loginModal').modal('toggle');
       } else {
         $scope.loginError = 'Invalid Login Information';
       }
@@ -388,7 +408,6 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope, $cookieSto
     });
   };
   $scope.register = function(){
-    console.log($scope.newUser);
     if($scope.newUser.username.length < 4){
       $scope.registerError = 'Username must be longer than 4 characters';
     }
@@ -402,12 +421,13 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope, $cookieSto
       $scope.registerError = 'Passwords do not match';
     }
     else {
-      console.log("SENDING " + $scope.newUser);
       $http.post('/register', $scope.newUser)
       .then(function(data){
         $('#loginModal').modal('toggle')
-        console.log(data);
         if(data.info === "Registration successful"){
+          $cookieStore.put('userObj', userObj);
+          $rootScope.isAuthenticated = true;
+          $rootScope.currentUser = data.data.user.username;
           //$location.url('/login');
           // Call Login here. Change login to not toggle the modal, but to simply hide it if it is there
         }
