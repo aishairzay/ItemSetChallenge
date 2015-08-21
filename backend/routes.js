@@ -1,6 +1,8 @@
 var path = require('path'),
 request = require('request'),
+cheerio = require('cheerio'),
 keys = require('../keys.js'),
+phantom = require('phantom'),
 viewRoot = '';
 
 exports.init = function(rootViewDirectory) {
@@ -27,4 +29,25 @@ exports.getChampions = function(req, res) {
     res.setHeader('Content-Type', 'application/json');
     res.send(body);
   });
+}
+
+var itemArr = [];
+
+exports.proBuilds = function(req, res) {
+phantom.create(function (ph) {
+  ph.createPage(function (page) {
+    page.open(req.body.value, function (status) {
+      console.log("opened " + req.body.value, status);
+      page.evaluate(function () { return document.body.innerHTML; }, function (result) {
+        var $ = cheerio.load(result);
+        $('li', '.buy-order').each(function(){
+          var x = $(this).attr('data-item');
+          itemArr.push(x);
+        });
+        console.log(itemArr);
+        ph.exit();
+      });
+    });
+  });
+});
 }

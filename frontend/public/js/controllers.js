@@ -232,7 +232,7 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams)
         //$scope.data = goodData;
       }
       else if (method == 'probuild') {
-
+        $http.post('/probuilds', {'value': value});
       }
     }
     

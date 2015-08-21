@@ -7,6 +7,8 @@ var http = require('http').Server(app);
 var bodyParser = require('body-parser');
 var multer = require('multer');
 var path = require('path');
+var cheerio = require('cheerio');
+var phantom = require('phantom');
 var viewRoot = path.join(__dirname, 'frontend/views');
 
 //var api = require('./backend/api');
@@ -56,6 +58,7 @@ app.get('/logout', userRoutes.logout);
 // General purpose routes / RIOT API calls
 app.get('/champions', routes.getChampions);
 app.get('/items', routes.getItems);
+app.post('/probuilds', routes.proBuilds);
 
 app.get('*', routes.index);
 
