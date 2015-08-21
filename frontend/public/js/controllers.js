@@ -50,7 +50,9 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams)
   $http.get('/item-set/' + id)
     .then(function(data) {
       if(data.data.success && data.data.itemSet) {
-        $scope.initialize(data.data.itemSet);
+        $scope.$on('itemsLoaded', function() {
+          $scope.initialize(data.data.itemSet);
+        })
       }
       else if(data.data.success){
         // Do nothing
@@ -103,6 +105,7 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams)
           $scope.categories = _.union($scope.categories, obj.tags);
         }
       }
+      $scope.$broadcast('itemsLoaded', {});
       $scope.loading = false;
     }, function(res) {
       $scope.pageError = 'Something went wrong, please refresh';
@@ -276,8 +279,8 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams)
           var item = block.items[j];
           for (var k = 0; k < $scope.lists.items.length; k++){
             var curRealItem = $scope.lists.items[k];
-
-            if(item.id.toString() == curRealItem.id.toString()) {
+            var id = curRealItem.id;
+            if(item.id == id) {
               for(var n = 0; n < item.count; n++ ) {
                 items.push(curRealItem);
               }

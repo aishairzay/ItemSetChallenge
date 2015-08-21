@@ -29,3 +29,6 @@ h1,h2,h3,h4,h5,p {
 .modal-smaller {
   width:600px;
 }
+.glyphicon-remove-circle:hover {
+  cursor:pointer;
+}

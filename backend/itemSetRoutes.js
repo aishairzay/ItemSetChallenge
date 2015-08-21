@@ -19,7 +19,7 @@ exports.getItemSet = function(req, res) {
     res.send({success:true});
   }
   else{
-    itemSet.findOne({},
+    itemSet.findOne({_id:req.params.id},
       function (err, itemSet) {
         if(err){
           console.log("Did not find id");
