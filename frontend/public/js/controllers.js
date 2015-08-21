@@ -19,6 +19,7 @@ run(function($rootScope, $http, $location, $cookieStore) {
       $location.path('/');
       $rootScope.isAuthenticated = false;
       $rootScope.currentUser = '';
+      $cookieStore.remove('userObj');
     })
   }
 
@@ -363,6 +364,11 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope, $cookieSto
 
   $scope.warning = '';
 
+  $scope.removeLoginErrors = function() {
+    $scope.loginError = '';
+    $scope.registerError = '';
+  }
+
   $scope.login = function(){
     $http.post('/login', $scope.user)
     .then(function(data){
@@ -373,7 +379,7 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope, $cookieSto
         $rootScope.isAuthenticated = true;
         $rootScope.currentUser = data.data.user.username;
         $('#loginModal').modal('toggle')
-        $location.url('/');
+        $location.refresh();
       } else {
         $scope.loginError = 'Invalid Login Information';
       }

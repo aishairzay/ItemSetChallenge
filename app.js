@@ -9,6 +9,9 @@ var multer = require('multer');
 var path = require('path');
 var viewRoot = path.join(__dirname, 'frontend/views');
 var routes = require(path.join(__dirname, 'backend', 'routes')).init(viewRoot);
+var userRoutes = require(path.join(__dirname, 'backend', 'userRoutes')).init(passport);
+var itemSetRoutes = require(path.join(__dirname, 'backend', 'itemSetRoutes')).init();
+
 //var api = require('./backend/api');
 // Setup
 app.set('views', path.join(__dirname, 'frontend', 'views'));
@@ -38,46 +41,20 @@ item-sets
 */
 
 // Routes
-app.get('/item-set/:id', routes.getItemSet);
-app.post('/item-set', routes.createItemSet);
-app.delete('/item-set/:id', routes.deleteItemSet);
+
+// Item set related routes
+app.get('/item-set/:id', itemSetRoutes.getItemSet);
+app.post('/item-set', itemSetRoutes.createItemSet);
+app.delete('/item-set/:id', itemSetRoutes.deleteItemSet);
+
+// User related routes
+app.post('/login', userRoutes.login);
+app.post('/register', userRoutes.register);
+app.get('/logout', userRoutes.logout);
+
+// General purpose routes / RIOT API calls
 app.get('/champions', routes.getChampions);
 app.get('/items', routes.getItems);
-
-
-//authentication routes -- put into routes.js later
-app.post('/login', function(req, res, next) {
-  passport.authenticate('login', function(err, user, info) {
-    if (err) { 
-      return next(err); 
-    }
-    if (!user) { 
-      console.log('Login failed');
-      return res.send(info); 
-    }
-    req.logIn(user, function(err) {
-      if (err) { 
-        return next(err); 
-      }
-      console.log("Signed in");
-      return res.send(info);
-    });
-  })(req, res, next);
-});
-app.post('/register', function(req, res, next) {
-  passport.authenticate('register', function(err, user, info) {
-    if (err) {
-      return next(err);
-    }
-    if(!user) {
-      console.log('Registration failed');
-      return res.send(info);
-    }
-    return res.send(info);
-  })(req, res, next);
-});
-
-app.get('/logout', routes.logout);
 
 app.get('*', routes.index);
 

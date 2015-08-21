@@ -14,8 +14,8 @@
         </div>
         <div class="navbar-collapse collapse">
             <div class="navbar-right">
-              <button ng-click="rootLogout()" ng-show="isAuthenticated" class="btn btn-primary">LOGOUT</button>
-              <button style="margin-top:7%;" ng-hide="isAuthenticated" type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Register/Login</button>
+              <button style="margin-top:7%;" ng-click="rootLogout()" ng-show="isAuthenticated" class="btn btn-primary">Log out</button>
+              <button style="margin-top:7%;" ng-click="removeLoginErrors()" ng-hide="isAuthenticated" type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Register / Log in</button>
               <!-- Modal -->
               <div id="loginModal" class="modal fade" role="dialog" ng-controller="AuthCtrl">
                 <div class="modal-dialog">
