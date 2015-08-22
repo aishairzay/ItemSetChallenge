@@ -11,9 +11,7 @@ exports.init = function(m) {
 // Itemset routes
 // get /item-set/:id
 exports.getItemSet = function(req, res) {
-
   res.setHeader('Content-Type', 'application/json');
-  console.log("param", req.params);
   if (req.params.id == 'undefined') {
     console.log("HERE");
     res.send({success:true});
@@ -58,7 +56,9 @@ exports.createItemSet = function(req, res) {
           mode: req.body.mode,
           priority: req.body.priority,
           sortrank: req.body.sortrank,
-          blocks: req.body.blocks
+          blocks: req.body.blocks,
+          viewCount: 1,
+          downloadCount: 1
         });
         newItemSet.save(function(err){
           if (err) {
@@ -92,7 +92,52 @@ exports.createItemSet = function(req, res) {
     });
   }
 }
+
+exports.incrementViewCount = function(req, res) {
+    var id = req.params.id;
+
+    itemSet.findOne({_id:req.params.id},
+      function (err, itemSet) {
+        if(err){
+          console.log("Did not find id");
+          res.send({success:false});
+        }
+        else{
+          if (!itemSet) {
+            res.send({success:false});
+          }
+          else{
+            itemSet.viewCount = itemSet.viewCount + 1;
+            itemSet.save();
+            res.send({success:true});
+          }
+        }
+      });
+}
+
+exports.incrementDownloadCount = function(req, res) {
+    var id = req.params.id;
+
+    itemSet.findOne({_id:req.params.id},
+      function (err, itemSet) {
+        if(err){
+          console.log("Did not find id");
+          res.send({success:false});
+        }
+        else{
+          if (!itemSet) {
+            res.send({success:false});
+          }
+          else{
+            itemSet.downloadCount = itemSet.downloadCount  + 1;
+            itemSet.save();
+            res.send({success:true});
+          }
+        }
+      });
+}
+
 // delete /item-set/:id
 exports.deleteItemSet = function(req, res) {
-
+    
 }

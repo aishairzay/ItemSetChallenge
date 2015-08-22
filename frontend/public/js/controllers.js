@@ -52,6 +52,11 @@ controller('AppController', function($scope, $http) {
 }).
 controller('CreateController', function($rootScope, $scope, $http, $routeParams, $location) {
   var id = $routeParams.id;
+
+  if(id && id.length > 0){
+    $http.post('/item-set/' + id + '/view');
+  }
+
   $http.get('/item-set/' + id)
   .then(function(data) {
     if(data.data.success && data.data.itemSet) {
@@ -203,7 +208,6 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
     });
 
 
-
     $scope.upload = function(value, method) {
       if (method == 'file') {
         var data = JSON.parse($scope.uploadedFileText);
@@ -291,13 +295,14 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
       console.log(obj);
     }
 
-
-
     $scope.submit = function(maps, champs) {
       console.log(maps, champs);
     }
 
     $scope.download = function (filename, text) {
+      if(id && id.length > 0){
+        $http.post('/item-set/' + id + '/download');
+      }
       var element = document.createElement('a');
       element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));  
       element.setAttribute('download', filename);

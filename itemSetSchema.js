@@ -13,7 +13,8 @@ var itemSetSchema = new Schema({
   priority: Boolean,
   sortrank: Number,
   blocks: [Schema.Types.Mixed],
-  id: Schema.Types.ObjectId
+  viewCount: Number,
+  downloadCount: Number
 });
 
 module.exports = mongoose.model('itemSet', itemSetSchema);
