@@ -3,15 +3,24 @@
 /* Controllers */
 
 angular.module('app.controllers', ['checklist-model', 'ngDragDrop', 'ngCookies']).
-run(function($rootScope, $http, $location, $cookieStore, $routeParams) {
+run(function($rootScope, $http, $location, $cookieStore, $routeParams, $timeout) {
   $rootScope.pageError = '';
   $rootScope.pageSuccess = '';
 
-  $rootScope.$on('$stateChangeStart',
-    function(toState){
-      $rootScope.pageError = '';
-      $rootScope.pageSuccess = '';
-    });
+  $rootScope.setPageError = function(str) {
+    $rootScope.pageError = str;
+    $timeout(
+      function(){
+        $rootScope.pageError = '';
+      }, 5000);
+  }
+  $rootScope.setPageSuccess = function(str) {
+    $rootScope.pageSuccess = str;
+    $timeout(
+      function(){
+        $rootScope.pageSuccess = '';
+      }, 5000);
+  }
 
   //setting default auth status
   if($cookieStore.get('userObj')){
@@ -27,7 +36,7 @@ run(function($rootScope, $http, $location, $cookieStore, $routeParams) {
     $cookieStore.remove('userObj');
     $rootScope.isAuthenticated = false;
     $rootScope.currentUser = '';
-    $rootScope.pageSuccess = 'You have been logged out';
+    $rootScope.setPageSuccess('You have been logged out');
 
     // no need for log out route, the cookie is the only thing that really matter
     $http.get('/logout').then(function(data){
@@ -44,7 +53,7 @@ run(function($rootScope, $http, $location, $cookieStore, $routeParams) {
       $rootScope.champions.push(champs[key]);
     }
   }, function(result) {
-    $rootScope.pageError = 'Something went wrong loading champions, refresh to try again';
+    $rootScope.setPageError('Something went wrong loading champions, refresh to try again');
   })
 }).
 controller('AppController', function($scope, $http) {
@@ -73,10 +82,10 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
         // Do nothing
       }
       else {
-        $rootScope.pageError = 'Could not find specified item-set';
+        $rootScope.setPageError('Could not find specified item-set');
       }
     }, function(response) {
-      $rootScope.pageError = 'Could not find specified item-set';
+      $rootScope.setPageError('Could not find specified item-set');
     });
 
   $scope.lists = {
@@ -237,10 +246,10 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
         }
         if (clean) {
           $scope.initialize(data);
-          $rootScope.pageSuccess = 'Your file has been uploaded'
+          $rootScope.setPageSuccess('Your file has been uploaded');
         }
         else{
-          $rootScope.pageError = 'There was a problem parsing the uploaded file. Make sure you have uploaded a JSON file with all item set fields.';
+          $rootScope.setPageError('There was a problem parsing the uploaded file. Make sure you have uploaded a JSON file with all item set fields.');
         }
         $('#uploadModal').modal('toggle');
         //$scope.data = goodData;
@@ -324,13 +333,13 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
         console.log("data", data);
         if (data.data.success) {
           $location.path( "/" );
-          $rootScope.pageSuccess = 'Your item set has been successfully saved';
+          $rootScope.setPageSuccess('Your item set has been successfully saved');
         }
         else {
-          $rootScope.pageError = "Something went wrong, please refresh and try again";
+          $rootScope.setPageError('Something went wrong, please refresh and try again');
         }
       }, function(result) {
-        $rootScope.pageError = "Something went wrong, please refresh and try again";
+        $rootScope.setPageError("Something went wrong, please refresh and try again");
       });
     }
 
@@ -489,7 +498,7 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope, $cookieSto
         $rootScope.currentUser = data.data.user.username;
         $('#loginModal').modal('toggle');
         $scope.clearLoginPage();
-        $rootScope.pageSuccess = 'You are now logged in';
+        $rootScope.setPageSuccess('You are now logged in');
       } else {
         $scope.loginError = 'Invalid Login Information';
       }
@@ -520,7 +529,7 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope, $cookieSto
           $rootScope.isAuthenticated = true;
           $rootScope.currentUser = user.username;
           $scope.clearLoginPage();
-          $rootScope.pageSuccess = 'You are now logged in';
+          $rootScope.setPageSuccess('You are now logged in');
         }
       }, function(response) {
         $scope.registerError = 'Something went wrong, refresh the page and try again';
