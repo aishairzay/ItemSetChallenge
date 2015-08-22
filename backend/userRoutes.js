@@ -6,7 +6,8 @@ exports.init = function(pp) {
 
 exports.logout = function(req, res, next){
   req.logout();
-  res.redirect('/');
+  res.end();
+  console.log('Logged out');
 }
 
 exports.login = function(req, res, next) {

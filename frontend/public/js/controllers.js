@@ -9,8 +9,8 @@ run(function($rootScope, $http, $location, $cookieStore, $routeParams) {
 
   $rootScope.$on('$stateChangeStart',
     function(toState){
-        $rootScope.pageError = '';
-        $rootScope.pageSuccess = '';
+      $rootScope.pageError = '';
+      $rootScope.pageSuccess = '';
     });
 
   //setting default auth status
@@ -29,13 +29,10 @@ run(function($rootScope, $http, $location, $cookieStore, $routeParams) {
     $rootScope.currentUser = '';
     $rootScope.pageSuccess = 'You have been logged out';
 
-    // no need for log out route, the cookie is the only thing that really matters
-
-    /*$http.get('/logout').then(function(data){
+    // no need for log out route, the cookie is the only thing that really matter
+    $http.get('/logout').then(function(data){
       $location.path('/');
-    }, function(result) {
-      $location.path('/');
-    });*/
+    })
   }
 
   //load champions on any page
@@ -56,18 +53,18 @@ controller('AppController', function($scope, $http) {
 controller('CreateController', function($rootScope, $scope, $http, $routeParams, $location) {
   var id = $routeParams.id;
   $http.get('/item-set/' + id)
-    .then(function(data) {
-      if(data.data.success && data.data.itemSet) {
-        if($scope.lists.items.length == 0) {
-          $scope.$on('itemsLoaded', function() {
-            $scope.initialize(data.data.itemSet);
-          })
-        }
-        else {
-           $scope.initialize(data.data.itemSet);
-        }
+  .then(function(data) {
+    if(data.data.success && data.data.itemSet) {
+      if($scope.lists.items.length == 0) {
+        $scope.$on('itemsLoaded', function() {
+          $scope.initialize(data.data.itemSet);
+        })
       }
-      else if(data.data.success){
+      else {
+       $scope.initialize(data.data.itemSet);
+     }
+   }
+   else if(data.data.success){
         // Do nothing
       }
       else {
@@ -82,17 +79,17 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
     "items":[]
   };
 
-    $scope.fixName = function(name) {
-      var newStr = '';
-      for (var i in name) {
-        var c = name[i]
-        if (c == c.toUpperCase()) {
-          newStr += ' ';
-        }
-        newStr += c;
+  $scope.fixName = function(name) {
+    var newStr = '';
+    for (var i in name) {
+      var c = name[i]
+      if (c == c.toUpperCase()) {
+        newStr += ' ';
       }
-      return newStr;
+      newStr += c;
     }
+    return newStr;
+  }
 
     // Item controls
     $scope.lists.items = [];
@@ -245,10 +242,57 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
         //$scope.data = goodData;
       }
       else if (method == 'probuild') {
-        $http.post('/probuilds', {'value': value});
+        $http.post('/probuilds', {'value': value})
+        .then(function(res){
+          $scope.initialize(proBuildsObj(res));
+        })
       }
     }
-    
+
+    var proBuildsObj = function(response){
+
+      var blocks = [];
+
+      var items = [];
+
+      var obj = {
+        title: response.data.title,
+        map: "any",
+        blocks: blocks
+      }
+
+      for(var i = 0, j = 0; i < response.data.itemArr.length; i++){
+        if(response.data.itemArr[i] > 0){
+          var itemObj = {
+            id: '',
+            count: 1
+          }
+
+          itemObj.id = response.data.itemArr[i];
+          items.push(itemObj); 
+
+        } else {
+          j++;
+          var blocksObj = {
+            type: '',
+            recMath: false,
+            minSummonerLevel: -1,
+            maxSummonerLevel: -1,
+            showIfSummonerSpell: '',
+            hideIfSUmmonerSpell: '',
+            items : items
+          };
+          blocksObj.type = j.toString();
+          blocks.push(blocksObj);
+          items = [];
+        }
+      }
+      return obj;
+      console.log(obj);
+    }
+
+
+
     $scope.submit = function(maps, champs) {
       console.log(maps, champs);
     }
@@ -262,7 +306,7 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
       element.click();
       document.body.removeChild(element);
     }
-    
+
     $scope.createDoc = function() {
       var data = $scope.buildObj();
       $scope.download($scope.itemSetTitle + '.json', JSON.stringify(data));
@@ -271,18 +315,18 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
       var data = $scope.buildObj();
       data.itemSetId = id;
       $http.post('/item-set', data)
-        .then(function(data) {
-          console.log("data", data);
-          if (data.data.success) {
-            $location.path( "/" );
-            $rootScope.pageSuccess = 'Your item set has been successfully saved';
-          }
-          else {
-            $rootScope.pageError = "Something went wrong, please refresh and try again";
-          }
-        }, function(result) {
+      .then(function(data) {
+        console.log("data", data);
+        if (data.data.success) {
+          $location.path( "/" );
+          $rootScope.pageSuccess = 'Your item set has been successfully saved';
+        }
+        else {
           $rootScope.pageError = "Something went wrong, please refresh and try again";
-        });
+        }
+      }, function(result) {
+        $rootScope.pageError = "Something went wrong, please refresh and try again";
+      });
     }
 
     $scope.initialize = function(data) {

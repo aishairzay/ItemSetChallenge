@@ -38,14 +38,23 @@ phantom.create(function (ph) {
   ph.createPage(function (page) {
     page.open(req.body.value, function (status) {
       console.log("opened " + req.body.value, status);
-      page.evaluate(function () { return document.body.innerHTML; }, function (result) {
-        var $ = cheerio.load(result);
+      page.evaluate(function () { 
+        return [document.body.innerHTML, document.title]; 
+      }, function (result) {
+        var $ = cheerio.load(result[0]);
         $('li', '.buy-order').each(function(){
           var x = $(this).attr('data-item');
           itemArr.push(x);
         });
-        console.log(itemArr);
         ph.exit();
+        for(var i = 0; i < itemArr.length; i++) {
+         if (typeof itemArr[i] == 'undefined') {
+          itemArr[i] = 0;
+         }else{
+          itemArr[i] = itemArr[i];
+         }
+        }
+        res.send({'itemArr': itemArr, 'title': result[1]});
       });
     });
   });
