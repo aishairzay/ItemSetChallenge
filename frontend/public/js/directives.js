@@ -21,13 +21,26 @@ directive('mybuildsmodal', function() {
         console.log("Making request");
         $http.get('/item-set/user')
           .then(function(data) {
+            // array of item sets -> data.data
             console.log("data", data);
+            $scope.myBuilds = data.data;
           }, function(res) {
             console.log(res);
           });
       }
-
       $rootScope.refreshMyBuilds();
+    }
+  }
+}).
+directive('itemsetlistview', function() {
+  return{
+    restrict: 'E',
+    scope: {
+      itemset: '='
+    },
+    templateUrl: 'templates/item-set-list-view.html',
+    controller: function($scope) {
+
     }
   }
 });
