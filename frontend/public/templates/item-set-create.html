@@ -26,7 +26,7 @@
           <input class="dark form-control" type="text" ng-model="itemSearch" placeholder="Item Search">
         </div>
         <div class="row">
-          <div class="col-xs-12">
+          <div class="col-xs-12 scrollable">
           <ul style="margin-left:-15%">
             <li ng-repeat="item in lists.items track by $index" data-drag="true" data-jqyoui-options="{revert:'invalid', helper:'clone'}" ng-model="lists.items" jqyoui-draggable="{index: {{$index}},placeholder:'keep', deepCopy:true}">
               <div ng-show="searchItems(item.name)&&inRightCategory(item.tags)">

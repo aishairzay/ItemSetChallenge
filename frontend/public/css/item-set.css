@@ -110,3 +110,8 @@ li {
 a:hover {
   cursor:pointer;
 }
+
+.scrollable {
+    max-height: 100%; /* or any value */
+    overflow-y: auto;
+}
