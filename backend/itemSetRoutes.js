@@ -141,3 +141,18 @@ exports.incrementDownloadCount = function(req, res) {
 exports.deleteItemSet = function(req, res) {
     
 }
+
+exports.getSavedItemSets = function(req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  if (!req.user || typeof req.user.username == undefined){
+    console.log('Not logged in');
+    res.send({success:false});
+  } else {
+    itemSet.find({user:req.user.username}).
+      select('id title viewCount downloadCount')
+      .exec(function(err, itemSets) {
+        if(err) {res.send({success:false});}
+        res.send(itemSets);
+      })
+  }
+}

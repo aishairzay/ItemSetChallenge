@@ -7,6 +7,16 @@ run(function($rootScope, $http, $location, $cookieStore, $routeParams, $timeout)
   $rootScope.pageError = '';
   $rootScope.pageSuccess = '';
 
+  /*$rootScope.refreshMyBuilds = function() {
+    console.log("Yo");
+    $http.get('/item-set/user')
+      .then(function(data) {
+        console.log("data", data);
+      }, function(res) {
+
+      });
+  }*/
+
   $rootScope.setPageError = function(str) {
     $rootScope.pageError = str;
     $timeout(
