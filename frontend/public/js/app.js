@@ -17,13 +17,9 @@ config(function ($routeProvider, $locationProvider) {
     templateUrl: '/templates/item-set-create.html',
     controller: 'CreateController'
   })
-  .when('/login', {
-    templateUrl:'/templates/login.html',
-    controller: 'AuthCtrl'
-  })
-  .when('/register', {
-    templateUrl:'/templates/register.html',
-    controller: 'AuthCtrl'
+  .when('/item-set/search', {
+    templateUrl: '/templates/item-set-search.html',
+    controller: 'SearchCtrl'
   })
   .otherwise({
     redirectTo: '/'

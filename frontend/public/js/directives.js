@@ -34,7 +34,6 @@ directive('mybuildsmodal', function() {
 }).
 directive('itemsetlistview', function() {
   return{
-    restrict: 'E',
     scope: {
       itemset: '='
     },

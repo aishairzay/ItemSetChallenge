@@ -156,3 +156,10 @@ exports.getSavedItemSets = function(req, res) {
       })
   }
 }
+
+exports.getAllItems = function(req, res) {
+  itemSet.find({}, function(err, items) {
+    if(err) throw err;
+    res.send(items);
+  });
+}
