@@ -41,9 +41,16 @@
   </div>
   <div class="col-xs-7">
     <div class="row col-xs-12 center">
-      <button type="button" class="btn btn-primary" style="margin-left:40px" data-toggle="modal" data-target="#uploadModal">
-        Upload Item Set
-      </button>
+      <div class="row">
+      <div class="col-xs-6">
+        <label ng-show="owner != ''">Item Set Creator: <strong>{{owner}}</strong></label>
+      </div>
+      <div class="col-xs-6">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal">
+          Upload Item Set
+        </button>
+      </div>
+      </div>
       <div id="uploadModal" class="modal fade" role="dialog">
         <form ng-submit="upload(uploadValue, uploadMethod)">
           <div class="modal-dialog">
@@ -100,7 +107,7 @@
         </p>
       </div>
       <div class="col-xs-12 col-md-6">
-        <button type="button" class="btn btn-primary" style="margin-top:20px;margin-left:40px" data-toggle="modal" data-target="#myModal">
+        <button type="button" class="btn btn-default" style="margin-top:20px;margin-left:40px" data-toggle="modal" data-target="#myModal">
           Additional Settings
         </button>
         <!-- Modal -->
@@ -200,7 +207,9 @@
         <ul>
           <li class="block-list" ng-repeat="block in lists.blocks">
             <span style="font-size:2.2em;color:#767676;position:relative;margin-left:94%;margin-bottom:-22%;margin-top:1%;" class="glyphicon glyphicon-remove-circle" ng-click="removeBlock($index)"></span>
-
+            <p align="center" style="position:absolute;margin-left:5%;margin-top:12%;" ng-show="block.items.length == 0">
+              <strong>- Drag an item here to add it to the block.</strong>
+            </p>
             <div class="block-wrapper">
               <div class="block">
                 <div class="row">

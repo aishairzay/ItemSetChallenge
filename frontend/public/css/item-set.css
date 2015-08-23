@@ -112,6 +112,6 @@ a:hover {
 }
 
 .scrollable {
-    max-height: 100%; /* or any value */
-    overflow-y: auto;
+    /*max-height: 100%; /* or any value */
+    /*overflow-y: auto;*/
 }

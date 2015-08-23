@@ -71,6 +71,7 @@ controller('AppController', function($scope, $http) {
 }).
 controller('CreateController', function($rootScope, $scope, $http, $routeParams, $location) {
   var id = $routeParams.id;
+  $scope.owner = '';
 
   if(id && id.length > 0){
     $http.post('/item-set/' + id + '/view');
@@ -85,7 +86,7 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
         })
       }
       else {
-       $scope.initialize(data.data.itemSet);
+
      }
    }
    else if(data.data.success){
@@ -98,10 +99,17 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
       $rootScope.setPageError('Could not find specified item-set');
     });
 
+
   $scope.lists = {
     "blocks":[],
     "items":[]
   };
+
+  $scope.$on('itemsLoaded', function() {
+    if ($scope.lists.blocks == '') {
+      $scope.addNewBlock();
+    }
+  });
 
   $scope.fixName = function(name) {
     var newStr = '';
@@ -137,6 +145,7 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
           var obj = items[key];
           $scope.lists.items.push(obj);
           $scope.categories = _.union($scope.categories, obj.tags);
+
         }
       }
       $scope.$broadcast('itemsLoaded', {});
@@ -355,6 +364,9 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
 
     $scope.initialize = function(data) {
       $scope.itemSetTitle = data.title;
+      if(data.user) {
+        $scope.owner = data.user;
+      }
       var map = data.map;
       var itemSetMap = 'Any';
       if (map == 'SR') {
