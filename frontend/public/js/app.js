@@ -10,16 +10,12 @@ config(function ($routeProvider, $locationProvider) {
   // Sets routes and
   // Decides which html file to load up in the main part of the view
   .when('/', {
-    templateUrl: 'templates/home.html',
-    controller: 'HomeController'
+    templateUrl: 'templates/item-set-search.html',
+    controller: 'SearchCtrl'
   })
   .when('/item-set/create/:id?', {
     templateUrl: '/templates/item-set-create.html',
     controller: 'CreateController'
-  })
-  .when('/item-set/search', {
-    templateUrl: '/templates/item-set-search.html',
-    controller: 'SearchCtrl'
   })
   .otherwise({
     redirectTo: '/'

@@ -47,8 +47,8 @@ item-sets
 
 // Item set related routes
 app.get('/item-set/user', itemSetRoutes.getSavedItemSets);
+app.post('/item-set/search', itemSetRoutes.searchItems);
 app.get('/item-set/:id', itemSetRoutes.getItemSet);
-app.get('/getAllItems', itemSetRoutes.getAllItems);
 app.post('/item-set', itemSetRoutes.createItemSet);
 app.delete('/item-set/:id', itemSetRoutes.deleteItemSet);
 app.post('/item-set/:id/view', itemSetRoutes.incrementViewCount);

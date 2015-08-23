@@ -157,9 +157,31 @@ exports.getSavedItemSets = function(req, res) {
   }
 }
 
-exports.getAllItems = function(req, res) {
-  itemSet.find({}, function(err, items) {
-    if(err) throw err;
-    res.send(items);
-  });
+exports.searchItems = function(req, res) {
+  console.log("req", req);
+  var search = req.body.search;
+  console.log("Got search: ", search);
+  if (search == undefined) {
+    search = '';
+  }
+  var sortFilter = req.body.sortFilter;
+  if(sortFilter == 'Download Count') {
+    sortFilter = 'downloadCount';
+  }
+  else {
+    sortFilter = 'viewCount';
+  }
+  var regex = '.*';
+  if (search != '') {
+    regex = regex + search + '.*';
+  }
+  console.log("My regex", regex);
+  itemSet.find({"title" : {$regex: regex}})
+    .limit(15)
+    .sort('-' + sortFilter)
+    .exec(function(err, items) {
+      if(err) throw err;
+      console.log("Sending items now!");
+      res.send(items);
+    })
 }

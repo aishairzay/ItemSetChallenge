@@ -548,13 +548,20 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope, $cookies) 
   }
 }).
 controller('SearchCtrl', function($scope, $http){
+  $scope.search = '';
+  $scope.sortFilter = 'Download Count';
   $scope.itemList = [];
-  var item = {};
-  $http.get('/getAllItems').then(function(response) {
-    for(var i = 0; i < response.data.length; i++) {
-      
-      item = response.data[i];
-      $scope.itemList.push(item);
-    }
-  });
+  $scope.refreshItemSets = function() {
+    var item = {};
+    console.log("Sending", $scope.search);
+    $http.post('/item-set/search', {search:$scope.search, sortFilter:$scope.sortFilter}).then(function(response) {
+      $scope.itemList = [];
+      console.log("all item sets", response.data);
+      for(var i = 0; i < response.data.length; i++) {
+        item = response.data[i];
+        $scope.itemList.push(item);
+      }
+    });
+  }
+  $scope.refreshItemSets();
 })
