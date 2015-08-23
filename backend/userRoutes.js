@@ -38,6 +38,17 @@ exports.register = function(req, res, next) {
       console.log('Registration failed');
       return res.send(info);
     }
-    return res.send({success:true});
+    req.logIn(user, function(err) {
+      if (err) {
+        return next(err);
+      }
+      console.log("Registered and Logged In");
+      return res.send({success:true});
+    });
+    
   })(req, res, next);
+}
+
+exports.isLogged = function(req, res) {
+  res.send(req.user ? req.user: '0');
 }
