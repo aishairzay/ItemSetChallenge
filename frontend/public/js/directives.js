@@ -39,7 +39,7 @@ directive('itemsetlistview', function() {
     },
     templateUrl: 'templates/item-set-list-view.html',
     controller: function($scope) {
-
+      
     }
   }
 });

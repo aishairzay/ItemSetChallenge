@@ -544,7 +544,7 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope) {
     } 
   }
 }).
-controller('SearchCtrl', function($scope, $http){
+controller('SearchCtrl', function($scope, $http, $location){
   $scope.search = '';
   $scope.sortFilter = 'Download Count';
   $scope.itemList = [];
@@ -559,6 +559,9 @@ controller('SearchCtrl', function($scope, $http){
         $scope.itemList.push(item);
       }
     });
+  }
+  $scope.goToHref = function(id) {
+    $location.path('item-set/create/' + id);
   }
   $scope.refreshItemSets();
 })

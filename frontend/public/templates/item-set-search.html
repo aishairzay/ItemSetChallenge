@@ -21,6 +21,6 @@
 			<th>Views</td>
 			<th>Downloads</td>
 		</tr>
-		<tr ng-repeat="item in itemList" itemsetlistview itemset="item"></tr>
+		<tr ng-repeat="item in itemList" class="pointer" ng-click="goToHref(item._id)" itemsetlistview itemset="item"></tr>
 	</table>
 </div>
