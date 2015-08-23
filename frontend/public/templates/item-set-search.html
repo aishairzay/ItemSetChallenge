@@ -1,11 +1,18 @@
 <a class="btn btn-success btn-lg" style="position:relative;width:200;left:50%;margin-left:-100px;"  href="#/item-set/create">Create an Item Set</a>
 <h3 align="center">Or Browse Other Builds</h3>
 
-<input type="text" class="form-control" ng-model="search" placeholder="Title Search" ng-change="refreshItemSets()">
-<select ng-model="sortFilter" ng-change="refreshItemSets()">
-  <option>Download Count</option>
-  <option>View Count</option>
-</select>
+<div style="margin-bottom:10px;" class="row">
+  <div style="left:10%" class="col-sm-6 col-xs-12">
+    Search: <input type="text" class="form-control" ng-model="search" placeholder="Title Search" ng-change="refreshItemSets()">
+  </div>
+  <div style="left:10%;" class="col-sm-6 col-xs-12">
+    Sort by: <select class="form-control" ng-model="sortFilter" ng-change="refreshItemSets()">
+      <option>Download Count</option>
+      <option>View Count</option>
+    </select>
+  </div>
+</div>
+
 <div id="itemSets">
 	<table class="table table-striped table-bordered table-hover">
 		<tr id="tableHeaders">
