@@ -58,6 +58,7 @@ app.post('/item-set/:id/download', itemSetRoutes.incrementDownloadCount);
 app.post('/login', userRoutes.login);
 app.post('/register', userRoutes.register);
 app.get('/logout', userRoutes.logout);
+app.get('/isLogged', userRoutes.isLogged);
 
 // General purpose routes / RIOT API calls
 app.get('/champions', routes.getChampions);

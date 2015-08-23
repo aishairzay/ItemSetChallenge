@@ -3,7 +3,7 @@
 /* Controllers */
 
 angular.module('app.controllers', ['checklist-model', 'ngDragDrop', 'ngCookies']).
-run(function($rootScope, $http, $location, $cookies, $routeParams, $timeout) {
+run(function($rootScope, $http, $location, $routeParams, $timeout) {
   $rootScope.pageError = '';
   $rootScope.pageSuccess = '';
 
@@ -16,6 +16,16 @@ run(function($rootScope, $http, $location, $cookies, $routeParams, $timeout) {
 
       });
   }*/
+  $http.get('/isLogged')
+    .then(function(userdata) {
+      if(userdata.data != 0){
+        $rootScope.isAuthenticated = true;
+        $rootScope.currentUser = userdata.data.username;
+      }else{
+        $rootScope.isAuthenticated = false;
+        $rootScope.currentUser = '';
+      }
+    })
 
   $rootScope.setPageError = function(str) {
     $rootScope.pageError = str;
@@ -32,18 +42,8 @@ run(function($rootScope, $http, $location, $cookies, $routeParams, $timeout) {
       }, 5000);
   }
 
-  //setting default auth status
-  if($cookies.get('userObj')){
-    $rootScope.isAuthenticated = true;
-    $rootScope.currentUser = $cookies.get('userObj').username;
-  }else{
-    $rootScope.isAuthenticated = false;
-    $rootScope.currentUser = '';
-  }
-
   //navbar button functions
   $rootScope.rootLogout = function(){
-    $cookies.remove('userObj');
     $rootScope.isAuthenticated = false;
     $rootScope.currentUser = '';
     $rootScope.setPageSuccess('You have been logged out');
@@ -474,7 +474,7 @@ controller('HomeController', function($scope, $http) {
 controller('ItemSetViewController', function($scope, $http) {
 
 }).
-controller('AuthCtrl', function($scope, $http, $location, $rootScope, $cookies) {
+controller('AuthCtrl', function($scope, $http, $location, $rootScope) {
   $scope.user = {
     username: '',
     password: ''
@@ -502,8 +502,6 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope, $cookies) 
     $http.post('/login', $scope.user)
     .then(function(data){
       if(data.data.info === 'success'){
-        var userObj = data.data.user;
-        $cookies.put('userObj', userObj);
         $rootScope.isAuthenticated = true;
         $rootScope.currentUser = data.data.user.username;
         $('#loginModal').modal('toggle');
@@ -535,7 +533,6 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope, $cookies) 
         $('#loginModal').modal('toggle')
         if(data.data.success){
           var user = $scope.newUser;
-          $cookies.put('userObj', user);
           $rootScope.isAuthenticated = true;
           $rootScope.currentUser = user.username;
           $scope.clearLoginPage();
@@ -549,10 +546,9 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope, $cookies) 
 }).
 controller('SearchCtrl', function($scope, $http){
   $scope.itemList = [];
-  var item = {};
   $http.get('/getAllItems').then(function(response) {
     for(var i = 0; i < response.data.length; i++) {
-      
+      var item = {};
       item = response.data[i];
       $scope.itemList.push(item);
     }
