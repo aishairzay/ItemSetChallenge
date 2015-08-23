@@ -3,10 +3,10 @@
 
 <div style="margin-bottom:10px;" class="row">
   <div style="left:10%" class="col-sm-6 col-xs-12">
-    Search: <input type="text" class="form-control" ng-model="search" placeholder="Title Search" ng-change="refreshItemSets()">
+    Search: <input type="text" class="form-control" ng-model="search" placeholder="Title Search" ng-change="searchChanged()">
   </div>
   <div style="left:10%;" class="col-sm-6 col-xs-12">
-    Sort by: <select class="form-control" ng-model="sortFilter" ng-change="refreshItemSets()">
+    Sort by: <select class="form-control" ng-model="sortFilter" ng-change="searchChanged()">
       <option>Download Count</option>
       <option>View Count</option>
     </select>
@@ -23,4 +23,7 @@
 		</tr>
 		<tr ng-repeat="item in itemList" class="pointer" ng-click="goToHref(item._id)" itemsetlistview itemset="item"></tr>
 	</table>
+</div>
+<div ng-show="count == itemList.length" style="text-align:center">
+    <a ng-click="loadMore()">Load More</a>
 </div>

@@ -160,6 +160,7 @@ exports.getSavedItemSets = function(req, res) {
 exports.searchItems = function(req, res) {
   console.log("req", req);
   var search = req.body.search;
+  var limit = req.body.limit;
   console.log("Got search: ", search);
   if (search == undefined) {
     search = '';
@@ -177,7 +178,7 @@ exports.searchItems = function(req, res) {
   }
   console.log("My regex", regex);
   itemSet.find({"title" : {$regex: regex}})
-    .limit(15)
+    .limit(limit)
     .sort('-' + sortFilter)
     .exec(function(err, items) {
       if(err) throw err;

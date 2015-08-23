@@ -107,7 +107,7 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
 
   $scope.$on('itemsLoaded', function() {
     if ($scope.lists.blocks == '') {
-      $scope.addNewBlock();
+      $scope.addNewBlock(true);
     }
   });
 
@@ -156,9 +156,13 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
 
     // Block controls
     $scope.lists.blocks = [];
-    $scope.addNewBlock = function() {
+    $scope.addNewBlock = function(first) {
+      var type = '';
+      if(first) {
+        type = 'Starting Items';
+      }
       $scope.lists.blocks.push({
-        'type':'', 
+        'type':type, 
         'items':[]
       });
     }
@@ -560,10 +564,11 @@ controller('SearchCtrl', function($scope, $http, $location){
   $scope.search = '';
   $scope.sortFilter = 'Download Count';
   $scope.itemList = [];
+  $scope.count = 10;
   $scope.refreshItemSets = function() {
     var item = {};
     console.log("Sending", $scope.search);
-    $http.post('/item-set/search', {search:$scope.search, sortFilter:$scope.sortFilter}).then(function(response) {
+    $http.post('/item-set/search', {search:$scope.search, sortFilter:$scope.sortFilter, limit: $scope.count}).then(function(response) {
       $scope.itemList = [];
       console.log("all item sets", response.data);
       for(var i = 0; i < response.data.length; i++) {
@@ -571,6 +576,14 @@ controller('SearchCtrl', function($scope, $http, $location){
         $scope.itemList.push(item);
       }
     });
+  }
+  $scope.searchChanged = function() {
+    $scope.count = 10;
+    $scope.refreshItemSets();
+  }
+  $scope.loadMore = function() {
+    $scope.count = $scope.count + 10;
+    $scope.refreshItemSets();
   }
   $scope.goToHref = function(id) {
     $location.path('item-set/create/' + id);
