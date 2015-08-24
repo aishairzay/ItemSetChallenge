@@ -3,6 +3,7 @@ request = require('request'),
 cheerio = require('cheerio'),
 keys = require('../keys.js'),
 phantom = require('phantom'),
+jsonData = require('../jsonData');
 viewRoot = '';
 
 exports.init = function(rootViewDirectory) {
