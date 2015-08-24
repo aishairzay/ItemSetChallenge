@@ -46,11 +46,11 @@ item-sets
 // Routes
 
 // Item set related routes
-app.get('/item-set/user', itemSetRoutes.getSavedItemSets);
+app.get('/item-set/user', userRoutes.isAuth, itemSetRoutes.getSavedItemSets);
 app.post('/item-set/search', itemSetRoutes.searchItems);
 app.get('/item-set/:id', itemSetRoutes.getItemSet);
-app.post('/item-set', itemSetRoutes.createItemSet);
-app.delete('/item-set/:id', itemSetRoutes.deleteItemSet);
+app.post('/item-set', userRoutes.isAuth, itemSetRoutes.createItemSet);
+app.delete('/item-set/:id', userRoutes.isAuth, itemSetRoutes.deleteItemSet);
 app.post('/item-set/:id/view', itemSetRoutes.incrementViewCount);
 app.post('/item-set/:id/download', itemSetRoutes.incrementDownloadCount);
 
