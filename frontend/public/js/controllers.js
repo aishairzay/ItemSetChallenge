@@ -3,7 +3,7 @@
 /* Controllers */
 
 angular.module('app.controllers', ['checklist-model', 'ngDragDrop', 'ngCookies', 'ngAnimate']).
-run(function($rootScope, $http, $location, $routeParams, $timeout) {
+run(function($rootScope, $http, $location, $routeParams, $timeout, authFact) {
   $rootScope.pageError = '';
   $rootScope.pageSuccess = '';
 
@@ -15,8 +15,21 @@ run(function($rootScope, $http, $location, $routeParams, $timeout) {
       }, function(res) {
 
       });
-  }*/
-  $http.get('/user/is-logged-in')
+}*/
+
+authFact.checkAuth().then(function(userdata){
+ if(userdata.data != 0){
+  $rootScope.isAuthenticated = true;
+  $rootScope.currentUser = userdata.data.username;
+}else{
+  $rootScope.isAuthenticated = false;
+  $rootScope.currentUser = '';
+}
+});
+
+
+
+ /* $http.get('/user/is-logged-in')
     .then(function(userdata) {
       if(userdata.data != 0){
         $rootScope.isAuthenticated = true;
@@ -26,21 +39,22 @@ run(function($rootScope, $http, $location, $routeParams, $timeout) {
         $rootScope.currentUser = '';
       }
     })
+*/
 
-  $rootScope.setPageError = function(str) {
-    $rootScope.pageError = str;
-    $timeout(
-      function(){
-        $rootScope.pageError = '';
-      }, 5000);
-  }
-  $rootScope.setPageSuccess = function(str) {
-    $rootScope.pageSuccess = str;
-    $timeout(
-      function(){
-        $rootScope.pageSuccess = '';
-      }, 5000);
-  }
+$rootScope.setPageError = function(str) {
+  $rootScope.pageError = str;
+  $timeout(
+    function(){
+      $rootScope.pageError = '';
+    }, 5000);
+}
+$rootScope.setPageSuccess = function(str) {
+  $rootScope.pageSuccess = str;
+  $timeout(
+    function(){
+      $rootScope.pageSuccess = '';
+    }, 5000);
+}
 
   //navbar button functions
   $rootScope.rootLogout = function(){
@@ -48,8 +62,10 @@ run(function($rootScope, $http, $location, $routeParams, $timeout) {
     $rootScope.currentUser = '';
     $rootScope.setPageSuccess('You have been logged out');
 
-    // no need for log out route, the cookie is the only thing that really matter
-    $http.get('/user/logout').then(function(data){
+    
+    authFact.logout()
+    //$http.get('/user/logout')
+    .then(function(data){
       $location.path('/');
     })
   }
@@ -87,9 +103,9 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
       }
       else {
 
-     }
-   }
-   else if(data.data.success){
+      }
+    }
+    else if(data.data.success){
         // Do nothing
       }
       else {
@@ -490,7 +506,7 @@ controller('HomeController', function($scope, $http) {
 controller('ItemSetViewController', function($scope, $http) {
 
 }).
-controller('AuthCtrl', function($scope, $http, $location, $rootScope) {
+controller('AuthCtrl', function($scope, $http, $location, $rootScope, authFact) {
   $scope.user = {
     username: '',
     password: ''
@@ -515,7 +531,9 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope) {
   }
 
   $scope.login = function(){
-    $http.post('/user/login', $scope.user)
+    authFact.login($scope.user)
+    //$http.post('/user/login', $scope.user)
+    
     .then(function(data){
       if(data.data.info === 'success'){
         $rootScope.isAuthenticated = true;
@@ -544,7 +562,8 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope) {
       $scope.registerError = 'Passwords do not match';
     }
     else {
-      $http.post('/user/register', $scope.newUser)
+      authFact.register($scope.newUser)
+      //$http.post('/user/register', $scope.newUser)
       .then(function(data){
         $('#loginModal').modal('toggle')
         if(data.data.success){

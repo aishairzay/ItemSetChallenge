@@ -67,8 +67,10 @@ exports.register = function(req, res, next) {
   Checks whether or not a user is logged in based on the request.
 */
 exports.isLogged = function(req, res) {
+  console.log("GOT REQUEST TO CHECK");
   res.send(req.user ? req.user: '0');
 }
+
 
 exports.isAuth = function(req, res, next) {
   if(req.isAuthenticated()){
