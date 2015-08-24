@@ -7,6 +7,7 @@ directive('item', function(){
 		},
 		templateUrl: 'templates/item-directive.html',
 		controller: function($scope) {
+      
 		}
 	};
 }).

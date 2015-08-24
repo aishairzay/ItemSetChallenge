@@ -19,17 +19,21 @@ exports.index = function(req, res) {
 
 
 exports.getItems = function(req, res) {
-  request('https://global.api.pvp.net/api/lol/static-data/na/v1.2/item?itemListData=from,gold,groups,into,maps,sanitizedDescription,stats,tags,tree&api_key='+ keys.RIOT_API_KEY, function(err, resp, body) {
+  //request('https://global.api.pvp.net/api/lol/static-data/na/v1.2/item?itemListData=from,gold,groups,into,maps,sanitizedDescription,stats,tags,tree&api_key='+ keys.RIOT_API_KEY, function(err, resp, body) {
     res.setHeader('Content-Type', 'application/json');
-    res.send(body);
-  });
+    res.send(jsonData.items);
+  //});
 }
 
 exports.getChampions = function(req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.parse(jsonData.champions));
+  /*
   request('https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?champData=tags&api_key=' + keys.RIOT_API_KEY, function(err, resp, body) {
     res.setHeader('Content-Type', 'application/json');
     res.send(body);
   });
+*/
 }
 
 var itemArr = [];

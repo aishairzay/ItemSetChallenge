@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-angular.module('app.controllers', ['checklist-model', 'ngDragDrop', 'ngCookies']).
+angular.module('app.controllers', ['checklist-model', 'ngDragDrop', 'ngCookies', 'ngAnimate']).
 run(function($rootScope, $http, $location, $routeParams, $timeout) {
   $rootScope.pageError = '';
   $rootScope.pageSuccess = '';
