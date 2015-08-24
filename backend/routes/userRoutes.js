@@ -69,3 +69,10 @@ exports.register = function(req, res, next) {
 exports.isLogged = function(req, res) {
   res.send(req.user ? req.user: '0');
 }
+
+exports.isAuth = function(req, res, next) {
+  if(req.isAuthenticated()){
+    return next();
+  }
+  return res.send({success: false});
+}
