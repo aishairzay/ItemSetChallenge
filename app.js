@@ -19,6 +19,7 @@ app.use(express.static(path.join(__dirname, 'frontend', 'public')));
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 //app.use(multer()); // for parsing multipart/form-data
+
 //passport configuration
 app.use(session({ secret: 'keyboard cat'}));
 app.use(passport.initialize());
@@ -47,7 +48,7 @@ item-sets
 
 // Item set related routes
 app.get('/item-set/user', userRoutes.isAuth, itemSetRoutes.getSavedItemSets);
-app.post('/item-set/search', itemSetRoutes.searchItems);
+app.post('/item-set/search', itemSetRoutes.searchItemSets);
 app.get('/item-set/:id', itemSetRoutes.getItemSet);
 app.post('/item-set', userRoutes.isAuth, itemSetRoutes.createItemSet);
 app.delete('/item-set/:id', userRoutes.isAuth, itemSetRoutes.deleteItemSet);
