@@ -9,7 +9,10 @@ exports.init = function(m) {
 }
 
 // Itemset routes
-// get /item-set/:id
+/*
+  /item-set/:id
+  Retrieves a single item set based on ID.
+*/
 exports.getItemSet = function(req, res) {
   res.setHeader('Content-Type', 'application/json');
   if (req.params.id == 'undefined') {
@@ -34,7 +37,11 @@ exports.getItemSet = function(req, res) {
       });
   }
 }
-// post /item-set
+
+/*
+  /item-set route
+  Creates an item set  
+*/
 exports.createItemSet = function(req, res) {
   res.setHeader('Content-Type', 'application/json');
   if (!req.user || typeof req.user.username == undefined){
@@ -115,6 +122,10 @@ exports.incrementViewCount = function(req, res) {
       });
 }
 
+/*
+  /item-set/:id/download route
+  Adds a single download to the existing download count for the specified id
+*/
 exports.incrementDownloadCount = function(req, res) {
     var id = req.params.id;
 
@@ -137,11 +148,18 @@ exports.incrementDownloadCount = function(req, res) {
       });
 }
 
-// delete /item-set/:id
+/*
+  /item-set/:id route
+  Deletes the specified item-set
+*/
 exports.deleteItemSet = function(req, res) {
     
 }
 
+/*
+  /item-set/user route
+  Gets all item sets binded to the currently logged in user
+*/
 exports.getSavedItemSets = function(req, res) {
   res.setHeader('Content-Type', 'application/json');
   if (!req.user || typeof req.user.username == undefined){
@@ -157,7 +175,11 @@ exports.getSavedItemSets = function(req, res) {
   }
 }
 
-exports.searchItems = function(req, res) {
+/*
+  /item-set/search route
+  Searches through item-sets given certain queries
+*/
+exports.searchItemSets = function(req, res) {
   console.log("req", req);
   var search = req.body.search;
   var limit = req.body.limit;
