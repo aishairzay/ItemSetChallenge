@@ -55,10 +55,10 @@ app.post('/item-set/:id/view', itemSetRoutes.incrementViewCount);
 app.post('/item-set/:id/download', itemSetRoutes.incrementDownloadCount);
 
 // User related routes
-app.post('/login', userRoutes.login);
-app.post('/register', userRoutes.register);
-app.get('/logout', userRoutes.logout);
-app.get('/isLogged', userRoutes.isLogged);
+app.post('/user/login', userRoutes.login);
+app.post('/user/register', userRoutes.register);
+app.get('/user/logout', userRoutes.logout);
+app.get('/user/is-logged-in', userRoutes.isLogged);
 
 // General purpose routes / RIOT API calls
 app.get('/champions', routes.getChampions);

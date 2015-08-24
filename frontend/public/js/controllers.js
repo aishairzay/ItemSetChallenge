@@ -16,7 +16,7 @@ run(function($rootScope, $http, $location, $routeParams, $timeout) {
 
       });
   }*/
-  $http.get('/isLogged')
+  $http.get('/user/is-logged-in')
     .then(function(userdata) {
       if(userdata.data != 0){
         $rootScope.isAuthenticated = true;
@@ -49,7 +49,7 @@ run(function($rootScope, $http, $location, $routeParams, $timeout) {
     $rootScope.setPageSuccess('You have been logged out');
 
     // no need for log out route, the cookie is the only thing that really matter
-    $http.get('/logout').then(function(data){
+    $http.get('/user/logout').then(function(data){
       $location.path('/');
     })
   }
@@ -515,7 +515,7 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope) {
   }
 
   $scope.login = function(){
-    $http.post('/login', $scope.user)
+    $http.post('/user/login', $scope.user)
     .then(function(data){
       if(data.data.info === 'success'){
         $rootScope.isAuthenticated = true;
@@ -544,7 +544,7 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope) {
       $scope.registerError = 'Passwords do not match';
     }
     else {
-      $http.post('/register', $scope.newUser)
+      $http.post('/user/register', $scope.newUser)
       .then(function(data){
         $('#loginModal').modal('toggle')
         if(data.data.success){
