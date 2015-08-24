@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var session = require('express-session');
 var passport = require('./passport-config.js');
-var itemSet = require('./itemSetSchema.js');
+var itemSet = require('./backend/schemas/itemSetSchema');
 var http = require('http').Server(app);
 var bodyParser = require('body-parser');
 var multer = require('multer');
@@ -31,9 +31,9 @@ app.use(passport.session());
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/item-set-challenge');
 
-var routes = require(path.join(__dirname, 'backend', 'routes')).init(viewRoot);
-var userRoutes = require(path.join(__dirname, 'backend', 'userRoutes')).init(passport);
-var itemSetRoutes = require(path.join(__dirname, 'backend', 'itemSetRoutes')).init(mongoose);
+var routes = require(path.join(__dirname, 'backend', 'routes', 'routes')).init(viewRoot);
+var userRoutes = require(path.join(__dirname, 'backend', 'routes', 'userRoutes')).init(passport);
+var itemSetRoutes = require(path.join(__dirname, 'backend', 'routes', 'itemSetRoutes')).init(mongoose);
 
 /**
 collections to use:

@@ -1,4 +1,4 @@
-var itemSet = require('../itemSetSchema.js');
+var itemSet = require('../schemas/itemSetSchema.js');
 var mongoose;
 var Schema;
 

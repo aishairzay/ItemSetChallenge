@@ -2,6 +2,10 @@ var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
 
+/*
+  Defines schema for an item set in the mongo database
+*/
+
 var itemSetSchema = new Schema({
   //maybe add user info
   date_created: {type: Date, default: Date.now()},

@@ -1,7 +1,7 @@
 var path = require('path'),
 request = require('request'),
 cheerio = require('cheerio'),
-keys = require('../keys.js'),
+keys = require('../../keys.js'),
 phantom = require('phantom'),
 jsonData = require('../jsonData');
 viewRoot = '';
