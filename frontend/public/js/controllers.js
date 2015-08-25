@@ -7,6 +7,11 @@ run(function($rootScope, $http, $location, $routeParams, $timeout, authFact) {
   $rootScope.pageError = '';
   $rootScope.pageSuccess = '';
 
+
+  $rootScope.goToHref = function(id) {
+    $location.path('item-set/create/' + id);
+  }
+
   /*$rootScope.refreshMyBuilds = function() {
     console.log("Yo");
     $http.get('/item-set/user')
@@ -603,9 +608,6 @@ controller('SearchCtrl', function($scope, $http, $location){
   $scope.loadMore = function() {
     $scope.count = $scope.count + 10;
     $scope.refreshItemSets();
-  }
-  $scope.goToHref = function(id) {
-    $location.path('item-set/create/' + id);
   }
   $scope.refreshItemSets();
 })
