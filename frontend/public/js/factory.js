@@ -9,7 +9,7 @@ angular.module('app.factory', [])
 	}
 
 	authFact.login = function(cred) {
-		$http.post('/user/login', cred);
+		return $http.post('/user/login', cred);
 	}
 
 	authFact.register = function(newCred) {
