@@ -153,7 +153,18 @@ exports.incrementDownloadCount = function(req, res) {
   Deletes the specified item-set
 */
 exports.deleteItemSet = function(req, res) {
-    
+  res.setHeader('Content-Type', 'application/json');
+  if (!req.user || typeof req.user.username == undefined) {
+    console.log('Not logged in');
+    res.send({success:false});
+  }
+  else {
+    itemSet.find({_id: req.body.id}, function(err, itemset) {
+      // Verify it is the current logged in user and then delete it.
+      // If it is not the same logged in user as the owner of the itemset, then send success: false
+
+    }); 
+  }
 }
 
 /*
@@ -167,7 +178,7 @@ exports.getSavedItemSets = function(req, res) {
     res.send({success:false});
   } else {
     itemSet.find({user:req.user.username}).
-      select('id title viewCount downloadCount')
+      select('_id title user viewCount downloadCount')
       .exec(function(err, itemSets) {
         if(err) {res.send({success:false});}
         res.send(itemSets);
