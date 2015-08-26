@@ -13,17 +13,6 @@ run(function($rootScope, $http, $location, $routeParams, $timeout, authFact) {
     $location.path('item-set/create/' + id);
   }
 
-  /*$rootScope.refreshMyBuilds = function() {
-    console.log("Yo");
-    $http.get('/item-set/user')
-      .then(function(data) {
-
-        console.log("data", data);
-      }, function(res) {
-
-      });
-}*/
-
 authFact.checkAuth().then(function(userdata){
  if(userdata.data != 0){
   $rootScope.isAuthenticated = true;
@@ -91,7 +80,7 @@ $rootScope.setPageSuccess = function(str) {
 controller('AppController', function($scope, $http) {
 
 }).
-controller('CreateController', function($rootScope, $scope, $http, $routeParams, $location) {
+controller('CreateController', function($rootScope, $scope, $http, $routeParams, $location, $timeout) {
   var id = $routeParams.id;
   $scope.owner = '';
 
@@ -102,14 +91,16 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
   $http.get('/item-set/' + id)
   .then(function(data) {
     if(data.data.success && data.data.itemSet) {
-      if($scope.lists.items.length == 0) {
-        $scope.$on('itemsLoaded', function() {
+      $timeout(function() {
+        if (!$scope.loading) {
           $scope.initialize(data.data.itemSet);
-        })
-      }
-      else {
-
-      }
+        }
+        else {
+          $scope.$on('itemsLoaded', function() {
+            $scope.initialize(data.data.itemSet);
+          });
+        }
+      })      
     }
     else if(data.data.success){
         // Do nothing
@@ -346,11 +337,6 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
         }
       }
       return obj;
-      console.log(obj);
-    }
-
-    $scope.submit = function(maps, champs) {
-      console.log(maps, champs);
     }
 
     $scope.download = function (filename, text) {
@@ -375,7 +361,6 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
       data.itemSetId = id;
       $http.post('/item-set', data)
       .then(function(data) {
-        console.log("data", data);
         if (data.data.success) {
           $location.path( "/" );
           $rootScope.setPageSuccess('Your item set has been successfully saved');
@@ -592,10 +577,8 @@ controller('SearchCtrl', function($scope, $http, $location){
   $scope.count = 10;
   $scope.refreshItemSets = function() {
     var item = {};
-    console.log("Sending", $scope.search);
     $http.post('/item-set/search', {search:$scope.search, sortFilter:$scope.sortFilter, limit: $scope.count}).then(function(response) {
       $scope.itemList = [];
-      console.log("all item sets", response.data);
       for(var i = 0; i < response.data.length; i++) {
         item = response.data[i];
         $scope.itemList.push(item);

@@ -17,11 +17,9 @@ directive('mybuildsmodal', function() {
     templateUrl: 'templates/my-builds-modal.html',
     controller: function($scope, $http, $location, $rootScope) {
       $rootScope.refreshMyBuilds = function() {
-        console.log("Making request");
         $http.get('/item-set/user')
           .then(function(data) {
             // array of item sets -> data.data
-            console.log("data", data);
             $scope.myBuilds = data.data;
           }, function(res) {
             console.log(res);
