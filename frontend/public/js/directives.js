@@ -14,8 +14,6 @@ directive('item', function(){
 directive('mybuildsmodal', function() {
   return {
     restrict: 'E',
-    scope: {
-    },
     templateUrl: 'templates/my-builds-modal.html',
     controller: function($scope, $http, $location, $rootScope) {
       $rootScope.refreshMyBuilds = function() {

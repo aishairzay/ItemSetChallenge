@@ -9,6 +9,7 @@ run(function($rootScope, $http, $location, $routeParams, $timeout, authFact) {
 
 
   $rootScope.goToHref = function(id) {
+    $('#myBuildModal').modal('hide');
     $location.path('item-set/create/' + id);
   }
 
@@ -16,6 +17,7 @@ run(function($rootScope, $http, $location, $routeParams, $timeout, authFact) {
     console.log("Yo");
     $http.get('/item-set/user')
       .then(function(data) {
+
         console.log("data", data);
       }, function(res) {
 
@@ -31,7 +33,6 @@ authFact.checkAuth().then(function(userdata){
   $rootScope.currentUser = '';
 }
 });
-
 
 
  /* $http.get('/user/is-logged-in')
@@ -295,7 +296,7 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
         else{
           $rootScope.setPageError('There was a problem parsing the uploaded file. Make sure you have uploaded a JSON file with all item set fields.');
         }
-        $('#uploadModal').modal('toggle');
+        $('#uploadModal').modal('hide');
         //$scope.data = goodData;
       }
       else if (method == 'probuild') {
@@ -543,7 +544,7 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope, authFact) 
       if(data.data.info === 'success'){
         $rootScope.isAuthenticated = true;
         $rootScope.currentUser = data.data.user.username;
-        $('#loginModal').modal('toggle');
+        $('#loginModal').modal('hide');
         $scope.clearLoginPage();
         $rootScope.setPageSuccess('You are now logged in');
       } else {
@@ -570,7 +571,7 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope, authFact) 
       authFact.register($scope.newUser)
       //$http.post('/user/register', $scope.newUser)
       .then(function(data){
-        $('#loginModal').modal('toggle')
+        $('#loginModal').modal('hide')
         if(data.data.success){
           var user = $scope.newUser;
           $rootScope.isAuthenticated = true;

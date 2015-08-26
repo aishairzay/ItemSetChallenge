@@ -163,7 +163,7 @@ exports.deleteItemSet = function(req, res) {
       // Verify it is the current logged in user and then delete it.
       // If it is not the same logged in user as the owner of the itemset, then send success: false
 
-    }); 
+    });
   }
 }
 
