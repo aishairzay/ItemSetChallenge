@@ -10,7 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    
+
     <link rel="stylesheet" type="text/css" href="css/index.css">
 
     <script src="js/app.js"></script>
@@ -29,7 +29,18 @@
             Item Set Helper
           </a>
         </div>
-        <div class="navbar-collapse collapse">
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li ng-class="{active: isActive('/')}">
+              <a href="#/">Home</a>
+            </li>
+            <li ng-class="{active: isActive('/item-set/create')}">
+              <a href="#/item-set/create">Create</a>
+            </li>
+            <li ng-class="{active: isActive('/browse')}" >
+              <a href="#/browse">Browse</a>
+            </li>
+          </ul>
             <div class="navbar-right">
               <button style="margin-top:7%;" ng-click="refreshMyBuilds()" type="button" ng-show="isAuthenticated" class="btn btn-success" data-toggle="modal" data-target="#myBuildModal">My Builds</button>
               <myBuildsModal></myBuildsModal>

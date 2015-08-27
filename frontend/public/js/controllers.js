@@ -7,6 +7,9 @@ run(function($rootScope, $http, $location, $routeParams, $timeout, authFact) {
   $rootScope.pageError = '';
   $rootScope.pageSuccess = '';
 
+  $rootScope.isActive = function (viewLocation) {
+    return viewLocation === $location.path();
+  };
 
   $rootScope.goToHref = function(id) {
     $('#myBuildModal').modal('hide');
