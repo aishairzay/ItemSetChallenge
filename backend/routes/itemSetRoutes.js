@@ -16,14 +16,12 @@ exports.init = function(m) {
 exports.getItemSet = function(req, res) {
   res.setHeader('Content-Type', 'application/json');
   if (req.params.id == 'undefined') {
-    console.log("HERE");
     res.send({success:true});
   }
   else{
     itemSet.findOne({_id:req.params.id},
       function (err, itemSet) {
         if(err){
-          console.log("Did not find id");
           res.send({success:false});
         }
         else{
@@ -45,13 +43,11 @@ exports.getItemSet = function(req, res) {
 exports.createItemSet = function(req, res) {
   res.setHeader('Content-Type', 'application/json');
   if (!req.user || typeof req.user.username == undefined){
-    console.log('Not logged in');
     res.send({success:false});
   } else{
     if(!req.body.itemSetId) {
       req.body.itemSetId = '';
     }
-    console.log("Looking for itemSetId:", req.body.itemSetId);
     itemSet.findOne({_id:req.body.itemSetId}, function(err, itemS) {
       if (err || itemS.user != req.user.username) {
         // Create new item set attached to the current user
@@ -74,7 +70,6 @@ exports.createItemSet = function(req, res) {
           else {
             res.send({success:true});
           }
-          console.log('item set saved successfully');
         });
       }
       else {
@@ -93,7 +88,6 @@ exports.createItemSet = function(req, res) {
           else {
             res.send({success:true});
           }
-          console.log('item set updated successfully');
         });
       }
     });
@@ -106,7 +100,6 @@ exports.incrementViewCount = function(req, res) {
     itemSet.findOne({_id:req.params.id},
       function (err, itemSet) {
         if(err){
-          console.log("Did not find id");
           res.send({success:false});
         }
         else{
@@ -132,7 +125,6 @@ exports.incrementDownloadCount = function(req, res) {
     itemSet.findOne({_id:req.params.id},
       function (err, itemSet) {
         if(err){
-          console.log("Did not find id");
           res.send({success:false});
         }
         else{
@@ -155,14 +147,28 @@ exports.incrementDownloadCount = function(req, res) {
 exports.deleteItemSet = function(req, res) {
   res.setHeader('Content-Type', 'application/json');
   if (!req.user || typeof req.user.username == undefined) {
-    console.log('Not logged in');
     res.send({success:false});
   }
   else {
-    itemSet.find({_id: req.body.id}, function(err, itemset) {
-      // Verify it is the current logged in user and then delete it.
-      // If it is not the same logged in user as the owner of the itemset, then send success: false
-
+    itemSet.find({_id: req.params.id}, function(err, itemsets) {
+      if(itemsets.length == 0) {
+        res.send({success: false});
+      }
+      else {
+        var itemset = itemsets[0];
+        if (itemset.user == req.user.username) {
+          itemSet.remove({_id: req.params.id}, function(err, result) {
+            return res.send({success:true});
+          });  
+        }
+        else {
+          console.log("Failed 2");
+          return res.send({success:false});
+        }
+      }
+    }, function(res) {
+      console.log("Failed 3");
+      res.send({success: false});
     });
   }
 }
@@ -174,7 +180,6 @@ exports.deleteItemSet = function(req, res) {
 exports.getSavedItemSets = function(req, res) {
   res.setHeader('Content-Type', 'application/json');
   if (!req.user || typeof req.user.username == undefined){
-    console.log('Not logged in');
     res.send({success:false});
   } else {
     itemSet.find({user:req.user.username}).
@@ -191,10 +196,8 @@ exports.getSavedItemSets = function(req, res) {
   Searches through item-sets given certain queries
 */
 exports.searchItemSets = function(req, res) {
-  console.log("req", req);
   var search = req.body.search;
   var limit = req.body.limit;
-  console.log("Got search: ", search);
   if (search == undefined) {
     search = '';
   }
@@ -209,13 +212,11 @@ exports.searchItemSets = function(req, res) {
   if (search != '') {
     regex = regex + search + '.*';
   }
-  console.log("My regex", regex);
   itemSet.find({"title" : {$regex: regex}})
     .limit(limit)
     .sort('-' + sortFilter)
     .exec(function(err, items) {
       if(err) throw err;
-      console.log("Sending items now!");
       res.send(items);
     })
 }

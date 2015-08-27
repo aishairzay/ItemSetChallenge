@@ -570,7 +570,7 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope, authFact) 
     } 
   }
 }).
-controller('SearchCtrl', function($scope, $http, $location){
+controller('SearchCtrl', function($scope, $http, $location, $timeout){
   $scope.search = '';
   $scope.sortFilter = 'Download Count';
   $scope.itemList = [];
@@ -583,6 +583,7 @@ controller('SearchCtrl', function($scope, $http, $location){
         item = response.data[i];
         $scope.itemList.push(item);
       }
+      console.log("My itemset: ", $scope.itemList);
     });
   }
   $scope.searchChanged = function() {

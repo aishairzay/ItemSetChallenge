@@ -50,7 +50,6 @@ exports.proBuilds = function(req, res) {
   phantom.create(function (ph) {
     ph.createPage(function (page) {
       page.open(req.body.value, function (status) {
-        console.log("opened " + req.body.value, status);
         page.evaluate(function () { 
           return [document.body.innerHTML, document.title]; 
         }, function (result) {

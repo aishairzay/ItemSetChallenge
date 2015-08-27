@@ -26,17 +26,21 @@ directive('mybuildsmodal', function() {
           });
       }
       $rootScope.refreshMyBuilds();
-    }
-  }
-}).
-directive('itemsetlistview', function() {
-  return{
-    scope: {
-      itemset: '='
-    },
-    templateUrl: 'templates/item-set-list-view.html',
-    controller: function($scope) {
-      
+
+      $scope.deleteBuild = function(index, id) {
+        console.log("IM HERE DELETING AN ITEM SET:", id);
+        console.log("index", index);
+        $http.delete('/item-set/' + id)
+          .then(function(data) {
+            if (data.data.success) {
+              $scope.myBuilds.splice(index, 1);
+            }
+            else {
+              $('#myBuildModal').modal('hide');
+              $rootScope.pageError = 'Something went wrong, please refresh the page';
+            }
+          })
+      }
     }
   }
 });

@@ -12,7 +12,6 @@ exports.init = function(pp) {
 exports.logout = function(req, res, next){
   req.logout();
   res.end();
-  console.log('Logged out');
 }
 
 /*
@@ -24,15 +23,13 @@ exports.login = function(req, res, next) {
     if (err) { 
       return next(err);
     }
-    if (!user) { 
-      console.log('Login failed');
+    if (!user) {
       return res.send(info); 
     }
     req.logIn(user, function(err) {
       if (err) { 
         return next(err); 
       }
-      console.log("Signed in");
       return res.send(info);
     });
   })(req, res, next);
@@ -48,14 +45,12 @@ exports.register = function(req, res, next) {
       return next(err);
     }
     if(!user) {
-      console.log('Registration failed');
       return res.send(info);
     }
     req.logIn(user, function(err) {
       if (err) {
         return next(err);
       }
-      console.log("Registered and Logged In");
       return res.send({success:true});
     });
     
@@ -67,11 +62,12 @@ exports.register = function(req, res, next) {
   Checks whether or not a user is logged in based on the request.
 */
 exports.isLogged = function(req, res) {
-  console.log("GOT REQUEST TO CHECK");
   res.send(req.user ? req.user: '0');
 }
 
-
+/*
+  Checks if a user is curretly is logged in and allows the next function to run if so
+*/
 exports.isAuth = function(req, res, next) {
   if(req.isAuthenticated()){
     return next();

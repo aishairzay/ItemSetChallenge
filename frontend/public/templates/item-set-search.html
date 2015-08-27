@@ -21,7 +21,12 @@
 			<th>Views</td>
 			<th>Downloads</td>
 		</tr>
-		<tr ng-repeat="item in itemList" class="pointer" ng-click="goToHref(item._id)" itemsetlistview itemset="item"></tr>
+    <tr ng-repeat="item in itemList" class="pointer" ng-click="goToHref(item._id)">
+      <td>{{item.title}}</td>
+      <td>{{item.user}}</td>
+      <td>{{item.viewCount}}</td>
+      <td>{{item.downloadCount}}</td>
+    </tr>
 	</table>
 </div>
 <div ng-show="count == itemList.length" style="text-align:center">

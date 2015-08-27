@@ -2,7 +2,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
-        HERE WE ARE
+        <h3>{{currentUser}}'s Builds</h3>
         <table class="table table-striped table-bordered table-hover">
           <tr id="tableHeaders">
             <th>Name of Item Set</td>
@@ -10,7 +10,17 @@
             <th>Views</td>
             <th>Downloads</td>
           </tr>
-          <tr ng-repeat="item in myBuilds" class="pointer" ng-click="goToHref(item._id)" itemsetlistview itemset="item"></tr>
+          <tr ng-repeat="item in myBuilds" class="pointer">
+            <td ng-click="goToHref(item._id)">{{item.title}}</td>
+            <td ng-click="goToHref(item._id)">{{item.user}}</td>
+            <td ng-click="goToHref(item._id)">{{item.viewCount}}</td>
+            <td ng-click="goToHref(item._id)">
+              {{item.downloadCount}}
+            </td>
+            <td>
+            <span style="font-size:1.3em;color:black;position:relative;margin-left:20%" class="glyphicon glyphicon-remove-circle center" ng-click="deleteBuild($index, item._id)"></span>
+            </td>
+          </tr>
         </table>
       </div>
     </div>
