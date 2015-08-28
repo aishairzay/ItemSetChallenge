@@ -8,6 +8,10 @@ run(function($rootScope, $http, $location, $routeParams, $timeout, authFact) {
   $rootScope.pageSuccess = '';
 
   $rootScope.isActive = function (viewLocation) {
+    if(viewLocation == '/item-set/create' && $location.path().indexOf('create') != -1)
+    {
+      return true;
+    }
     return viewLocation === $location.path();
   };
 
@@ -84,6 +88,9 @@ controller('AppController', function($scope, $http) {
 
 }).
 controller('CreateController', function($rootScope, $scope, $http, $routeParams, $location, $timeout) {
+  $scope.allItems = [];
+  $scope.allItemsMap = {};
+  $scope.itemMap = {};
   var id = $routeParams.id;
   $scope.owner = '';
 
@@ -115,6 +122,46 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
       $rootScope.setPageError('Could not find specified item-set');
     });
 
+
+  $scope.refreshValues = function() {
+    $timeout(function(){
+      var totalValue = 0;
+      $scope.allItems.splice(0, $scope.allItems.length);
+      $scope.itemMap.length = 0;
+      var blocks = $scope.lists.blocks;
+      for (var i=0; i<blocks.length;i++) {
+        var block = blocks[i];
+        var items = block.items;
+        for(var j=0; j < items.length;j++) {
+          var item = items[j];
+          $scope.allItems.push(item.id);
+          $scope.itemMap[item.id] = item;
+        }
+      }
+      for(var i = 0; i<$scope.allItems.length; i++ ) {
+        var itemNum = $scope.allItems[i];
+        var item = $scope.allItemsMap[itemNum];
+        if (item.from && item.from.length > 0) {
+          var from = item.from;
+          var value = item.gold.base;
+          for(var j =0;j<from.length;j++){
+            var id = from[j];
+            if (!(id in $scope.itemMap)) {
+              value = value + $scope.allItemsMap[id].gold.base;
+            }
+            else {
+              delete $scope.itemMap[id];
+            }
+          } 
+          totalValue = totalValue + value;
+        }
+        else {
+          totalValue = totalValue + item.gold.total;
+        }
+      }
+      console.log(totalValue);
+    }, 100);
+  }
 
   $scope.lists = {
     "blocks":[],
@@ -160,6 +207,7 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
         if(items.hasOwnProperty(key)) {
           var obj = items[key];
           $scope.lists.items.push(obj);
+          $scope.allItemsMap[obj.id] = obj;
           $scope.categories = _.union($scope.categories, obj.tags);
 
         }
@@ -177,12 +225,15 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
       if(first) {
         type = 'Starting Items';
       }
+      var value = 0;
       $scope.lists.blocks.push({
         'type':type, 
-        'items':[]
+        'items':[],
+        'value': value
       });
     }
     $scope.removeBlock = function(index) {
+      $scope.refreshValues();
       $scope.lists.blocks.splice(index, 1);
     }
 
@@ -586,7 +637,6 @@ controller('SearchCtrl', function($scope, $http, $location, $timeout){
         item = response.data[i];
         $scope.itemList.push(item);
       }
-      console.log("My itemset: ", $scope.itemList);
     });
   }
   $scope.searchChanged = function() {

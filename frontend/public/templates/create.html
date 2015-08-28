@@ -100,7 +100,7 @@
 
     <div class="row" style="margin-left:5%">
       <div class="col-xs-12 col-md-6" >
-        <p><strong>Give your item set a title:</strong>
+        <p><strong>Give your item set a descriptive title:</strong>
           <input class="dark form-control" type="text" ng-model="itemSetTitle" placeholder="Title">
         </p>
       </div>
@@ -216,7 +216,7 @@
                     <ul class="block-item-wrap" 
                       data-drop="true"
                       ng-model="block.items"
-                      jqyoui-droppable="{deepCopy:true,multiple:true}">
+                      jqyoui-droppable="{deepCopy:true,multiple:true,onDrop:refreshValues()}">
                       <li ng-repeat="item in block.items track by $index"
                         data-drag="true"
                         ng-model="block.items"
