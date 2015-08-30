@@ -159,7 +159,7 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
           totalValue = totalValue + item.gold.total;
         }
       }
-      console.log(totalValue);
+      $scope.totalValue = totalValue;
     }, 100);
   }
 
@@ -228,13 +228,17 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
       var value = 0;
       $scope.lists.blocks.push({
         'type':type, 
-        'items':[],
-        'value': value
+        'items':[]
       });
     }
     $scope.removeBlock = function(index) {
       $scope.refreshValues();
       $scope.lists.blocks.splice(index, 1);
+    }
+
+    $scope.removeBlockItem = function(block, index) {
+      block.items.splice(index,1);
+      $scope.refreshValues();
     }
 
     // Champ controls

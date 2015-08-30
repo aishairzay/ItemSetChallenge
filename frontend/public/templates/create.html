@@ -195,6 +195,18 @@
     </div>
     <br/>
     </div>
+    <div class="summary row">
+      <div class="col-xs-4">
+        <p class="center" align="center">Total Value: <b>{{totalValue}}</b></p>
+      </div>
+      <div class="col-xs-1">
+        <p align="right"><b>Stats:</b></p>
+      </div>
+      <div class="col-xs-7">
+        <p>Stat here</p>
+        <p>Stat 2 here</p>
+      </div>
+    </div>
     <div class="row block-row">
       <div class="col-xs-12">
         <ul>
@@ -218,7 +230,7 @@
                         data-jqyoui-options="{revert: 'invalid', helper: 'clone'}"
                         jqyoui-draggable="{index:{{$index}}, placeholder:false, deepCopy:true}">
                         <item class="item" data='item'></item>
-                        <span style="z-index:100;font-size:1.1em;color:black;position:relative;margin-left:95%;margin-top:-95%" class="glyphicon glyphicon-remove-circle" ng-click="block.items.splice($index,1)"></span>
+                        <span style="z-index:100;font-size:1.1em;color:black;position:relative;margin-left:95%;margin-top:-95%" class="glyphicon glyphicon-remove-circle" ng-click="removeBlockItem(block, $index)"></span>
                       </li>
                     </ul>
                   </div>

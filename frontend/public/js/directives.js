@@ -28,8 +28,6 @@ directive('mybuildsmodal', function() {
       $rootScope.refreshMyBuilds();
 
       $scope.deleteBuild = function(index, id) {
-        console.log("IM HERE DELETING AN ITEM SET:", id);
-        console.log("index", index);
         $http.delete('/item-set/' + id)
           .then(function(data) {
             if (data.data.success) {
