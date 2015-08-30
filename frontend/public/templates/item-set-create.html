@@ -60,12 +60,7 @@
               <div class="modal-body">
                 
                 <div ng-init="uploadMethod='file'"></div>
-                <div ng-click="uploadMethod='file'">
-                  <input ng-model="uploadMethod" type="radio" name="uploadMethod" value="file"/>File Upload
-                </div>
-                <div ng-click="uploadMethod='probuild'">
-                  <input ng-model="uploadMethod" type="radio" name="uploadMethod" value="probuild"/>Probuild
-                </div>
+                
                 <hr/>
 
                 <div id="item-upload-wrapper" ng-show="uploadMethod=='file'">
