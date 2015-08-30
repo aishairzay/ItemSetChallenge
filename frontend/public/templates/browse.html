@@ -1,16 +1,16 @@
-<a class="btn btn-success btn-lg" style="position:relative;width:200;left:50%;margin-left:-100px;"  href="#/item-set/create">Create an Item Set</a>
-<h3 align="center">Or Browse Other Builds</h3>
+<h3 style="margin-top:5px" align="center">Browse Builds</h3>
 
-<div style="margin-bottom:10px;" class="row">
-  <div style="left:10%" class="col-sm-6 col-xs-12">
+<div style="margin-left:20px;margin-bottom:10px;" class="row">
+  <div class="col-sm-4 col-xs-12">
     Search: <input type="text" class="form-control" ng-model="search" placeholder="Title Search" ng-change="searchChanged()">
   </div>
-  <div style="left:10%;" class="col-sm-6 col-xs-12">
+  <div class="col-sm-4 col-xs-12">
     Sort by: <select class="form-control" ng-model="sortFilter" ng-change="searchChanged()">
       <option>Download Count</option>
       <option>View Count</option>
     </select>
   </div>
+  <a align="center" class="col-sm-4 col-xs-12 btn btn-success btn-md form-control" style="margin-left:5%width:150px;margin-top:20px" href="#/item-set/create">Create your own build!</a>
 </div>
 
 <div id="itemSets">
@@ -21,7 +21,12 @@
 			<th>Views</td>
 			<th>Downloads</td>
 		</tr>
-		<tr ng-repeat="item in itemList" class="pointer" ng-click="goToHref(item._id)" itemsetlistview itemset="item"></tr>
+    <tr ng-repeat="item in itemList" class="pointer" ng-click="goToHref(item._id)">
+      <td>{{item.title}}</td>
+      <td>{{item.user}}</td>
+      <td>{{item.viewCount}}</td>
+      <td>{{item.downloadCount}}</td>
+    </tr>
 	</table>
 </div>
 <div ng-show="count == itemList.length" style="text-align:center">
