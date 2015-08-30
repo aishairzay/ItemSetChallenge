@@ -3,8 +3,9 @@
     <img ng-mouseover="showPopover=true" ng-mouseleave="showPopover=false" height="36" width="36" ng-src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/item/{{data.id}}.png">
   </div>
 </div>
-<div class="item-popover" ng-show="showPopover"> 
+<div class="item-popover" ng-show="showPopover">
   <h5><b>{{data.name}}</b></h5>
+  <p>Cost: <b>{{data.gold.total}}</b></p>
   <p>{{data.plaintext}}</p>
   <h5>{{data.sanitizedDescription}}</h5>
 </div>

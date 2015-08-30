@@ -88,6 +88,8 @@ controller('AppController', function($scope, $http) {
 
 }).
 controller('CreateController', function($rootScope, $scope, $http, $routeParams, $location, $timeout) {
+  $scope.totalValue = 0;
+  $scope.stats = [];
   $scope.allItems = [];
   $scope.allItemsMap = {};
   $scope.itemMap = {};
@@ -126,8 +128,10 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
   $scope.refreshValues = function() {
     $timeout(function(){
       var totalValue = 0;
+      var finalItems = [];
       $scope.allItems.splice(0, $scope.allItems.length);
       $scope.itemMap.length = 0;
+      $scope.stats.splice(0, $scope.stats.length);
       var blocks = $scope.lists.blocks;
       for (var i=0; i<blocks.length;i++) {
         var block = blocks[i];
@@ -136,8 +140,11 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
           var item = items[j];
           $scope.allItems.push(item.id);
           $scope.itemMap[item.id] = item;
+          finalItems.push(item.id);
         }
       }
+      
+      var statMap = {};
       for(var i = 0; i<$scope.allItems.length; i++ ) {
         var itemNum = $scope.allItems[i];
         var item = $scope.allItemsMap[itemNum];
@@ -147,17 +154,39 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
           for(var j =0;j<from.length;j++){
             var id = from[j];
             if (!(id in $scope.itemMap)) {
-              value = value + $scope.allItemsMap[id].gold.base;
+              value = value + $scope.allItemsMap[id].gold.total;
             }
             else {
               delete $scope.itemMap[id];
+              var idx = finalItems.indexOf(parseInt(id));
+              if(idx != -1) {
+                finalItems.splice(idx, 1);
+              }
             }
-          } 
+          }
           totalValue = totalValue + value;
         }
         else {
           totalValue = totalValue + item.gold.total;
         }
+      }
+      for(var i = 0; i < finalItems.length; i++) {
+        var itemId = finalItems[i];
+        var item = $scope.allItemsMap[itemId];
+        var stats = item.stats;
+        for (var key in stats) {
+          if (key in statMap) {
+            statMap[key] = statMap[key] + stats[key];
+          }
+          else {
+            statMap[key] = stats[key];
+          }
+        }
+      }
+
+      for (var key in statMap) {
+        var obj = {name: key, value: statMap[key]};
+        $scope.stats.push(obj);
       }
       $scope.totalValue = totalValue;
     }, 100);
@@ -176,6 +205,15 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
 
   $scope.fixName = function(name) {
     var newStr = '';
+    if(name.substr(0,7) == 'Percent') {
+      name = name.substr(7);
+    }
+    if(name.substr(0,4) == 'Flat') {
+      name = name.substr(4);
+    }
+    if(name.substr(name.length-3) == 'Mod') {
+      name = name.substr(0, name.length-3);
+    }
     for (var i in name) {
       var c = name[i]
       if (c == c.toUpperCase()) {
@@ -184,6 +222,15 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
       newStr += c;
     }
     return newStr;
+  }
+
+  $scope.fixStat = function(name, stat) {
+    if(name.substr(0,7) == 'Percent') {
+      return +((stat * 100).toFixed(2)) + '%';
+    }
+    else {
+      return +(stat.toFixed(2));
+    }
   }
 
     // Item controls
@@ -209,7 +256,6 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
           $scope.lists.items.push(obj);
           $scope.allItemsMap[obj.id] = obj;
           $scope.categories = _.union($scope.categories, obj.tags);
-
         }
       }
       $scope.$broadcast('itemsLoaded', {});
