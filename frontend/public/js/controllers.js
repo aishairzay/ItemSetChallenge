@@ -225,7 +225,7 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
   }
 
   $scope.fixStat = function(name, stat) {
-    if(name.substr(0,7) == 'Percent') {
+    if (name.indexOf('CritChance') != -1 || name.substr(0,7) == 'Percent') {
       return +((stat * 100).toFixed(2)) + '%';
     }
     else {
