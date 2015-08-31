@@ -353,7 +353,7 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
     Assists with the filtering and selecting of champs in the additional options pan.
   */
   $scope.champFilter = 'All';
-  $scope.championView = 'All';
+  $scope.champView = 'All';
   $scope.champs = [];
   $scope.championSearch = '';
   $scope.inRightChampCategory = function(categories) {
@@ -510,6 +510,20 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
      which MUST adhere to the RIOT item-set JSON format
   */
   $scope.initialize = function(data) {
+    //champView
+    //champFilter
+    //champs
+    var championData = data.champions;
+    if(championData) {
+      if (championData.all) {
+        $scope.champFilter = 'All';
+      }
+      else {
+        for (var i=0; i<championData.names.length; i++) {
+          $scope.champs.push(championData.names[i]);
+        }
+      }
+    }
     $scope.itemSetTitle = data.title;
     if(data.user) {
       $scope.owner = data.user;
