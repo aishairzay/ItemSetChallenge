@@ -83,6 +83,8 @@ exports.createItemSet = function(req, res) {
         itemS.priority = req.body.mode;
         itemS.sortrank = req.body.sortrank;
         itemS.blocks = req.body.blocks;
+        itemS.champions = req.body.champions;
+        itemS.allChamps = req.body.allChamps;
         itemS.save(function(err){
           if (err) {
             res.send({success:false});
