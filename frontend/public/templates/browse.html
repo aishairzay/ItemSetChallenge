@@ -1,16 +1,19 @@
 <h3 style="margin-top:5px" align="center">Browse Builds</h3>
 
 <div style="margin-left:20px;margin-bottom:10px;" class="row">
-  <div class="col-sm-4 col-xs-12">
-    Search: <input type="text" class="form-control" ng-model="search" placeholder="Title Search" ng-change="searchChanged()">
+  <div class="col-sm-3 col-xs-12">
+    Title Search: <input type="text" class="form-control" ng-model="titleSearch" placeholder="Title Search" ng-change="searchChanged()" style="width:250px;">
   </div>
-  <div class="col-sm-4 col-xs-12">
-    Sort by: <select class="form-control" ng-model="sortFilter" ng-change="searchChanged()">
+  <div class="col-sm-3 col-xs-12">
+    Champion Search: <input type="text" class="form-control" ng-model="champSearch" placeholder="Champion Search" ng-change="searchChanged()" style="width:250px;">
+  </div>
+  <div class="col-sm-3 col-xs-12">
+    Sort by: <select class="form-control" ng-model="sortFilter" ng-change="searchChanged()" style="width:250px;">
       <option>Download Count</option>
       <option>View Count</option>
     </select>
   </div>
-  <a align="center" class="col-sm-4 col-xs-12 btn btn-success btn-md form-control" style="margin-left:5%width:150px;margin-top:20px" href="#/item-set/create">Create your own build!</a>
+  <a align="center" class="col-sm-3 col-xs-12 btn btn-success btn-md form-control" style="margin-left:5%;width:180px;margin-top:20px" href="#/item-set/create">Create your own build!</a>
 </div>
 
 <div id="itemSets">

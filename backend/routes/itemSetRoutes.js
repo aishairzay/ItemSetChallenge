@@ -197,6 +197,7 @@ exports.getSavedItemSets = function(req, res) {
 */
 exports.searchItemSets = function(req, res) {
   var search = req.body.search;
+  var champSearch = req.body.champSearch;
   var limit = req.body.limit;
   if (search == undefined) {
     search = '';

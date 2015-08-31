@@ -480,9 +480,14 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);
+    $rootScope.pageSuccess = ("Your item set has been downloaded, Place the JSON file in your League of Legends folder at: \n League of Legends\\Config\\Global\\Recommended\\ \n OR \n League of Legends\\Config\\Champions\\{championKey}\\Recommended\\");
+    $("html, body").animate({ scrollTop: 0 }, "slow");
   }
   $scope.createDoc = function() {
     var data = $scope.buildObj();
+    if(data.champions) {
+      delete data['champions']
+    }
     $scope.download($scope.itemSetTitle + '.json', JSON.stringify(data));
   }
   /*
@@ -634,6 +639,13 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
       title = 'UnnamedItemSet'
     }
 
+    var championNames = $scope.champs;
+    var all = false;
+    if($scope.champView == 'All' || championNames.length == $rootScope.champions.length) {
+      all = true;
+      championNames = [];
+    }
+
     var data = {
       title: title,
       type:'custom',
@@ -641,7 +653,11 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
       mode:'any',
       priority: false,
       sortrank: 0,
-      blocks: blocks
+      blocks: blocks,
+      champions: {
+        all: all,
+        names: championNames
+      }
     };
     return data;
   }
@@ -733,7 +749,7 @@ controller('AuthCtrl', function($scope, $http, $location, $rootScope, authFact) 
 
 // Controller for the Browse page
 controller('SearchCtrl', function($scope, $http, $location, $timeout){
-  $scope.search = '';
+  $scope.titleSearch = '';
   $scope.sortFilter = 'Download Count';
   $scope.itemList = [];
   $scope.count = 10;
@@ -742,7 +758,7 @@ controller('SearchCtrl', function($scope, $http, $location, $timeout){
   // Only retrieves $scope.count amount of results, which is increaswed when loadmore is clicked.
   $scope.refreshItemSets = function() {
     var item = {};
-    $http.post('/item-set/search', {search:$scope.search, sortFilter:$scope.sortFilter, limit: $scope.count}).then(function(response) {
+    $http.post('/item-set/search', {search:$scope.titleSearch, champSearch:$scope.champSearch, sortFilter:$scope.sortFilter, limit: $scope.count}).then(function(response) {
       $scope.itemList = [];
       for(var i = 0; i < response.data.length; i++) {
         item = response.data[i];
