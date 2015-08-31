@@ -61,7 +61,9 @@ exports.createItemSet = function(req, res) {
           sortrank: req.body.sortrank,
           blocks: req.body.blocks,
           viewCount: 1,
-          downloadCount: 1
+          downloadCount: 1,
+          allChamps: req.body.allChamps,
+          champions: req.body.champions
         });
         newItemSet.save(function(err){
           if (err) {

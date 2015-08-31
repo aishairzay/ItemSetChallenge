@@ -18,7 +18,9 @@ var itemSetSchema = new Schema({
   sortrank: Number,
   blocks: [Schema.Types.Mixed],
   viewCount: Number,
-  downloadCount: Number
+  downloadCount: Number,
+  allChamps: Boolean,
+  champions: [String]
 });
 
 module.exports = mongoose.model('itemSet', itemSetSchema);

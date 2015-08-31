@@ -486,7 +486,10 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
   $scope.createDoc = function() {
     var data = $scope.buildObj();
     if(data.champions) {
-      delete data['champions']
+      delete data['champions'];
+    }
+    if(data.allChamps) {
+      delete data['allChamps'];
     }
     $scope.download($scope.itemSetTitle + '.json', JSON.stringify(data));
   }
@@ -515,17 +518,16 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
      which MUST adhere to the RIOT item-set JSON format
   */
   $scope.initialize = function(data) {
-    //champView
-    //champFilter
-    //champs
-    var championData = data.champions;
-    if(championData) {
-      if (championData.all) {
+    var champions = data.champions;
+    var allChamps = data.allChamps;
+    if(champions && allChamps) {
+      if(allChamps) {
         $scope.champFilter = 'All';
       }
-      else {
-        for (var i=0; i<championData.names.length; i++) {
-          $scope.champs.push(championData.names[i]);
+      else{
+        $scope.champFilter = 'Custom';
+        for (var i=0; i<champions.length; i++) {
+          $scope.champs.push(champions[i]);
         }
       }
     }
@@ -654,10 +656,8 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
       priority: false,
       sortrank: 0,
       blocks: blocks,
-      champions: {
-        all: all,
-        names: championNames
-      }
+      allChamps: all,
+      champions: championNames
     };
     return data;
   }
