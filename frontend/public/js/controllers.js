@@ -753,14 +753,19 @@ controller('SearchCtrl', function($scope, $http, $location, $timeout){
   $scope.sortFilter = 'Download Count';
   $scope.itemList = [];
   $scope.count = 10;
+  $scope.champSearch = 'All';
 
   // Retrieves item sets given all of the query options from the page's fields.
   // Only retrieves $scope.count amount of results, which is increaswed when loadmore is clicked.
   $scope.refreshItemSets = function() {
     var item = {};
-    $http.post('/item-set/search', {search:$scope.titleSearch, champSearch:$scope.champSearch, sortFilter:$scope.sortFilter, limit: $scope.count}).then(function(response) {
+    var champSearch = $scope.champSearch.trim();
+    if(champSearch == 'All') {
+      champSearch = '';
+    }
+    $http.post('/item-set/search', {search:$scope.titleSearch, champSearch:champSearch, sortFilter:$scope.sortFilter, limit: $scope.count}).then(function(response) {
       $scope.itemList = [];
-      for(var i = 0; i < response.data.length; i++) {
+      for (var i = 0; i < response.data.length; i++) {
         item = response.data[i];
         $scope.itemList.push(item);
       }

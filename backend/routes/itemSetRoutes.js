@@ -80,7 +80,7 @@ exports.createItemSet = function(req, res) {
         itemS.type = req.body.type;
         itemS.map = req.body.map;
         itemS.mode = req.body.mode;
-        itemS.priority = req.body.mode;
+        itemS.priority = req.body.priority;
         itemS.sortrank = req.body.sortrank;
         itemS.blocks = req.body.blocks;
         itemS.champions = req.body.champions;
@@ -166,12 +166,10 @@ exports.deleteItemSet = function(req, res) {
           });  
         }
         else {
-          console.log("Failed 2");
           return res.send({success:false});
         }
       }
     }, function(res) {
-      console.log("Failed 3");
       res.send({success: false});
     });
   }
@@ -201,7 +199,7 @@ exports.getSavedItemSets = function(req, res) {
 */
 exports.searchItemSets = function(req, res) {
   var search = req.body.search;
-  var champSearch = req.body.champSearch;
+  var champSearch = req.body.champSearch.toLowerCase();
   var limit = req.body.limit;
   if (search == undefined) {
     search = '';
@@ -217,11 +215,28 @@ exports.searchItemSets = function(req, res) {
   if (search != '') {
     regex = regex + search + '.*';
   }
-  itemSet.find({"title" : {$regex: regex}})
+  console.log("ChampSearch length:", champSearch.length);
+  if(champSearch.length == 0) {
+    itemSet.find({"title" : {$regex: regex}})
     .limit(limit)
     .sort('-' + sortFilter)
     .exec(function(err, items) {
       if(err) throw err;
       res.send(items);
     })
+  }
+  else {
+    champSearch = champSearch.charAt(0).toUpperCase() + champSearch.slice(1);
+    console.log("champSearch", champSearch);
+    itemSet.find({"allChamps" : false})
+    .find({"champions" : champSearch})
+    .find({"title" : {$regex: regex}})
+    .limit(limit)
+    .sort('-' + sortFilter)
+    .exec(function(err, items) {
+      if(err) throw err;
+      res.send(items);
+    })
+  }
+
 }

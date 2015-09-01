@@ -2,13 +2,19 @@
 
 <div style="margin-left:20px;margin-bottom:10px;" class="row">
   <div class="col-sm-3 col-xs-12">
-    Title Search: <input type="text" class="form-control" ng-model="titleSearch" placeholder="Title Search" ng-change="searchChanged()" style="width:250px;">
+    Title Search <input type="text" class="form-control" ng-model="titleSearch" placeholder="Title Search" ng-change="searchChanged()" style="width:250px;">
   </div>
   <div class="col-sm-3 col-xs-12">
-    Champion Search: <input type="text" class="form-control" ng-model="champSearch" placeholder="Champion Search" ng-change="searchChanged()" style="width:250px;">
+    Champion Search 
+    <select class="form-control" ng-model="champSearch" ng-change="searchChanged()" style="width:250px;">
+      <option>All</option>
+      <option ng-repeat="champ in champions | orderBy:'name'" >
+        {{champ.name.trim()}}
+      </option>
+    </select>
   </div>
   <div class="col-sm-3 col-xs-12">
-    Sort by: <select class="form-control" ng-model="sortFilter" ng-change="searchChanged()" style="width:250px;">
+    Sort by <select class="form-control" ng-model="sortFilter" ng-change="searchChanged()" style="width:250px;">
       <option>Download Count</option>
       <option>View Count</option>
     </select>
