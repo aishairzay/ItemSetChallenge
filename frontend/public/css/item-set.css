@@ -3,11 +3,11 @@
   border-radius: 30px;
   padding:10px;
   position:absolute;
-  z-index:100;
+  z-index:1000;
   min-width:225px;
   min-height: 100px;
   background-color:rgba(100,160,220,0.9);
-  margin-left:50px;
+  margin-left:-150px;
   margin-top:-20%;
 }
 
@@ -107,7 +107,13 @@ a:hover {
   cursor:pointer;
 }
 
-.scrollable {
-    /*max-height: 100%; /* or any value */
-    /*overflow-y: auto;*/
+.scroll-zone {
+  display:block;
+  float:left;
+  padding:0px;
+  margin:0px;
+  overflow-y:scroll;
+  overflow-x:hidden;
+  position:relative;
+  height:100%;
 }
