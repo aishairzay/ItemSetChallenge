@@ -19,8 +19,8 @@ Your keys.js file must contain a line like the following: "exports.RIOT_API_KEY 
 
 - Create your keys.js file as mentioned above
 
-- Run '''npm install'''
+- Run "npm install"
 
 - Start mongodb on its default port
 
-- Run the command '''npm start''' 
+- Run the command "npm start" 
