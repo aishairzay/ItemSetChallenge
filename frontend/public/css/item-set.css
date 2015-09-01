@@ -114,6 +114,7 @@ a:hover {
   margin:0px;
   overflow-y:scroll;
   overflow-x:hidden;
-  position:relative;
-  height:100%;
+  position:fixed;
+  width:37%;
+  height:550px;
 }

@@ -8,32 +8,34 @@
 </div>
 
 <div class="row" ng-hide="loading">
-  <div class="col-xs-5 scroll-zone ">
-    <div class="row">
-      <div class="col-xs-4">
-        <h5>Categories</h5>
-        <ul class="nav nav-pills nav-stacked">
-          <li ng-class="{active:category == 'All'}">
-            <a ng-click="changeSelectedCategory('All')" style="padding:2px 10px">All</a>
-          </li>
-          <li ng-class="{active:category == categoryObj}" ng-repeat="categoryObj in categories">
-            <a class="category" style="padding:2px 10px" ng-click="changeSelectedCategory(categoryObj)">{{fixName(categoryObj)}}</a>
-          </li>
-        </ul>
-      </div>
-      <div class="col-xs-8" style="margin-top:12px;">
-        <div class="center">
-          <input class="dark form-control" type="text" ng-model="itemSearch" placeholder="Item Search">
-        </div>
-        <div class="row">
-          <div class="col-xs-12">
-          <ul style="margin-left:-15%">
-            <li ng-repeat="item in lists.items track by $index" data-drag="true" data-jqyoui-options="{revert:'invalid', helper:'clone', appendTo:'body'}" ng-model="lists.items" jqyoui-draggable="{index: {{$index}},placeholder:'keep', deepCopy:true}">
-              <div ng-show="searchItems(item.name)&&inRightCategory(item.tags)">
-                <item class="item" data='item'></item>
-              </div>
+  <div class="col-xs-5">
+    <div class="scroll-zone">
+      <div class="row">
+        <div class="col-xs-4">
+          <h5>Categories</h5>
+          <ul class="nav nav-pills nav-stacked">
+            <li ng-class="{active:category == 'All'}">
+              <a ng-click="changeSelectedCategory('All')" style="padding:2px 10px">All</a>
+            </li>
+            <li ng-class="{active:category == categoryObj}" ng-repeat="categoryObj in categories">
+              <a class="category" style="padding:2px 10px" ng-click="changeSelectedCategory(categoryObj)">{{fixName(categoryObj)}}</a>
             </li>
           </ul>
+        </div>
+        <div class="col-xs-8" style="margin-top:12px;">
+          <div class="center">
+            <input class="dark form-control" type="text" ng-model="itemSearch" placeholder="Item Search">
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+            <ul style="margin-left:-15%">
+              <li ng-repeat="item in lists.items track by $index" data-drag="true" data-jqyoui-options="{revert:'invalid', helper:'clone', appendTo:'body'}" ng-model="lists.items" jqyoui-draggable="{index: {{$index}},placeholder:'keep', deepCopy:true}">
+                <div ng-show="searchItems(item.name)&&inRightCategory(item.tags)">
+                  <item class="item" data='item'></item>
+                </div>
+              </li>
+            </ul>
+            </div>
           </div>
         </div>
       </div>
