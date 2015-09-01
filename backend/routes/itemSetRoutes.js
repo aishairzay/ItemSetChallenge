@@ -227,7 +227,6 @@ exports.searchItemSets = function(req, res) {
   }
   else {
     champSearch = champSearch.charAt(0).toUpperCase() + champSearch.slice(1);
-    console.log("champSearch", champSearch);
     itemSet.find({"allChamps" : false})
     .find({"champions" : champSearch})
     .find({"title" : {$regex: regex}})

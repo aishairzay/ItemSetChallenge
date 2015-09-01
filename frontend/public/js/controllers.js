@@ -520,12 +520,12 @@ controller('CreateController', function($rootScope, $scope, $http, $routeParams,
   $scope.initialize = function(data) {
     var champions = data.champions;
     var allChamps = data.allChamps;
-    if(champions && allChamps) {
+    if(champions) {
       if(allChamps) {
-        $scope.champFilter = 'All';
+        $scope.champView = 'All';
       }
       else{
-        $scope.champFilter = 'Custom';
+        $scope.champView = 'Custom';
         for (var i=0; i<champions.length; i++) {
           $scope.champs.push(champions[i]);
         }
