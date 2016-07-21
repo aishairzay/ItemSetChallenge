@@ -1,7 +1,5 @@
 #Item Set Challenge
 
-###Up now at www.LeagueOfBuilds.com
-
 ##Design
 Frontend folder -
   Contains all publicly served files separated into js/css/images/templates folders.
